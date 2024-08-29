@@ -1,0 +1,67 @@
+@media print {
+    .logoEmpresa {
+        display: block;
+        text-align: end;
+    }
+
+    .btnExportarPdf {
+        display: none;
+    }
+
+    #btnCadastrarCompras {
+        display: none;
+    }
+
+    #btnCadastrarFornecedores {
+        display: none;
+    }
+
+    #btnCadastrarProdutos {
+        display: none;
+    }
+
+    .btnExportarExcel{
+        display: none;
+    }
+
+    .actions{
+        display: none;
+    }
+    #ColAcoes{
+        display: none;
+    }
+    #btnCadastrarCompras{
+        display: none;
+    }
+    #ColAcoes{
+        display: none;
+    }
+    #ColVisualizar{
+        display: none;
+    }
+    #AncoraVisualizar{
+        display: none;
+    }
+    #inputPesquisa{
+        display: none;
+    }
+    #selBusca{
+        display: none;
+    }
+    #btnPesquisa{
+        display: none;
+    }
+
+    #iconEye{
+        display: none;  
+    }
+    #thAcoes{
+        display: none;  
+    }
+    #tdAcoes{
+        display: none;  
+    }
+    #visualizarCompra{
+        display: none;  
+    }
+}

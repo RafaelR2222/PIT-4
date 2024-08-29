@@ -1,0 +1,143 @@
+<script src="js/jslayout2/validacaocontato.js"></script>
+<script src="js/jslayout2/validacaoreserva.js"></script>
+
+<section class="probootstrap-slider flexslider probootstrap-inner">
+    <ul class="slides">
+       <li style="background-image: url(assets/images/slider_1.jpg);" class="overlay">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div class="probootstrap-slider-text text-center">
+                  <p><img src="assets/svg/curve_white.svg" class="seperator probootstrap-animate" alt="Free HTML5 Bootstrap Template"></p>
+                  <h1 class="probootstrap-heading probootstrap-animate">Reserve já seu quarto!</h1>
+                  <div class="probootstrap-animate probootstrap-sub-wrap">Suítes para todos os gostos, escolha a sua</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+    </ul>
+</section>
+  
+<section class="probootstrap-section">
+<div class="container">
+    <div class="row probootstrap-gutter40">
+    <div class="col-md-8">
+        <h2 class="mt0">Ficha de Reserva</h2>
+        <form method="post" class="probootstrap-form" target="_blank">
+        <div class="row">
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="fname">Primeiro Nome</label>
+                <input type="text" class="form-control" id="fname" name="fname" placeholder="Digite seu primeiro nome...
+                "onkeyup="verificaall()" maxlength="20" required>
+                <p id="pfnome"></p>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="lname">Sobrenome</label>
+                <input type="text" class="form-control" id="lname" name="lname" placeholder="Digite seu sobrenome..." 
+                onkeyup="verificaall()" maxlength="20" required>
+                <p id="plname"></p>
+            </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="email">Email</label>
+            <div class="form-field">
+            <i class="icon icon-mail"></i>
+            <input type="email" class="form-control" id="email" name="email" placeholder="Digite o seu email..." onkeyup="verificaall()" maxlength="40" required>
+            <p id="pemail"></p>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="room">Quarto</label>
+            <div class="form-field">
+            <i class="icon icon-chevron-down"></i>
+            <select name="room" id="room" class="form-control" onchange="verificaall()" required >
+                <option value="" disabled selected>Selecione seu quarto</option>
+                <option value="1">Suíte Básica - Externo</option>
+                <option value="2">Suíte Básica - Interno</option>
+                <option value="3">Suíte Standart - Externo</option>
+                <option value="4">Suíte Standart - Interno</option>
+                <option value="5">Suíte Deluxe - Externo</option>
+                <option value="6">Suíte Deluxe - Interno</option>
+            </select>
+            <p id="proom"></p>
+            </div>
+        </div>
+        <div class="row">
+            <h4 class="mt0"></br>Busque excursões por data</h4>
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="date-arrival">Data inicial</label>
+                <div class="form-field">
+                <i class="icon icon-calendar2"></i>
+                <input type="text" class="form-control" id="date-arrival" name="date-arrival" onchange="verificaall()" required>
+                </div>
+                <p id="pdatearrival"></p>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="date-departure">Data final</label>
+                <div class="form-field">
+                <i class="icon icon-calendar2"></i>
+                <input type="text" class="form-control" id="date-departure" name="date-departure" onchange="verificaall()" required>
+                </div>
+                <p id="pdatedeparture"></p>
+            </div>
+            </div>
+        </div>
+
+        <div class="row mb30">
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="adults">Adultos</label>
+                <div class="form-field">
+                <i class="icon icon-chevron-down"></i>
+                <select name="adults" id="adults" class="form-control" onchange="verificaall()"  required>
+                    <option value="">Numero de Adultos</option>
+                    <option value="1" >1</option>
+                    <option value="2" >2</option>
+                    <option value="3" >3</option>
+                    <option value="4" >4+</option>
+                </select>
+                <p id="padults"></p>
+                </div>
+            </div>
+            </div>
+            <div class="col-md-6">
+            <div class="form-group">
+                <label for="children">Crianças</label>
+                <div class="form-field">
+                <i class="icon icon-chevron-down"></i>
+                <select name="children" id="children" class="form-control" onchange="verificaall()" required>
+                    <option value="" disabled selected>Numero de Crianças</option>
+                    <option value="5">Nenhuma</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4+</option>
+                </select>
+                <p id="pchildren"></p>
+                </div>
+                
+            </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-primary btn-lg" id="submit" name="submit" value="Reserve" onclick="verificabotaor()">
+            
+        </div>
+        </form>
+    </div>
+    <div class="col-md-4">
+        <h2 class="mt0">Feedback</h2>
+        <p>Houve algum problema durante sua reserva ou está com alguma dúvida? Contate nosso time de suporte 24hrs</p>
+        <p><a href="/contato" class="btn btn-primary" role="button">Entre em contato</a></p>
+    </div>
+    </div>
+</div>
+</section>

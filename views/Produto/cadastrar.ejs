@@ -1,0 +1,29 @@
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<script src="/js/Produto/cadastrar.js"></script>
+<head>
+    <link rel="stylesheet" href="/../../public/css/csslayout2/style.css">
+</head>
+<div>
+    <h1>Cadastrar novo produto</h1>
+
+    <div>
+        <div class="form-group">
+            <label for="produtoCodigo">Código:</label>
+            <input class="form-control" type="text" id="produtoCodigo" />
+
+            <label for="produtoDescricao">Descrição:</label>
+            <input class="form-control" type="text" id="produtoDescricao" />
+
+            <label for="produtoQuantidade">Quantidade:</label>
+            <input class="form-control" type="number" id="produtoQuantidade" />
+
+            <label for="produtoPreco">Preço Unitário:</label>
+            <input class="form-control" type="text" id="produtoPreco" />
+        </div>
+
+        <div>
+            <button id="btnGravar" class="btn btn-primary">Gravar</button>
+            <a class="btn btn-secondary" href="/produtos">Voltar</a>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,66 @@
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<script src="/js/Compra/listar.js"></script>
+<script src="/js/Compra/filtrar.js"></script>
+
+<head>
+    <link rel="stylesheet" href="css/webfronts/print.css">
+</head>
+
+<div>
+    <h1>Compras cadastrados</h1>
+
+    <div>
+        <div>
+            <select class="form-control mb-3" id="selBusca">
+                <option selected value="1">Código da compra</option>
+                <option value="2">Nome do fornecedor</option>
+            </select>
+            <div style="display: flex;">
+                <input id="inputPesquisa" placeholder="Digite aqui" type="text" class="form-control">
+                <div class="input-group-append">
+                    <button class="btn btn-primary" type="button" id="btnPesquisa">
+                        <i class="fas fa-search"> </i> Pesquisar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div>
+        <a class="btn btn-primary " id="btnCadastrarCompras" href="/compras/cadastrar">Cadastrar compra</a>
+        <button onclick="window.print()" class="btn btn-primary btnExportarPdf">Exportar para PDF</button>
+        <button id="btnExportarExcel" class="btn btn-primary btnExportarExcel">Exportar para Excel</button>
+    </div>
+
+    <div id="rotuloQtdeCompras" style="text-align:end;">
+        <b>Quantidade de compras realizadas: <%= lista.length %></b>
+    </div>
+
+    <table style="margin-top:10px" id="tabelaCompras" class="table table-stripped">
+        <thead>
+            <th>Nº da Nota</th>
+            <th>Fornecedor</th>
+            <th>Valor</th>
+            <th>Data</th>
+            <th id="thAcoes">Açoes</th>
+        </thead>
+        <tbody id="corpoTabelaCompras">
+            <% for(let i=0; i<lista.length; i++) { %>
+                <tr>
+                    <td><%= lista[i].compraCodigo %></td>
+                    <td><%= lista[i].nomeFornecedor %></td>
+                    <td>R$ <%= lista[i].compraValor %></td>
+                    <td class="dataFormatada"><%= lista[i].compraData %></td>
+                    <td id="tdAcoes">
+                        <div id="visualizarCompra">
+                            <a href="/compras/visualizar/<%= lista[i].compraCodigo %>" class="btn btn-primary">
+                                <i id="iconEye" class="fas fa-eye"></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+
+            <% } %>
+        </tbody>
+    </table>
+</div>

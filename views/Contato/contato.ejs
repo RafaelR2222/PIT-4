@@ -1,0 +1,105 @@
+<script src="js/jslayout2/validacaocontato.js"></script>
+<script src="js/jslayout2/validacaoreserva.js"></script>
+
+
+<section class="probootstrap-slider flexslider probootstrap-inner">
+    <ul class="slides">
+       <li style="background-image: url(assets/images/slider_1.jpg);" class="overlay">
+          <div class="container">
+            <div class="row">
+              <div class="col-md-10 col-md-offset-1">
+                <div class="probootstrap-slider-text text-center">
+                  <p><img src="assets/svg/curve_white.svg" class="seperator probootstrap-animate" alt="Free HTML5 Bootstrap Template"></p>
+                  <h1 class="probootstrap-heading probootstrap-animate">Contato</h1>
+                  <div class="probootstrap-animate probootstrap-sub-wrap">Nossa equipe 24hrs está pronta para sanar todas as suas dúvidas online e prontos para dar o suporte necessário.</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </li>
+    </ul>
+  </section>
+  
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row probootstrap-gutter60">
+        <div class="col-md-8">
+          <h2 class="mt0">Entre em contato</h2>
+          <form method="post" class="probootstrap-form" target="_blank">
+            <div class="row">
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="fname">Primeiro Nome</label>
+                  <input type="text" class="form-control" id="fname" name="fname" maxlength="20" onkeyup="validactt()" required>
+                </div>
+                <p id="pfname"></p>
+              </div>
+              <div class="col-md-6">
+                <div class="form-group">
+                  <label for="lname">Sobrenome</label>
+                  <input type="text" class="form-control" id="lname" name="lname" maxlength="20" onkeyup="validactt()" required>
+                </div>
+                <p id="plname"></p>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" class="form-control" id="email" name="email" maxlength="50" onkeyup="validactt()" required>  
+            </div>
+            <p id="pemail"></p>
+            <div class="form-group">
+              <label for="subject">Assunto</label>
+              <input type="text" class="form-control" id="subject" name="subject" onkeyup="validactt()" maxlength="40" required>
+            </div>
+            <p id="psubject"></p>
+            <div class="form-group">
+              <label for="message">Escreva sua mensagem</label>
+              <textarea cols="30" rows="10" class="form-control" id="message" name="message" onkeyup="validactt()" maxlength ="1500" required></textarea>
+            </div>
+            <p id="pmessage"></p>
+            <div class="form-group">
+              <input type="submit" class="btn btn-primary btn-lg" id="submit" name="submit" value="Enviar" onclick="validabotaoc()">
+            </div>
+          </form>
+          <!-- Inserir Tabela -->
+          <h2 class="mt0">Lista de Contatos</h2>
+          <table id="tabelaContato">
+            <tr>
+              <th id="thname">Nome</th>
+              <th>E-mail</th>
+              <th>Mensagem</th>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <h2 class="mt0">Dados de contato</h2>
+          <ul class="probootstrap-contact-info">
+            <li><i class="icon-location2"></i> <span>Av. Salvador de Sá, 118 - Cidade Nova, Rio de Janeiro - RJ, 20211-260</span></li>
+            <li><i class="icon-mail"></i><span>	suporte@rvictoria.com.br</span></li>
+            <li><i class="icon-phone2"></i><span>+55 (21)2502-6591</span></li>
+          </ul>
+          <h2>Feedback</h2>
+          <p>Envie também um feedback sobre sue experiência a bordo dos nossos cruzeiros para que mais pessoas vejam.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="probootstrap-half">
+    <div class="image" style="background-image: url(assets/images/slider_2.jpg);"></div>
+    <div class="text">
+      <div class="probootstrap-animate fadeInUp probootstrap-animated">
+        <h2 class="mt0">O Melhor Cruzeiro de toda a América Latina</h2>
+        <p><img src="assets/svg/curve_white.svg" class="seperator" alt="Free HTML5 Bootstrap Template"></p>
+        <div class="row">
+          <div class="col-md-6">
+            <p>Eleito o melhor Cruzeiro de toda a América Latina por 3 anos seguidos pela revista "Best Navegation", o Rainha Victória Cruzeiros conta com 5 modelos  de navios que saem do porto do Rio o ano inteiro com pacotes de viagem que vão de 5 à 30 dias de navegação.</p>    
+          </div>
+          <div class="col-md-6">
+            <p>Por 8 anos viajando com qualidade, segurança e conforto. Trazendo experiências incríveis para pessoas e familias de todas as idades.</p>    
+          </div>
+        </div>
+        <p><a href="/blog" class="link-with-icon white">Saiba mais <i class=" icon-chevron-right"></i></a></p>
+      </div>
+    </div>
+  </section>

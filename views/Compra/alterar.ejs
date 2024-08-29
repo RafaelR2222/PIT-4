@@ -1,0 +1,26 @@
+<script src="/js/Compra/alterar.js"></script>
+
+<div>
+    <h1>Alterar Compra</h1>
+
+    <div>
+        <input id="compraCodigo" type="hidden" value="<%= compra.compCodigo%>"/>
+        <div class="form-group">
+
+            <label for="compraCnpj">CNPJ:</label>
+            <input value="<%= compra.compCnpj%>" class="form-control" type="text" id="compraCnpj" />
+
+            <label for="compraValor">Valor Total:</label>
+            <input value="<%= compra.compValor%>" class="form-control" type="text" id="compraValor" />
+
+            <label for="compraQuantidade">Quantidade:</label>
+            <input value="<%= compra.compQuantidade%>" class="form-control" type="number" id="compraQuantidade" />
+        
+        </div>
+
+        <div>
+            <button id="btnAlterar" class="btn btn-primary">Gravar</button>
+            <a class="btn btn-secondary" href="/compras">Voltar</a>
+        </div>
+    </div>
+</div>

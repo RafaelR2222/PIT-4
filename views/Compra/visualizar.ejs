@@ -1,0 +1,46 @@
+
+<script src="/js/Compra/cadastrar.js"></script>
+<div>
+    <div>
+        <div class="form-group">
+            <h3 class="text-center mt-8">Dados Nota</h1>
+
+            <label for="compraCodigo">Código:</label>
+            <input class="form-control" value="<%= compra.compraCodigo %>" type="text" id="compraCodigo" />
+
+            <label for="compraCnpj">Nome fornecedor:</label >
+            <input class="form-control" type="text" id="compraCnpj" value="<%= compra.nomeFornecedor %>" />
+            
+            <label for="compraValor">Valor Total:</label>
+            <input class="form-control" type="text" id="compraValor" value="<%= compra.compraValor %>"/>
+        </div>
+        <div class="form-group">
+            <h3 class="text-center mt-8">Itens da nota</h1>
+
+            <table class='table'>
+                <thead>
+                    <th> Código </th>
+                    <th> Descricao </th>
+                    <th> Valor Unitário </th>
+                    <th> Valor Total </th>
+                    <th> Quantidade </th>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<lista.length; i++) { %>
+                        <tr>
+                            <td><%= lista[i].produtoCodigo %></td>
+                            <td><%= lista[i].produtoNome %></td>
+                            <td>R$ <%= parseFloat(lista[i].valorUnitario).toFixed(2) %></td>
+                            <td>R$ <%= parseFloat(lista[i].valor).toFixed(2) %></td>
+                            <td> <%= lista[i].quantidade %></td>
+                        </tr>
+        
+                    <% } %>
+                </tbody>
+                </table>
+        </div>
+        <div>
+            <a class="btn btn-secondary" href="/compras">Voltar</a>
+        </div>
+    </div>
+</div>

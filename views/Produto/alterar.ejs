@@ -1,0 +1,26 @@
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+<script src="/js/Produto/alterar.js"></script>
+
+<div>
+    <h1>Alterar Produto</h1>
+
+    <div>
+        <input id="produtoCodigo" type="hidden" value="<%= produto.proCodigo%>"/>
+        <div class="form-group">
+
+            <label for="produtoDescricao">Descrição:</label>
+            <input value="<%= produto.proDescricao%>" class="form-control" type="text" id="produtoDescricao" />
+
+            <label for="produtoPreco">Preço Unitário:</label>
+            <input value="<%= produto.proPreco%>" class="form-control" type="text" id="produtoPreco" />
+
+            <label for="produtoQuantidade">Quantidade:</label>
+            <input value="<%= produto.proQuantidade%>" class="form-control" type="number" id="produtoQuantidade" />
+        </div>
+
+        <div>
+            <button id="btnAlterar" class="btn btn-primary">Gravar</button>
+            <a class="btn btn-secondary" href="/produtos">Voltar</a>
+        </div>
+    </div>
+</div>

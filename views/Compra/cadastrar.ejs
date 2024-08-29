@@ -1,0 +1,56 @@
+
+<script src="/js/Compra/cadastrar.js"></script>
+<div>
+    <h1>Cadastrar nova Compra</h1>
+
+    <div>
+        <div class="form-group">
+            <h3 class="text-center mt-8">Dados Nota</h1>
+
+            <label for="compraCodigo">Código:</label>
+            <input class="form-control" type="text" id="compraCodigo" placeholder="Informe o codigo dessa compra..."/>
+
+            <label for="compraCnpj">CNPJ:</label >
+            <input class="form-control" type="text" id="compraCnpj" placeholder="Informe o CNPJ do fornecedor que você fez essa compra..."/>
+
+            <label for="compraData">Data:</label>
+            <input class="form-control" type="date" id="compraData" placeholder="Informe a data da compra..."/>
+
+            <label for="compraValor">Valor Total:</label>
+            <input class="form-control" type="text" id="compraValor" placeholder="Informe o valor total que irá pagar na compra..."/>
+        </div>
+        <div class="form-group">
+            <h3 class="text-center mt-8">Itens da nota</h1>
+            <div class="form-row">
+                <div class="col-md-4 mb-3">
+                    <label for="produto">Produto</label>
+                    <select class="custom-select" id="select-produto" required>
+                        <option value="">Selecione um produto</option>
+                        <% listaProduto.map(produto => { %>
+                            <option value=<%= produto.proCodigo %>> <%= produto.proDescricao %></option>
+                        <% }) %>
+                    </select>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="itemQuantidade">Quantidade:</label>
+                    <input class="form-control" type="number" id="itemQuantidade" min="1"/>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <label for="itemValorPago">Valor Pago Unitário:</label>
+                    <input class="form-control" type="text" id="itemValorPago" />
+                </div>
+                <div class="col-md-2 mb-3" style="display: flex; align-items: flex-end;">
+                    <button class="btn btn-primary" id="btnAdd" > Adicionar </button>
+                </div>
+            </div>
+
+            <div id="corpoTabela">
+
+            </div>
+        </div>
+        <div>
+            <button id="btnGravar" class="btn btn-primary">Gravar</button>
+            <a class="btn btn-secondary" href="/compras">Voltar</a>
+        </div>
+    </div>
+</div>
