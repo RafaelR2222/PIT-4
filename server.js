@@ -46,17 +46,21 @@ let contatoRota = new ContatoRoute();
 app.use('/contato', contatoRota.router);
 
 //Daqui pra baixo tem que ser ADM
-app.use(auth.verificaUsuarioADMLogado);
+// Rotas que precisam de autenticação de funcionários ou admin
+app.use(auth.verificaUsuarioFuncLogado);
 
+// Rotas protegidas (admin e funcionários podem acessar)
 let produtoRota = new ProdutoRoute();
 app.use('/produtos', produtoRota.router);
 let fornecedorRota = new FornecedorRoute();
 app.use('/fornecedor', fornecedorRota.router);
-let usuarioRota = new UsuarioRoute();
-app.use('/usuarios', usuarioRota.router);
 let compraRota = new CompraRoute();
 app.use('/compras', compraRota.router);
 
+// Rotas que somente administradores podem acessar (usuários)
+let usuarioRota = new UsuarioRoute();
+app.use('/usuarios', auth.verificaUsuarioFuncLogado, usuarioRota.router);
+//app.use('/usuarios/cadastrar', auth.verificaUsuarioADMLogado, usuarioRota.router);
 app.listen('5000', function () {
     console.log("servidor web iniciado no link: localhost:5000");
 })

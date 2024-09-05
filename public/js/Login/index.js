@@ -37,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
             alert("Usuário/Senha inválidos!");
         }
     }
-
+//aaaa
     function validarCampos(email, senha) {
         let erros = [];
 
