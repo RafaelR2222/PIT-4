@@ -25,6 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return r.json()
             }).then(function(r) {
                 if(r.status == true){
+                    if(r.perId == 3){
+                        windows.location.href = "/";
+                    }
                     window.location.href = "/produtos";
                 }
                 else{

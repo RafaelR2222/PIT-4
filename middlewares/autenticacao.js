@@ -66,8 +66,8 @@ class Autenticacao {
                         res.locals.usuarioLogado = usuario;
                         next();
                     } else {
-                        res.send({status: false, msg: "Você não tem permissão para acessar esta área!"});
-                            return res.redirect('/login');
+                        // res.send({status: false, msg: "Você não tem permissão para acessar esta área!"});
+                        return res.redirect('/');
                     }
                 } else {
                     res.send({status: false, msg: "Você não é um usuário ativo!"});
