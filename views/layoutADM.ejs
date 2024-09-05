@@ -41,114 +41,91 @@
 
     <!-- Sidebar -->
     <div class="sidebar">
-      <!-- Sidebar user panel (optional) -->
-     
-
-
       <!-- Sidebar Menu -->
       <nav class="mt-2">
         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
           <li class="nav-item" id="nav-line">
             <a id="nav-menu" href="/" class="nav-link">
-              <i  class="nav-icon fas fa-home"></i>
-              <p>
-                Início
-              </p>
+              <i class="nav-icon fas fa-home"></i>
+              <p>Início</p>
             </a>
           </li>
           <li class="nav-item" id="nav-line">
             <a id="nav-menu" href="/produtos" class="nav-link">
               <i class="nav-icon fas fa-box"></i>
-              <p>
-                Produtos
-              </p>
+              <p>Produtos</p>
             </a>
           </li>
           <li class="nav-item" id="nav-line">
             <a id="nav-menu" href="/compras" class="nav-link">
               <i class="nav-icon fas fa-store"></i>
-              <p >
-                Compras
-              </p>
+              <p>Compras</p>
             </a>
           </li>
           <li class="nav-item" id="nav-line">
             <a id="nav-menu" href="/fornecedor" class="nav-link">
-              <i  class="nav-icon fas fa-truck"></i>
-              <p>
-                Fornecedores
-              </p>
+              <i class="nav-icon fas fa-truck"></i>
+              <p>Fornecedores</p>
             </a>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item" id="usuarioMenuItem">
             <a id="nav-menu" href="/usuarios" class="nav-link">
-              <i  class="nav-icon fas fa-user"></i>
-              <p>
-                Usuarios
-              </p>
+              <i class="nav-icon fas fa-user"></i>
+              <p>Usuários</p>
             </a>
           </li>
-          <li class="nav-item" >
+          <li class="nav-item">
             <div id="nav-line">
-            <a id="nav-menu" href="/login/logout" class="nav-link">
-              <i class="nav-icon fas fa-sign-out-alt"></i>
-              <p >
-                Sair
-              </p>
-            </a>
-          </div>
+              <a id="nav-menu" href="/login/logout" class="nav-link">
+                <i class="nav-icon fas fa-sign-out-alt"></i>
+                <p>Sair</p>
+              </a>
+            </div>
           </li>
-          
         </ul>
       </nav>
-      <!-- /.sidebar-menu -->
     </div>
-    <!-- /.sidebar -->
   </aside>
 
   <!-- Content Wrapper. Contains page content -->
   <div id="div_fundo_layout" class="content-wrapper">
-    <!-- /.content -->
-    <div id="contornoBody"  class="card card-body">
-        <%- body %>
+    <div id="contornoBody" class="card card-body">
+      <%- body %>
     </div>
-    
   </div>
-  <!-- /.content-wrapper -->
+  
+  <!-- Footer -->
   <footer id="footer_LayoutAdm" class="main-footer">
     <div id="flexbox-img">
-     
       <img width="300px" src="/assets/images/rainhavitoriasfundo.png" alt="Logo Rainha Victoria"> 
-      
-      <img class="img-responsive" id="ImgCapitech" style="display:flex; flex-direction: row-reverse;" width="100px" src="/assets/images/LOGOTIPO CAPI.png" alt="Logo Rainha Victoria">
-      
+      <img class="img-responsive" id="ImgCapitech" style="display:flex; flex-direction: row-reverse;" width="100px" src="/assets/images/LOGOTIPO CAPI.png" alt="Logo Capitech">
     </div>
-    
-    
-
   </footer>
 
-  <!-- Control Sidebar -->
+  <!-- JavaScript -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      // Função para obter o valor do cookie pelo nome
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) return parts.pop().split(';').shift();
+      }
 
-    <!-- Control sidebar content goes here -->
+      // Verifica o valor dos cookies
+      const isAdmin = getCookie('isAdmin') === 'true';
+      const usuarioLogado = getCookie('usuarioLogado');
 
-  <!-- /.control-sidebar -->
-</div>
-<!-- ./wrapper -->
-
-
-<script src="/js/jquery/jquery.min.js"></script>
-<script src="/js/bootstrap/bootstrap.bundle.min.js"></script>
-<script src="/js/template/adminlte.min.js"></script>
-<script src="js/jslayout2/scripts.min.js"></script>
-<script src="js/jslayout2/main.min.js"></script>
-<script src="js/jslayout2/custom.js"></script>
+      // Mostra ou esconde o menu "Usuários" baseado no valor dos cookies
+      const usuarioMenuItem = document.querySelector('#usuarioMenuItem');
+      if (usuarioMenuItem) {
+        if (isAdmin || usuarioLogado === '1') {
+          usuarioMenuItem.style.display = 'block';
+        } else {
+          usuarioMenuItem.style.display = 'none';
+        }
+      }
+    });
+  </script>
 </body>
 </html>
-
-
-
-
-
-
-
