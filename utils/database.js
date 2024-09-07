@@ -1,5 +1,5 @@
 var mysql = require('mysql2');
-
+const dotenv = require('dotenv');
 class Database {
 
     #conexao;
@@ -12,7 +12,7 @@ class Database {
             host: 'localhost', //endereço do nosso banco de dados na nuvem
             database: 'PFSIIEAD', //a database de cada um de vocês possui a nomenclatura PFS1_(RA)
             user: 'root',
-            password: '', // usuario e senha de cada um de vocês é o RA
+            password:'', // usuario e senha de cada um de vocês é o RA
             waitForConnections: true,
             connectionLimit: 10,
             maxIdle: 10,
