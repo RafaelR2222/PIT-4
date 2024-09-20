@@ -19,7 +19,7 @@ class ReservaRoute {
         this.#router.get("/listar", ctrl.listarReserva)
         this.#router.post("/gravar", ctrl.gravarReserva)
         this.#router.put("/editar", ctrl.editarReserva)
-        this.#router.delete("/editar", ctrl.excluirReserva)
+        this.#router.delete("/deletar", ctrl.excluirReserva)
 
     }
 }

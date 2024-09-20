@@ -10,30 +10,30 @@ class ReservaController {
         reserva.resQuartoId = req.body.quarto;
         reserva.resDataCheckin = req.body.dataInicial;
         reserva.resDataCheckout = req.body.dataFinal;
-        reserva.resNumAdulto = req.body.adults;
-        reserva.resNumCrianca = req.body.crianca;
+        reserva.resNumAdulto = req.body.adultos;
+        reserva.resNumCrianca = req.body.criancas;
         await reserva.gravarReserva();
-        res.redirect('/reserva');
+        return res.send({ ok: true, message: "Reserva efetuada com sucesso" });
     }
 
     async listarReserva(req, res) {
         let reserva = new ReservaModel();
         let listaReserva = await reserva.listarReservas(req.body.id);
-        res.send({ listaReserva });
+        return res.send({ listaReserva });
     }
 
     async excluirReserva(req, res) {
         let reserva = new ReservaModel();
         reserva.resId = req.params.id;
         await reserva.excluirReserva(req.body.id);
-        res.send({ ok: true, message: "Reserva excluida" });
+        return res.send({ ok: true, message: "Reserva excluida" });
     }
 
     async editarReserva(req, res) {
         let reserva = new ReservaModel();
         reserva.resId = req.params.id;
         reserva = await reserva.editarReserva(req.body.id);
-        res.send( { ok: true, reserva });
+        return res.send( { ok: true, reserva });
     }
 }
 

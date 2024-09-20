@@ -11,9 +11,10 @@ class Reserva {
     #resDataCheckout;
     #resNumAdulto;
     #resNumCrianca;
+    #resDataReserva;
 
     // Constructor to initialize the fields
-    constructor(resId, resPesNome, resPesEmail, resQuartoId, resDataCheckin, resDataCheckout, resNumAdulto, resNumCrianca) {
+    constructor(resId, resPesNome, resPesEmail, resQuartoId, resDataCheckin, resDataCheckout, resNumAdulto, resNumCrianca, resDataReserva) {
         this.#resId = resId;
         this.#resPesNome = resPesNome;
         this.#resPesEmail = resPesEmail;
@@ -22,6 +23,7 @@ class Reserva {
         this.#resDataCheckout = resDataCheckout;
         this.#resNumAdulto = resNumAdulto;
         this.#resNumCrianca = resNumCrianca;
+        this.#resDataReserva = resDataReserva;
     }
 
     // Getter and Setter for resId
@@ -96,6 +98,15 @@ class Reserva {
         this.#resNumCrianca = resNumCrianca;
     }
 
+    get resDataReserva() {
+        return this.#resDataReserva;
+    }
+
+    set resDataReserva(resDataReserva) {
+        this.#resDataReserva = resDataReserva;
+    }
+
+
     async gravarReserva() {
         let dataAtual = new Date();
         let sql = `insert into tb_reserva
@@ -142,6 +153,7 @@ class Reserva {
             reserva.resDataCheckout = rows[0]["res_dataCheckout"];
             reserva.resNumAdulto = rows[0]["res_numAdulto"];
             reserva.resNumCrianca = rows[0]["res_numCrianca"];
+            reserva.resDataReserva = rows[0]["res_dataReserva"];
 
             return reserva;
         }
