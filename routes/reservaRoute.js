@@ -16,7 +16,11 @@ class ReservaRoute {
         this.#router = express.Router();
 
         let ctrl = new ReservaController
-        this.#router.get("/", ctrl.reservaView)
+        this.#router.get("/listar", ctrl.listarReserva)
+        this.#router.post("/gravar", ctrl.gravarReserva)
+        this.#router.put("/editar", ctrl.editarReserva)
+        this.#router.delete("/editar", ctrl.excluirReserva)
+
     }
 }
 
