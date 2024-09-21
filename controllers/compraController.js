@@ -55,9 +55,9 @@ class CompraController {
     }
 
     async excluir(req, res) {
-        if(req.body.id != ""){
+        if(req.params.id != ""){
             let compra = new CompraModel();
-            let result = await compra.deletarCompra(req.body.id);
+            let result = await compra.deletarCompra(req.params.id);
             if(result == true)
                 res.send({ok: true, msg: "Compra excluído!"});
             else

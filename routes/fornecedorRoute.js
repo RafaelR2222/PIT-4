@@ -14,6 +14,7 @@ class fornecedorRoute{
 
         let ctrl = new fornecedorController();
         this.#router.get('/', ctrl.listarView);
+        this.#router.get('/listar', ctrl.obterFornecedor);
         this.#router.get('/cadastrar', ctrl.cadastrarView);
         this.#router.post('/cadastrar', ctrl.cadastrar);
         this.#router.get('/alterar/:id', ctrl.alterarView);
