@@ -50,18 +50,15 @@ app.use('/blog', blogRota.router);
 const contatoRota = new ContatoRoute();
 app.use('/contato', contatoRota.router);
 
-// Rotas que precisam de autenticação de funcionários ou admin
-app.use(auth.verificaUsuarioFuncLogado);
-
 // Rotas protegidas (admin e funcionários podem acessar)
 const produtoRota = new ProdutoRoute();
-app.use('/produtos', produtoRota.router);
+app.use('/produtos',auth.verificaUsuarioFuncLogado, produtoRota.router);
 
 const fornecedorRota = new FornecedorRoute();
-app.use('/fornecedor', fornecedorRota.router);
+app.use('/fornecedor',auth.verificaUsuarioFuncLogado, fornecedorRota.router);
 
 const compraRota = new CompraRoute();
-app.use('/compras', compraRota.router);
+app.use('/compras',auth.verificaUsuarioFuncLogado, compraRota.router);
 
 // Rotas que somente administradores podem acessar (usuários)
 const usuarioRota = new UsuarioRoute();

@@ -26,6 +26,20 @@ class Reserva {
         this.#resDataReserva = resDataReserva;
     }
 
+    toJSON() {
+        return {
+            'resId': this.#resId,
+            'resPesNome': this.#resPesNome,
+            'resPesEmail': this.#resPesEmail,
+            'resQuartoId': this.#resQuartoId.toJSON(),
+            'resDataCheckin': this.#resDataCheckin,
+            'resDataCheckout': this.#resDataCheckout,
+            'resNumAdulto': this.#resNumAdulto,
+            'resNumCrianca': this.#resNumCrianca,
+            'resDataReserva': this.#resDataReserva
+        }
+    }
+
     // Getter and Setter for resId
     get resId() {
         return this.#resId;
