@@ -26,8 +26,10 @@ class CompraController {
 
     async cadastrarView(req, res) {
         let produto = new ProdutoModel()
+        let fornecedores = new FornecedorModel()
+        let listaFornecedores = await fornecedores.listarFornecedor()
         let listaProduto = await produto.listarProdutos()
-        res.render('compra/cadastrar', { listaProduto: listaProduto, layout: 'layoutADM' });
+        res.render('compra/cadastrar', { listaProduto: listaProduto, listaFornecedores: listaFornecedores, layout: 'layoutADM' });
     }
 
     async alterarView(req, res) {
