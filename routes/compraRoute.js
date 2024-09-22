@@ -18,9 +18,9 @@ class CompraRoute {
         this.#router.get('/visualizar/:id', ctrl.visualizarView);   
         this.#router.get('/cadastrar', ctrl.cadastrarView);
         this.#router.post('/gravar-compra', ctrl.gravarCompra);
-        this.#router.post('/excluir', ctrl.excluir);
+        this.#router.delete('/excluir', ctrl.excluir);
         this.#router.get('/alterar/:id', ctrl.alterarView);
-        this.#router.post('/alterar', ctrl.alterar);
+        this.#router.put('/alterar', ctrl.alterar);
     }
 }
 

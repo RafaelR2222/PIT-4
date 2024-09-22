@@ -97,6 +97,23 @@ class FornecedorModel {
 
         return null;
     }
+    
+    async obterFornecedor() {
+        let sql = "select j.jur_cnpj, p.pes_nome from tb_pessoa p INNER JOIN tb_juridica j ON p.pes_codigo = j.cod_pessoa";
+
+        let rows = await conexao.ExecutaComando(sql);
+
+        let listaFornecedor = []
+        if(rows.length > 0) {
+
+            for(let i = 0; i< rows.length; i++) {
+                listaFornecedor.push(new FornecedorModel(rows[i]["jur_cnpj"], rows[i]["pes_nome"]))
+            }
+        }
+
+        return listaFornecedor;    
+}
+
 
 
     async salvarFornecedor() {

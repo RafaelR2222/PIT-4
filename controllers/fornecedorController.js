@@ -25,6 +25,11 @@ class fornecedorController{
         
     }
 
+    async obterFornecedor(req, res) {
+        let fornecedor = new FornecedorModel();
+        let listaFornecedor = await fornecedor.obterFornecedor();
+        return res.send({ listaFornecedor });
+    }
 
     async cadastrar(req, res) {
         if(req.body.nome != '' && req.body.cnpj != '' ){
