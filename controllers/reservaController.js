@@ -1,5 +1,5 @@
 const ReservaModel = require("../models/reservaModel");
-
+const cookieParser = require('cookie-parser');
 class ReservaController {
 
     async gravarReserva(req, res) {

@@ -1,0 +1,34 @@
+<script src="/js/RedefinirSenha/senhaNova.js"></script>
+
+  <section class="probootstrap-section">
+    <div class="container">
+      <div class="row probootstrap-gutter60">
+        <div class="col-md-8">
+          <h2 class="mt0">Nova Senha</h2>
+          <div id="msgRetorno"></div>
+          <form id="formBotao" action="#" method="post" class="probootstrap-form " target="_blank" style='display: block;'>
+            <div class="form-group">
+                <input type="email" class="form-control" id="email" name="email" placeholder="Preencha seu email aqui..." maxlength="30" value="r3dn1t4@gmail.com" style="font-weight: bold;font-size: large;margin-right: 50px; background-color: transparent; border-color: transparent;" disabled>  
+            </div>
+            <div class="form-group">
+              <label for="senha">Digite sua nova senha</label>
+              <input type="password" class="form-control" id="senha" name="senha" placeholder="Preencha sua senha nova aqui..." maxlength="30">  
+            </div>
+            <div class="form-group">
+                <label for="senha2">Repita sua nova senha</label>
+                <input type="password" class="form-control" id="senha2" name="senha2" placeholder="Preencha novamente sua senha nova..." maxlength="30">  
+              </div>
+            <div class="form-group">
+              <input type="button" class="btn btn-primary btn-lg" id="btnEnviar" name="submit" value="Enviar">
+            </div>
+          </form>
+          <h4 class="mt0" id="textoEnvio" style="color: rgb(4, 119, 10); display: none;">Senha redefinida com sucesso!</h5>
+          <form id="formToken" action="#" method="post" class="probootstrap-form " target="_blank" style="display:none">
+            <div class="form-group">
+                <a href="/login" class="btn btn-primary btn-lg" target="_self" role="button">Voltar</a>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>

@@ -15,6 +15,7 @@ class LoginRoute {
         this.#router.get('/', ctrl.indexView)
         this.#router.get("/logout", ctrl.logout);
         this.#router.post('/', ctrl.autenticar)
+ 
     }
 
 }

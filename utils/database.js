@@ -9,17 +9,20 @@ class Database {
     constructor() {
 
         this.#conexao = mysql.createPool({
-            host: 'localhost', //endereço do nosso banco de dados na nuvem
-            database: 'PFSIIEAD', //a database de cada um de vocês possui a nomenclatura PFS1_(RA)
-            user: 'root',
-            password:'', // usuario e senha de cada um de vocês é o RA
-            waitForConnections: true,
-            connectionLimit: 10,
-            maxIdle: 10,
-            idleTimeout:60000,
-            queueLimit: 0,
-            enableKeepAlive: true,
-            keepAliveInitialDelay:0
+            
+                host: 'localhost',
+                database: 'PFSIIEAD',
+                user: 'root',
+                password: '',
+                waitForConnections: true,
+                connectionLimit: 30,
+                maxIdle: 30,
+                idleTimeout: 700000,
+                queueLimit: 0,
+                enableKeepAlive: true,
+                keepAliveInitialDelay: 0,
+                connectTimeout: 800000 // 5 minutos (300.000 milissegundos)
+            
         });
     }
 

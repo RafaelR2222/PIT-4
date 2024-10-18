@@ -16,6 +16,15 @@ class Autenticacao {
         res.redirect('/login');
     }
 
+    async verificaAlterarSenhaAprovado(req, res, next) {
+        if (req.cookies.alterarSenhaAprovado){
+                return next();
+            }else{
+                res.redirect('/redefinicao');
+            }
+    }
+    
+
     async verificaUsuarioADMLogado(req, res, next) {
         const token = req.cookies.token;
 

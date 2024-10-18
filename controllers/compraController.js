@@ -2,23 +2,26 @@ const CompraModel = require("../models/compraModel");
 const ProdutoModel = require("../models/produtoModel");
 const FornecedorModel = require("../models/fornecedorModel");
 const ItensCompraModel = require("../models/itensCompraModel");
-
+const cookieParser = require('cookie-parser');
 class CompraController {
     async listarView(req, res) {
         let compra = new CompraModel();
         let listaCompra = await compra.listar()
-        res.render('compra/listar', {lista: listaCompra, layout: 'layoutADM'});
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        res.render('compra/listar', {lista: listaCompra, usuario: usuario, layout: 'layoutADM'});
     }
 
     async visualizarView(req, res) {
         if(req.params.id != undefined){
             let itensCompra = new ItensCompraModel();
             let listaItensCompra = await itensCompra.listar(req.params.id);
-
+            const usuarioCodificado = req.cookies.usuarioAtual;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let compra = new CompraModel();
             compra = await compra.obterCompraPorCodigo(req.params.id)
 
-            res.render('compra/visualizar', {lista: listaItensCompra, compra, layout: 'layoutADM'});
+            res.render('compra/visualizar', {lista: listaItensCompra, usuario: usuario, compra, layout: 'layoutADM'});
         } else {
             res.redirect("/")
         }
@@ -26,15 +29,19 @@ class CompraController {
 
     async cadastrarView(req, res) {
         let produto = new ProdutoModel()
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
         let listaProduto = await produto.listarProdutos()
-        res.render('compra/cadastrar', { listaProduto: listaProduto, layout: 'layoutADM' });
+        res.render('compra/cadastrar', { listaProduto: listaProduto, usuario: usuario, layout: 'layoutADM' });
     }
 
     async alterarView(req, res) {
         if(req.params.id != undefined){
             let compra = new CompraModel();
+            const usuarioCodificado = req.cookies.usuarioAtual;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             compra = await compra.obterCompraPorId(req.params.id);
-            res.render('compra/alterar', {compra: compra, layout: 'layoutADM'});
+            res.render('compra/alterar', {compra: compra, usuario: usuario, layout: 'layoutADM'});
         }
         else
             res.redirect("/")

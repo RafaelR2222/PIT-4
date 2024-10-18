@@ -11,7 +11,7 @@ class UsuarioModel {
     #usuSenha;
     #perId;
     #perDescricao;
-
+    #token;
     // Getters e Setters
     get usuId() { return this.#usuId; }
     set usuId(usuId) { this.#usuId = usuId; }
@@ -34,14 +34,19 @@ class UsuarioModel {
     get perDescricao() { return this.#perDescricao; }
     set perDescricao(perDescricao) { this.#perDescricao = perDescricao; }
 
-    constructor(usuId, usuNome, usuEmail, usuAtivo, usuSenha, perId, perDescricao){
+    get token() { return this.#token; }
+    set token(token) { this.#token = token; }
+
+    constructor(usuId, usuNome, usuEmail, usuAtivo, usuSenha, perId, usuToken, perDescricao ){
         this.#usuId = usuId;
         this.#usuNome = usuNome;
         this.#usuEmail = usuEmail;
         this.#usuAtivo = usuAtivo;
         this.#usuSenha = usuSenha;
         this.#perId = perId;
+        this.#token = usuToken;
         this.#perDescricao = perDescricao;
+        
     }
 
     // Método para converter a instância em um objeto JSON
@@ -52,7 +57,8 @@ class UsuarioModel {
             email: this.#usuEmail,
             ativo: this.#usuAtivo,
             perId: this.#perId,
-            perDescricao: this.#perDescricao
+            perDescricao: this.#perDescricao,
+            token: this.#token
         };
     }
 
@@ -73,6 +79,46 @@ class UsuarioModel {
             usuario.perDescricao = rows[0]["per_descricao"];
 
             return usuario;
+        }
+
+        return null;
+    }
+    
+    async enviarCodigoPorEmail(email, token) {
+        console.log(`Tentando enviar e-mail para: ${email} com token: ${token}`);
+    
+        // Configurações do transportador
+
+        let resposta;
+        const transporter = nodemailer.createTransport({
+            host: 'smtp@gmail.com', // Altere para seu servidor SMTP
+            port: 465, // Altere se necessário
+            secure: true, // true para 465, false para outros
+            auth: {
+                user: 'r3dn1t4@gmail.com', // Seu e-mail
+                pass: 'pwsynwrhpnmeueph' // Sua senha
+            }
+        });
+        transporter.sendMail({
+            from: 'Rainha victoria <r3dn1t4@gmail.com>', // Seu e-mail
+            to: email,
+            subject: 'Seu código de verificação',
+            text: `Seu código de verificação é: ${token}`
+        }).then((response)=> resposta = true, console.log('Sucesso ao enviar email! ', response))
+        .catch((err)=> resposta = false, console.log('Erro ao enviar email! ', err))
+        
+        return resposta;
+    }
+
+    async obterUsuarioPorEmail(email) {
+        let sql = "select usu_nome from tb_usuarioh where usu_email = ?";
+        let valores = email;
+
+        let rows = await conexao.ExecutaComando(sql, valores);
+        let usuarioNome = rows[0];
+        let NomeDoUsuario = usuarioNome.usu_nome;
+        if(usuarioNome) {
+            return NomeDoUsuario; // Retorna a lista de usuários
         }
 
         return null;
@@ -108,6 +154,64 @@ class UsuarioModel {
         }
     }
 
+    async obterEmailPorToken(token) {
+        const sql = "SELECT * FROM tb_tokens WHERE tk_tokens = '?'";
+        const valores = [token];
+        
+        // Executa o comando e espera o resultado
+        const rows = await conexao.ExecutaComando(sql, valores);
+        
+        // Verifica se encontrou alguma linha
+        if (rows.length > 0) {
+            let email = rows[0].tk_email;
+            return email;  // retorna o email diretamente
+        }
+        
+        // Retorna null se não encontrar
+        return null;
+    }
+
+    async gravarTokenEmUsuarios(email, token) {
+        // Primeiro, busca o usuário pelo e-mail
+        let sql = "SELECT * FROM tb_usuarioh WHERE usu_email = ?";
+        let valores = [email];
+    
+        let rows = await conexao.ExecutaComando(sql, valores);
+    
+        if (rows.length > 0) {
+            // Usuário encontrado, atualizar o token
+            let sqlUpdate = "UPDATE tb_usuarioh SET usu_token = ? WHERE usu_email = ?";
+            let valoresUpdate = [token, email];
+            let resultado = await conexao.ExecutaComandoNonQuery(sqlUpdate, valoresUpdate);
+            return resultado;
+        } else {
+            // Usuário não encontrado, você pode optar por retornar um erro ou criar um novo usuário
+            throw new Error("Usuário não encontrado com o e-mail fornecido.");
+        }
+    }
+    
+    async buscarEmailPorToken(token) {
+        const sql = `
+            SELECT usu_email 
+            FROM tb_usuarioh 
+            WHERE usu_token = ?`;
+    
+        const valores = [token];
+    
+        try {
+            const resultado = await conexao.ExecutaComando(sql, valores);
+    
+            if (resultado.length > 0) {
+                return resultado[0].usu_email; // Retorna apenas o email encontrado
+            } else {
+                throw new Error("Token não encontrado.");
+            }
+        } catch (error) {
+            console.error("Erro ao buscar o email pelo token:", error);
+            throw error; // Lança o erro para que possa ser tratado externamente
+        }
+    }
+    
     async listarUsuarios() {
         let lista = [];
 
