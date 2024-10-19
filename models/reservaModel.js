@@ -2,7 +2,7 @@ const Database = require('../utils/database')
 
 const conexao = new Database();
 
-class Reserva {
+class ReservaModel {
     #resId;
     #resPesNome;
     #resPesEmail;
@@ -176,3 +176,5 @@ class Reserva {
     }
 
 }
+
+module.exports = ReservaModel;

@@ -1,4 +1,4 @@
-const QuartoModel = require("../models/quartoModel");
+const QuartoModel = require('../models/quartoModel');
 
 class QuartoController {
     

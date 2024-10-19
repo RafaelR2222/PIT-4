@@ -134,7 +134,15 @@ function verificaall() {
 }
 
 async function verificabotaor() {
-  if (decisaoadulto == 1 && decisaocriancas == 1 && decisaodata1 == 1 && decisaodata2 == 1 && decisaoemail == 1 && decisaonome == 1 && decisaoquartos == 1 && decisaosobrenome == 1) {
+  var fname = document.getElementById('fname');
+  var lname = document.getElementById('lname');
+  var email = document.getElementById('email');
+  var adults = document.getElementById('adults');
+  var quarto = document.getElementById('room');
+  var crianca = document.getElementById('children');
+  var dataInicialInput = document.getElementById('date-arrival');
+  var dataFinalInput = document.getElementById('date-departure');
+
     let body = {
       nome: fname.value + ' ' + lname.value,
       email: email.value,
@@ -144,7 +152,10 @@ async function verificabotaor() {
       dataInicial: dataInicialInput.value,
       dataFinal: dataFinalInput.value
     }
-    await fetch('/gravar', {
+
+    console.log(body)
+
+    await fetch('/reservas/gravar', {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
@@ -157,15 +168,10 @@ async function verificabotaor() {
         alert("RESERVA EFETUADA COM SUCESSO !")
         location.reload(true);
       } else {
-        alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS !")
+        console.log(JSON.stringify(r))
+        alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS!")
         location.reload(true);
       }
     })
-  } else {
-    alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS !")
-    location.reload(true);
-  }
-
-
 }
 
