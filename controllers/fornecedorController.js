@@ -1,24 +1,30 @@
 const CompraModel = require("../models/compraModel");
 const FornecedorModel = require("../models/fornecedorModel");
-
+const cookieParser = require('cookie-parser');
 
 class fornecedorController{
     
     async listarView(req, res) {
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
         let fornecedor = new FornecedorModel();
         let listaFornecedor = await fornecedor.listarFornecedor()
-        res.render('fornecedor/listar', {lista: listaFornecedor, layout: 'layoutADM'});
+        res.render('fornecedor/listar', {lista: listaFornecedor, usuario: usuario, layout: 'layoutADM'});
     }
 
     cadastrarView(req, res) {
-        res.render('fornecedor/cadastrarForn', { layout: 'layoutADM' });
+        const usuarioCodificado = req.cookies.usuario_logado;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        res.render('fornecedor/cadastrarForn', { layout: 'layoutADM', usuario: usuario });
     }
 
     async alterarView(req, res) {
         if(req.params.id != undefined){
+            const usuarioCodificado = req.cookies.usuario_logado;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let fornecedor = new FornecedorModel();
             fornecedor = await fornecedor.obterFornecedorPorId(req.params.id);
-            res.render('fornecedor/alterar', {fornecedor: fornecedor, layout: 'layoutADM'});
+            res.render('fornecedor/alterar', {fornecedor: fornecedor, usuario: usuario, layout: 'layoutADM'});
         }
         else
             res.redirect("/")

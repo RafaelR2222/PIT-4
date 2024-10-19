@@ -1,25 +1,29 @@
 const PerfilModel = require("../models/perfilModel");
 const UsuarioModel = require("../models/usuarioModel");
-
+const cookieParser = require('cookie-parser');
 class UsuarioController {
 
 
     async listarView(req, res) {
-        let usuario = new UsuarioModel();
-        let listaUsuarios = await usuario.listarUsuarios();
-        res.render('usuario/listar', {lista: listaUsuarios, layout: 'layoutADM'});
+        let usuarioModel = new UsuarioModel();
+        const usuarioCodificado = req.cookies.usuario_logado;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        let listaUsuarios = await usuarioModel.listarUsuarios();
+        res.render('usuario/listar', {lista: listaUsuarios, usuario: usuario, layout: 'layoutADM'});
     }
 
     async cadastrarView(req, res) {
         let perfil = new PerfilModel();
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
         let listaPerfil = await perfil.listarPerfil();
-        res.render('usuario/cadastrar', {listaPerfil: listaPerfil, layout: 'layoutADM'});
+        res.render('usuario/cadastrar', {listaPerfil: listaPerfil, usuario:usuario, layout: 'layoutADM'});
     }
 
     async alterarView(req, res) {
         if(req.params.id != undefined) {
-            let usuario = new UsuarioModel();
-            usuario = await usuario.obterUsuario(req.params.id)
+            let usuarioModel = new UsuarioModel();
+            usuario = await usuarioModel.obterUsuario(req.params.id)
             let perfil = new PerfilModel();
             let listaPerfil = await perfil.listarPerfil();
             res.render('usuario/alterar', {usuario: usuario, listaPerfil: listaPerfil, layout: 'layoutADM'});

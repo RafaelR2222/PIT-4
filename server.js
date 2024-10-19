@@ -13,6 +13,8 @@ const ContatoRoute = require('./routes/contatoRoute.js');
 const UsuarioRoute = require('./routes/usuarioRoute.js');
 const LoginRoute = require('./routes/loginRoute.js');
 const CompraRoute = require('./routes/compraRoute.js');
+const RedefinirSenhaRoute = require('./routes/redefinirSenhaRoute.js');
+const AlterarSenhaRoute = require('./routes/alterarSenhaRoute.js');
 const Autenticacao = require('./middlewares/autenticacao.js');
 
 const app = express();
@@ -35,6 +37,13 @@ const auth = new Autenticacao();
 const homeRota = new HomeRoute();
 app.use('/', homeRota.router);
 
+const redefinirSenhaRota = new RedefinirSenhaRoute(); // Corrigido aqui
+app.use('/redefinicao', redefinirSenhaRota.router);
+
+
+
+app.use('/redefinicao/novaSenha', redefinirSenhaRota.router);
+
 const loginRota = new LoginRoute();
 app.use('/login', loginRota.router);
 
@@ -49,6 +58,9 @@ app.use('/blog', blogRota.router);
 
 const contatoRota = new ContatoRoute();
 app.use('/contato', contatoRota.router);
+
+const alterarSenhaRota = new AlterarSenhaRoute();
+app.use('/alterarSenha', auth.verificaAlterarSenhaAprovado , alterarSenhaRota.router);
 
 // Rotas protegidas (admin e funcionários podem acessar)
 const produtoRota = new ProdutoRoute();

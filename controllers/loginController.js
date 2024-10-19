@@ -1,6 +1,6 @@
 const UsuarioModel = require("../models/usuarioModel");
 const { assinar } = require("../middlewares/funcoesJWT.js");
-
+const cookieParser = require('cookie-parser');
 class LoginController {
 
     indexView(req, res) {
@@ -28,7 +28,15 @@ class LoginController {
                     secure: process.env.NODE_ENV === 'production',
                     maxAge: 3600000 // 1 hora
                 });
+
+                 usuario.obterUsuarioPorEmail(req.body.email);
+                 usuario.usuNome
+                if(usuario.usuNome){
+                    res.cookie('usuarioAtual' , usuario.usuNome, { httpOnly: true, secure: false });
+                }
                 res.cookie("usuarioLogado", usuario.usuId);
+                
+
                 res.send({ status: true, msg: "Autenticação realizada com sucesso" });
             } else {
                 res.send({ status: false, msg: "Credenciais inválidas" });

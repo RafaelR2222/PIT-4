@@ -1,7 +1,9 @@
 class ContatoController {
     
     contatoView(req, res) {
-        res.render('contato/contato');
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        res.render('contato/contato', {usuario: usuario} );
     }
 }
 
