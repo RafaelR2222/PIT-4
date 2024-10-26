@@ -1,8 +1,11 @@
 const QuartoModel = require("../models/quartoModel");
 const ReservaModel = require("../models/reservaModel");
+
 const nodemailer = require('nodemailer');
 
 const quartos = new QuartoModel();
+
+const cookieParser = require('cookie-parser');
 
 class ReservaController {
 

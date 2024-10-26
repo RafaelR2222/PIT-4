@@ -1,4 +1,5 @@
-const QuartoModel = require('../models/quartoModel');
+const QuartoModel = require("../models/quartoModel");
+const cookieParser = require('cookie-parser');
 
 class QuartoController {
     

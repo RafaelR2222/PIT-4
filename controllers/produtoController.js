@@ -1,26 +1,32 @@
 const ProdutoModel = require("../models/produtoModel");
 const Database = require('../utils/database')
 const ItensCompraModel = require("../models/itensCompraModel");
-
+const cookieParser = require('cookie-parser');
 const conexao = new Database();
 
 class ProdutoController {
 
     async listarView(req, res) {
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
         let produto = new ProdutoModel();
         let listaProduto = await produto.listarProdutos(conexao)
-        res.render('produto/listar', {lista: listaProduto, layout: 'layoutADM'});
+        res.render('produto/listar', {lista: listaProduto, usuario:usuario, layout: 'layoutADM'});
     }
 
     cadastrarView(req, res) {
-        res.render('produto/cadastrar', { layout: 'layoutADM' });
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        res.render('produto/cadastrar', { layout: 'layoutADM', usuario: usuario });
     }
 
     async alterarView(req, res) {
         if(req.params.id != undefined){
+            const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let produto = new ProdutoModel();
             produto = await produto.obterProdutoPorId(req.params.id, conexao);
-            res.render('produto/alterar', {produto: produto, layout: 'layoutADM'});
+            res.render('produto/alterar', {produto: produto, usuario: usuario, layout: 'layoutADM'});
         }
         else
             res.redirect("/")
