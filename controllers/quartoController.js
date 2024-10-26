@@ -1,5 +1,6 @@
 const QuartoModel = require("../models/quartoModel");
 const cookieParser = require('cookie-parser');
+
 class QuartoController {
     
     quartoView(req, res) {

@@ -2,7 +2,7 @@ const Database = require('../utils/database')
 
 const conexao = new Database();
 
-class Quarto {
+class QuartoModel {
     #qrIdQuarto;
     #qrNome;
     #qrDescricao;
@@ -70,7 +70,7 @@ class Quarto {
         let rows = await conexao.ExecutaComando(sql, valores);
 
         if (rows.length > 0) {
-            let quarto = new Quarto();
+            let quarto = new QuartoModel();
             quarto.qrIdQuarto = rows[0]["qr_id_quarto"];
             quarto.qrNome = rows[0]["qr_nome"];
             quarto.qrDescricao = rows[0]["qr_descricao"];
@@ -89,7 +89,7 @@ class Quarto {
 
         if (rows.length > 0) {
             for(let i = 0; i< rows.length; i++) {
-                listaQuartos.push(new Quarto(rows[i]["qr_id_quarto"], rows[i]["qr_nome"], rows[i]["qr_descricao"], rows[i]["qr_quarto_status"]))
+                listaQuartos.push(new QuartoModel(rows[i]["qr_id_quarto"], rows[i]["qr_nome"], rows[i]["qr_descricao"], rows[i]["qr_quarto_status"]))
             }
             return listaQuartos;
         }
@@ -103,7 +103,7 @@ class Quarto {
         let listaQuarto = []
         if(rows.length > 0) {
             for(let i = 0; i< rows.length; i++) {
-                listaQuarto.push(new Quarto(rows[i]["qr_id_quarto"], rows[i]["qr_nome"], rows[i]["qr_descricao"], rows[i]["qr_quarto_status"]))
+                listaQuarto.push(new QuartoModel(rows[i]["qr_id_quarto"], rows[i]["qr_nome"], rows[i]["qr_descricao"], rows[i]["qr_quarto_status"]))
             }
         }
         return listaQuarto;
@@ -117,6 +117,7 @@ class Quarto {
 
         return resultado;
     }
-    
 
 }
+
+module.exports = QuartoModel;

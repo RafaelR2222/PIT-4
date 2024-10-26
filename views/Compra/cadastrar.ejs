@@ -10,8 +10,15 @@
             <label for="compraCodigo">Código:</label>
             <input class="form-control" type="text" id="compraCodigo" placeholder="Informe o codigo dessa compra..."/>
 
-            <label for="compraCnpj">CNPJ:</label >
-            <input class="form-control" type="text" id="compraCnpj" placeholder="Informe o CNPJ do fornecedor que você fez essa compra..."/>
+            <label for="compraCnpj">CNPJ:</label>
+            <select class="custom-select" id="compraCnpj" placeholder="Selecione o fornecedor" required>
+                <option value="">Selecione o fornecedor</option>
+                <% listaFornecedores.map(fornecedor => { %>
+                    <option value="<%= fornecedor.fornCnpj %>"> Nome: <%= fornecedor.fornNome %> | CNPJ: <%= fornecedor.fornCnpj %></option>
+                <% }) %>
+            </select>
+            
+         
 
             <label for="compraData">Data:</label>
             <input class="form-control" type="date" id="compraData" placeholder="Informe a data da compra..."/>

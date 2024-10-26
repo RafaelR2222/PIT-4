@@ -9,7 +9,6 @@ class Database {
     constructor() {
 
         this.#conexao = mysql.createPool({
-            
                 host: 'localhost',
                 database: 'PFSIIEAD',
                 user: 'root',
@@ -22,7 +21,6 @@ class Database {
                 enableKeepAlive: true,
                 keepAliveInitialDelay: 0,
                 connectTimeout: 800000 // 5 minutos (300.000 milissegundos)
-            
         });
     }
 
