@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function validaToken() {
         let token = document.querySelector("#tokenRecebido");
-        alert('entrou na token !!!' );
+
 
         if (token.value ) {
         
