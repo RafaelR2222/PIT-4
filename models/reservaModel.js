@@ -174,6 +174,42 @@ class ReservaModel {
 
         return null;
     }
+    
+    async listaReservas(termo, busca) {
+        let sqlWhere = "";
+        if(termo != undefined && termo != ""){
+            if(busca == "1") {
+                if(isNaN(termo) == false)
+                    sqlWhere = ` where r.res_quartoId = ${termo} `;
+            }
+            else if(busca == "2") {
+                sqlWhere = ` where r.res_pesNome like '%${termo}%'  `;
+            }
+        }
+
+        let sql = "select * from tb_reserva r inner join tb_quartos q on r.res_quartoId = q.qr_id_quarto ${sqlWhere} order by r.res_dataCheckin DESC";
+        let rows = await conexao.ExecutaComando(sql);
+
+        var relatorio = [];
+
+        for(var i = 0; i < rows.length; i++){
+            var row = rows[i];
+            var data = {
+                id: i,
+                nomeCliente: row["res_pesNome"],
+                idQuarto: row["qr_id_quarto"],
+                nomeQuarto: row["qr_descricao"],
+                dataCheckin: row["res_dataCheckin"],
+                dataCheckout: row["res_dataCheckout"]
+            }
+
+            relatorio.push(data);
+        }
+
+        return relatorio;
+    }
+
+
 
 }
 

@@ -92,9 +92,20 @@ class ReservaController {
         }
     }
 
-    async listarReserva(req, res) {
+    async obterReserva(req, res) {
         let reserva = new ReservaModel();
-        let listaReserva = await reserva.listarReservas(req.params.id);
+        let listaReserva = await reserva.obterReserva(req.params.id);
+        return res.send({ listaReserva });
+    }
+
+    async listarReservas(req, res) {
+        let reserva = new ReservaModel();
+        let listaReserva = []
+        if(req.body != undefined){
+            let termo = req.body.termo;
+            let busca = req.body.busca;
+            listaReserva = await reserva.listaReservas(termo, busca);
+        }
         return res.send({ listaReserva });
     }
 
