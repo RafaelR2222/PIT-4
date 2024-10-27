@@ -28,16 +28,16 @@ class ReservaModel {
 
     toJSON() {
         return {
-            'resId': this.#resId,
-            'resPesNome': this.#resPesNome,
-            'resPesEmail': this.#resPesEmail,
-            'resQuartoId': this.#resQuartoId.toJSON(),
-            'resDataCheckin': this.#resDataCheckin,
-            'resDataCheckout': this.#resDataCheckout,
-            'resNumAdulto': this.#resNumAdulto,
-            'resNumCrianca': this.#resNumCrianca,
-            'resDataReserva': this.#resDataReserva
-        }
+            resId: this.#resId,
+            resPesNome: this.#resPesNome,
+            resPesEmail: this.#resPesEmail,
+            resQuartoId: this.#resQuartoId,
+            resDataCheckin: this.#resDataCheckin,
+            resDataCheckout: this.#resDataCheckout,
+            resNumAdulto: this.#resNumAdulto,
+            resNumCrianca: this.#resNumCrianca,
+            resDataReserva: this.#resDataReserva,
+        };
     }
 
     // Getter and Setter for resId
@@ -151,14 +151,43 @@ class ReservaModel {
         return result1;
     }
 
-    async obterReserva(id) {
+    async obterReservas() {
+        let sql = "SELECT * FROM tb_reserva";
+        let rows = await conexao.ExecutaComando(sql);
+    
+        let reservas = [];
+    
+        if (rows.length > 0) {
+            for (let row of rows) {
+                let reserva = new ReservaModel();
+                reserva.resId = row["res_id"];
+                reserva.resPesNome = row["res_pesNome"];
+                reserva.resPesEmail = row["res_pesEmail"];
+                reserva.resQuartoId = row["res_quartoId"];
+                reserva.resDataCheckin = row["res_dataCheckin"];
+                reserva.resDataCheckout = row["res_dataCheckout"];
+                reserva.resNumAdulto = row["res_numAdulto"];
+                reserva.resNumCrianca = row["res_numCrianca"];
+                reserva.resDataReserva = row["res_dataReserva"];
+    
+                // reserva convertida para JSON à lista
+                reservas.push(reserva.toJSON());
+            }
+        }
+    
+        return reservas; //lista de reservas como JSON
+    }
+    
+    
+
+    async obterReservaPorId(id) {
         let sql = "select * from tb_reserva where res_id = ?";
         let valores = [id];
 
         let rows = await conexao.ExecutaComando(sql, valores);
 
         if(rows.length > 0) {
-            let reserva = new Reserva();
+            let reserva = new ReservaModel();
             reserva.resId = rows[0]["res_id"];
             reserva.resPesNome = rows[0]["res_pesNome"];
             reserva.resPesEmail = rows[0]["res_pesEmail"];
@@ -187,7 +216,7 @@ class ReservaModel {
             }
         }
 
-        let sql = "select * from tb_reserva r inner join tb_quartos q on r.res_quartoId = q.qr_id_quarto ${sqlWhere} order by r.res_dataCheckin DESC";
+        let sql = `select * from tb_reserva r inner join tb_quartos q on r.res_quartoId = q.qr_id_quarto ${sqlWhere} order by r.res_dataCheckin DESC`;
         let rows = await conexao.ExecutaComando(sql);
 
         var relatorio = [];
@@ -198,9 +227,12 @@ class ReservaModel {
                 id: i,
                 nomeCliente: row["res_pesNome"],
                 idQuarto: row["qr_id_quarto"],
+                emailPessoa: row["res_pesEmail"],
                 nomeQuarto: row["qr_descricao"],
                 dataCheckin: row["res_dataCheckin"],
-                dataCheckout: row["res_dataCheckout"]
+                dataCheckout: row["res_dataCheckout"],
+                numAdultos: row["res_numAdulto"],
+                numCriancas:row["res_numCrianca"]
             }
 
             relatorio.push(data);

@@ -37,12 +37,12 @@ class LoginController {
                 res.cookie("usuarioLogado", usuario.usuId);
                 
 
-                res.send({ status: true, msg: "Autenticação realizada com sucesso" });
+                res.send({ status: true, msg: "Autenticação realizada com sucesso", user: usuario.perId  });
             } else {
-                res.send({ status: false, msg: "Credenciais inválidas" });
+                res.send({ status: false, msg: "Credenciais inválidas", user: usuario.perId  });
             }
         } else {
-            res.send({ status: false, msg: "Credenciais inválidas" });
+            res.send({ status: false, msg: "Credenciais inválidas", user: usuario.perId  });
         }
     }
 

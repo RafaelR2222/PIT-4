@@ -12,6 +12,13 @@ class ReservaController {
     reservaView(req, res) {
         res.render('reserva/reserva');
     }
+   async listarView(req,res){
+        const usuarioCodificado = req.cookies.usuarioAtual;
+        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+        let ReservasModel = new ReservaModel();
+        let listaReservas = await ReservasModel.obterReservas()
+        res.render('reserva/listar', {lista: listaReservas, usuario: usuario, layout: 'layoutADM'});
+    }
 
     async gravarReserva(req, res) {
         let reserva = new ReservaModel();

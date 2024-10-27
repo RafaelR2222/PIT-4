@@ -25,8 +25,9 @@ document.addEventListener('DOMContentLoaded', function() {
                 return r.json()
             }).then(function(r) {
                 if(r.status == true){
-                    if(r.perId == 3){
-                        windows.location.href = "/";
+                    if(r.user == 3){
+                        alert('Este usuário não tem permissão para entrar nesta área!');
+                       
                     }
                     window.location.href = "/produtos";
                 }
