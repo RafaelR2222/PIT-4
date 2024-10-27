@@ -32,6 +32,14 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     function filtrarTabela(termo, busca) {
+        if(busca == 1 && isNaN(termo)){
+            alert('Isto não é id de um quarto');
+        return;
+        }
+        if(busca == 2 && !isNaN(termo)){
+            alert('Isto não é um nome de hospede');
+        return;
+        }
         fetch('/reservas/listar', {
             method: "POST",
             headers: {
@@ -79,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
                 }
                 else{
-                    alert("Nenhuma compra encontrado!");
+                    alert("Nenhuma reserva encontrado!");
                 }
             }
         })
