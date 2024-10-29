@@ -3,13 +3,13 @@ document.addEventListener('DOMContentLoaded', function() {
     const textoEnvio = document.getElementById('textoEnvio');
     formToken.style.display = 'none'
     textoEnvio.style.display = 'none'
-    alert('carregou !!!' );
+
     document.getElementById("btnVerificarToken").addEventListener('click', validaToken);
     
 
     function validaToken() {
         let token = document.querySelector("#tokenRecebido");
-        alert('entrou na token !!!' );
+
 
         if (token.value ) {
         

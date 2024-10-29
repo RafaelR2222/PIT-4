@@ -21,6 +21,10 @@ class ReservaController {
     }
 
     async gravarReserva(req, res) {
+        const { nome, email, quartos } = req.body;
+    if (!nome || !email || !quartos ) {
+        return res.send({ ok: false, message: "Todos os campos obrigatórios devem ser preenchidos" });
+    }
         let reserva = new ReservaModel();
         reserva.resPesNome = req.body.nome;
         reserva.resPesEmail = req.body.email;
