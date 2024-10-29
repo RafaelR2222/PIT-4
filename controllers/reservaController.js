@@ -29,8 +29,8 @@ class ReservaController {
         reserva.resPesNome = req.body.nome;
         reserva.resPesEmail = req.body.email;
         reserva.resQuartoId = req.body.quartos;
-        reserva.resDataCheckin = req.body.dataInicial;
-        reserva.resDataCheckout = req.body.dataFinal;
+        reserva.resDataCheckin = new Date(req.body.dataInicial);
+        reserva.resDataCheckout = new Date(req.body.dataFinal);
         reserva.resNumAdulto = req.body.adultos;
         reserva.resNumCrianca = req.body.criancas;
         let quartosDisponiveis = await quartos.obterQuartoDesocupado();
