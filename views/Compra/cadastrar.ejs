@@ -34,10 +34,9 @@
                     <select class="custom-select" id="select-produto" required>
                         <option value="">Selecione um produto</option>
                         <% listaProduto.map(produto => { %>
-                            <option value=<%= produto.proCodigo %>> <%= produto.proDescricao %> | Valor base:  R$<%= produto.proPreco %> cada </option>
+                            <option value=<%= produto.proCodigo %>> <%= produto.proDescricao %></option>
                         <% }) %>
                     </select>
-                    <a class="btn btn-primary" href="/produtos" target="_blank" style="margin-top: 1rem;">Ver Produtos</a>
                 </div>
                 <div class="col-md-3 mb-3">
                     <label for="itemQuantidade">Quantidade:</label>

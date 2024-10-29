@@ -48,6 +48,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         return r.json();
                     }).then(function(r) {
                         if (r.status) {
+                            alert('entrou nesse krl');
                             textoEnvio.style.display = 'block';
                             formToken.style.display = 'block' // Exibe o texto de sucesso
                             formbotao.style.display = 'none'    

@@ -164,7 +164,7 @@ async function verificabotaor() {
     }).then(function (r) {
       return r.json()
     }).then(function (r) {
-      if (r.ok) {
+      if (r.ok == true) {
         alert("RESERVA EFETUADA COM SUCESSO !")
         location.reload(true);
       } else {

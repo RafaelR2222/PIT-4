@@ -29,12 +29,10 @@ class CompraController {
 
     async cadastrarView(req, res) {
         let produto = new ProdutoModel()
-        let fornecedor = new FornecedorModel()
         const usuarioCodificado = req.cookies.usuarioAtual;
         let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
-        let listaFornecedores = await fornecedor.listarFornecedor();
-        let listaProduto = await produto.listarProdutos();
-        res.render('compra/cadastrar', { listaProduto: listaProduto, listaFornecedores:listaFornecedores, usuario: usuario, layout: 'layoutADM' });
+        let listaProduto = await produto.listarProdutos()
+        res.render('compra/cadastrar', { listaProduto: listaProduto, usuario: usuario, layout: 'layoutADM' });
     }
 
     async alterarView(req, res) {
