@@ -35,7 +35,7 @@ class LoginController {
                 if(usuario.usuNome){
                     res.cookie('usuarioAtual' , usuario.usuNome, { httpOnly: true, secure: false });
                 }
-                res.cookie("usuarioLogado", usuario.usuId);
+                res.cookie("usuarioLogado", usuario.perId);
                 
 
                 res.send({ status: true, msg: "Autenticação realizada com sucesso", user: usuario.perId ? usuario.perId : 0  });
