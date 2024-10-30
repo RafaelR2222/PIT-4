@@ -10,7 +10,6 @@ document.addEventListener('DOMContentLoaded', function() {
     
 
     function validaToken() {
-        alert('entrou !!!' );
         let senha1 = document.querySelector("#senha").value;
         let senha2 = document.querySelector("#senha2").value;
         let email = document.querySelector('#email').value;
