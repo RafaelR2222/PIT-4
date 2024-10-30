@@ -17,6 +17,7 @@ class LoginController {
         if (req.body.email && req.body.senha) {
             let usuario = new UsuarioModel();
             usuario = await usuario.autenticarUsuario(req.body.email, req.body.senha);
+            
             if (usuario) {
                 // Limpa o token existente, se houver
                 res.clearCookie("token");
@@ -37,9 +38,9 @@ class LoginController {
                 res.cookie("usuarioLogado", usuario.usuId);
                 
 
-                res.send({ status: true, msg: "Autenticação realizada com sucesso", user: usuario.perId  });
+                res.send({ status: true, msg: "Autenticação realizada com sucesso", user: usuario.perId ? usuario.perId : 0  });
             } else {
-                res.send({ status: false, msg: "Credenciais inválidas", user: usuario.perId  });
+                res.send({ status: false, msg: "Credenciais inválidas" });
             }
         } else {
             res.send({ status: false, msg: "Credenciais inválidas", user: usuario.perId  });
