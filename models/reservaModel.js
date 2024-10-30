@@ -224,7 +224,7 @@ class ReservaModel {
         for(var i = 0; i < rows.length; i++){
             var row = rows[i];
             var data = {
-                id: i,
+                id: row["res_id"],
                 nomeCliente: row["res_pesNome"],
                 idQuarto: row["qr_id_quarto"],
                 emailPessoa: row["res_pesEmail"],
