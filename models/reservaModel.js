@@ -164,12 +164,12 @@ class ReservaModel {
                 reserva.resPesNome = row["res_pesNome"];
                 reserva.resPesEmail = row["res_pesEmail"];
                 reserva.resQuartoId = row["res_quartoId"];
-                reserva.resDataCheckin = row["res_dataCheckin"];
-                reserva.resDataCheckout = row["res_dataCheckout"];
+                reserva.resDataCheckin = new Date(row["res_dataCheckin"]).toLocaleDateString();
+                reserva.resDataCheckout = new Date(row["res_dataCheckout"]).toLocaleDateString();
                 reserva.resNumAdulto = row["res_numAdulto"];
                 reserva.resNumCrianca = row["res_numCrianca"];
-                reserva.resDataReserva = row["res_dataReserva"];
-    
+                reserva.resDataReserva = new Date(row["res_dataReserva"]).toLocaleDateString();
+                
                 // reserva convertida para JSON à lista
                 reservas.push(reserva.toJSON());
             }
@@ -192,11 +192,11 @@ class ReservaModel {
             reserva.resPesNome = rows[0]["res_pesNome"];
             reserva.resPesEmail = rows[0]["res_pesEmail"];
             reserva.resQuartoId = rows[0]["res_quartoId"];
-            reserva.resDataCheckin = rows[0]["res_dataCheckin"];
-            reserva.resDataCheckout = rows[0]["res_dataCheckout"];
+            reserva.resDataCheckin = new Date(rows[0]["res_dataCheckin"]).toLocaleDateString();
+            reserva.resDataCheckout = new Date(rows[0]["res_dataCheckout"]).toLocaleDateString();
             reserva.resNumAdulto = rows[0]["res_numAdulto"];
             reserva.resNumCrianca = rows[0]["res_numCrianca"];
-            reserva.resDataReserva = rows[0]["res_dataReserva"];
+            reserva.resDataReserva = new Date(rows[0]["res_dataReserva"]).toLocaleDateString();
 
             return reserva;
         }
@@ -229,11 +229,15 @@ class ReservaModel {
                 idQuarto: row["qr_id_quarto"],
                 emailPessoa: row["res_pesEmail"],
                 nomeQuarto: row["qr_descricao"],
-                dataCheckin: row["res_dataCheckin"],
-                dataCheckout: row["res_dataCheckout"],
+                dataCheckin: new Date(row["res_dataCheckin"]).toLocaleDateString(),
+                dataCheckout: new Date(row["res_dataCheckout"]).toLocaleDateString(),
                 numAdultos: row["res_numAdulto"],
-                numCriancas:row["res_numCrianca"]
-            }
+                numCriancas: row["res_numCrianca"],
+                dataReserva: new Date(row["res_dataReserva"]).toLocaleDateString()
+            };
+            
+            
+            
 
             relatorio.push(data);
         }

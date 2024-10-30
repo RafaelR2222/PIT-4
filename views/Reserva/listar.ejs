@@ -35,7 +35,7 @@
             <th>Id</th>
             <th>Nome</th>
             <th>Email</th>
-            <th>Id do quarto</th>
+            <th>Número do quarto</th>
             <th>Data check-in</th>
             <th>Data check-out</th>
             <th>Numero de adultos</th>
@@ -50,11 +50,11 @@
                     <td><%=lista[i].resPesNome%> </td>
                     <td><%=lista[i].resPesEmail%> </td>
                     <td><%=lista[i].resQuartoId%> </td>
-                    <td>sla </td>
-                    <td>sla </td>
+                    <td><%=lista[i].resDataCheckin%> </td>
+                    <td><%=lista[i].resDataCheckout%> </td>
                     <td><%=lista[i].resNumAdulto%> </td>
                     <td><%=lista[i].resNumCrianca%></td>
-                    <td>sla </td>
+                    <td><%=lista[i].resDataReserva%> </td> 
                    <!---- <td class="actions">
                         <div>
                             <a href="/fornecedor/alterar/<%= lista[i].fornId %>" class="btn btn-primary">

@@ -64,11 +64,11 @@ document.addEventListener("DOMContentLoaded", function() {
                             <td>${obj.nomeCliente} </td>
                             <td>${obj.emailPessoa} </td>
                             <td>${obj.idQuarto} </td>
-                            <td>sla </td>
-                            <td>sla </td>
+                            <td>${obj.dataCheckin}</td>
+                            <td>${obj.dataCheckout}</td>
                             <td>${obj.numAdultos} </td>
                             <td>${obj.numCriancas}</td>
-                            <td>sla </td>
+                            <td>${obj.dataReserva} </td>
                         <!---- <td class="actions">
                                 <div>
                                     <a href="/fornecedor/alterar/ lista[i].fornId " class="btn btn-primary">
