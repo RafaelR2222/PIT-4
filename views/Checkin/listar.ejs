@@ -1,0 +1,45 @@
+<script src="/js/Fornecedor/listar.js"></script>
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+<div>
+    <h1>Fornecedores cadastrados</h1>
+
+    <div>
+        <a class="btn btn-primary" id="btnCadastrarFornecedores" href="/fornecedor/cadastrar">Cadastrar fornecedores</a>
+        <button onclick="window.print()" class="btn btn-primary btnExportarPdf">Exportar para PDF</button>
+        <button id="btnExportarExcel" class="btn btn-primary btnExportarExcel">Exportar para Excel</button>
+    </div>
+    <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
+        <thead>
+            <th>CNPJ</th>
+            <th>Nome</th>
+            <th>Email</th>
+            <th>Telefone</th>
+            <th>Endereco</th>
+            <th>CEP</th>
+            <th class="actions">Ações</th>
+        </thead>
+        <tbody>
+            <% for(let i=0; i<lista.length; i++) { %>
+                <tr>
+                    <td><%= lista[i].fornCnpj %></td>
+                    <td><%= lista[i].fornNome %></td>
+                    <td><%= lista[i].fornEmail %></td>
+                    <td><%= lista[i].fornTelefone %></td>
+                    <td><%= lista[i].fornEndereco %></td>
+                    <td><%= lista[i].fornCep %></td>
+                    <td class="actions">
+                        <div>
+                            <a href="/fornecedor/alterar/<%= lista[i].fornId %>" class="btn btn-primary">
+                                <i class="fas fa-pen"></i>
+                            </a>
+                            <button data-id="<%= lista[i].fornId %>" class="btn btn-danger btnExclusao">
+                                <i class="fas fa-trash"></i>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            <% } %>
+        </tbody>
+    </table>
+</div>

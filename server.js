@@ -15,6 +15,7 @@ const LoginRoute = require('./routes/loginRoute.js');
 const CompraRoute = require('./routes/compraRoute.js');
 const RedefinirSenhaRoute = require('./routes/redefinirSenhaRoute.js');
 const AlterarSenhaRoute = require('./routes/alterarSenhaRoute.js');
+const CheckInRoute = require('./routes/checkinRoute.js');
 const Autenticacao = require('./middlewares/autenticacao.js');
 
 const app = express();
@@ -61,6 +62,9 @@ app.use('/contato', contatoRota.router);
 
 const alterarSenhaRota = new AlterarSenhaRoute();
 app.use('/alterarSenha', auth.verificaAlterarSenhaAprovado , alterarSenhaRota.router);
+
+const checkinRota = new CheckInRoute();
+app.use('/checkin', checkinRota.router);
 
 // Rotas protegidas (admin e funcionários podem acessar)
 const produtoRota = new ProdutoRoute();
