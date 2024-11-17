@@ -1,0 +1,66 @@
+<script src="/js/checkin/alterar.js"></script>
+<div>
+    <h1>Alterar Check-in</h1>
+
+    <div>
+        <div class="form-group">
+            <label for="cinNomePessoa">Id:</label>
+            <input class="form-control" type="text" id="cinId" readonly/>
+            
+            <label for="cinNomePessoa">Nome:</label>
+            <input class="form-control" type="text" id="cinNomePessoa" />
+
+            <label for="cinEmail">Email:</label>
+            <input class="form-control" type="email" id="cinEmail" maxlength="50" />
+
+            <label for="cinQuarto">Quarto:</label>
+            <input class="form-control" type="text" id="cinQuarto" readonly />
+
+            <label for="cinQuartoValor">Valor do Quarto:</label>
+            <input class="form-control" type="number" id="cinQuartoValor" step="0.01" />
+
+            <label for="cinNomeQuarto">Nome do Quarto:</label>
+            <input class="form-control" type="text" id="cinNomeQuarto" />
+
+            <label for="cinData">Data de Check-in:</label>
+            <input class="form-control" type="text" id="cinData" />
+
+            <label for="cinCoutData">Data de Check-out:</label>
+            <input class="form-control" type="text" id="cinCoutData" />
+
+            <label for="cinCinDataEsperada">Data de Check-in Esperada:</label>
+            <input class="form-control" type="text" id="cinCinDataEsperada" />
+
+            <label for="cinCoutDataEsperada">Data de Check-out Esperada:</label>
+            <input class="form-control" type="text" id="cinCoutDataEsperada" />
+
+            <label for="cinDataReserva">Data da Reserva:</label>
+            <input class="form-control" type="text" id="cinDataReserva" />
+
+            <label for="cinIdReserva">ID da Reserva:</label>
+            <input class="form-control" type="text" id="cinIdReserva" readonly />
+
+            <label for="cinNumAdultos">Número de Adultos:</label>
+            <input class="form-control" type="number" id="cinNumAdultos" />
+
+            <label for="cinNumCriancas">Número de Crianças:</label>
+            <input class="form-control" type="number" id="cinNumCriancas" />
+
+            <label for="cinIdServContratados">ID dos Serviços Contratados:</label>
+            <input class="form-control" type="text" id="cinIdServContratados" readonly />
+
+            <label for="cinNomeServContratados">Nome dos Serviços Contratados:</label>
+            <input class="form-control" type="text" id="cinNomeServContratados" />
+
+            <label for="cinValorServs">Valor dos Serviços:</label>
+            <input class="form-control" type="number" id="cinValorServs" step="0.01" />
+        </div>
+
+        <div style="display: flex;">
+            <button id="btnAlterar" class="btn btn-primary">Alterar</button>
+            <div style="margin-left: .3rem;">
+                <a class="btn btn-secondary" href="/checkin">Voltar</a>
+            </div>
+        </div>
+    </div>
+</div>

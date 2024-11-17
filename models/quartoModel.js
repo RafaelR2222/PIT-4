@@ -63,10 +63,20 @@ class QuartoModel {
         this.#qrQuartoStatus = qrQuartoStatus;
     }
 
+    toJSON() {
+        return {
+            qrIdQuarto: this.#qrIdQuarto,
+            qrNome: this.#qrNome,
+            qrDescricao: this.#qrDescricao,
+            qrNumeroQuarto: this.#qrNumeroQuarto,
+            qrQuartoStatus: this.#qrQuartoStatus
+        };
+    }
+    
     async obterQuartoPorId(id) {
         let sql = "select * from tb_quartos where qr_id_quarto = ?";
         let valores = [id];
-
+        let quartos = []
         let rows = await conexao.ExecutaComando(sql, valores);
 
         if (rows.length > 0) {
@@ -76,7 +86,8 @@ class QuartoModel {
             quarto.qrDescricao = rows[0]["qr_descricao"];
             quarto.qrQuartoStatus = rows[0]["qr_quarto_status"];
 
-            return quarto;
+            quartos.push(quarto.toJSON());
+            return quartos
         }
     }
 

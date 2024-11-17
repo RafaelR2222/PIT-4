@@ -12,9 +12,10 @@ class ReservaModel {
     #resNumAdulto;
     #resNumCrianca;
     #resDataReserva;
+    #resValorTotal;  // Novo campo
 
     // Constructor to initialize the fields
-    constructor(resId, resPesNome, resPesEmail, resQuartoId, resDataCheckin, resDataCheckout, resNumAdulto, resNumCrianca, resDataReserva) {
+    constructor(resId, resPesNome, resPesEmail, resQuartoId, resDataCheckin, resDataCheckout, resNumAdulto, resNumCrianca, resDataReserva, resValorTotal) {
         this.#resId = resId;
         this.#resPesNome = resPesNome;
         this.#resPesEmail = resPesEmail;
@@ -24,8 +25,10 @@ class ReservaModel {
         this.#resNumAdulto = resNumAdulto;
         this.#resNumCrianca = resNumCrianca;
         this.#resDataReserva = resDataReserva;
+        this.#resValorTotal = resValorTotal;  // Inicializando o novo campo
     }
 
+    // Método para retornar os dados em formato JSON
     toJSON() {
         return {
             resId: this.#resId,
@@ -37,6 +40,7 @@ class ReservaModel {
             resNumAdulto: this.#resNumAdulto,
             resNumCrianca: this.#resNumCrianca,
             resDataReserva: this.#resDataReserva,
+            resValorTotal: this.#resValorTotal  // Incluindo o novo campo
         };
     }
 
@@ -120,6 +124,14 @@ class ReservaModel {
         this.#resDataReserva = resDataReserva;
     }
 
+    get resValorTotal() {
+        return this.#resValorTotal;
+    }
+
+    set resValorTotal(resValorTotal) {
+        this.#resValorTotal = resValorTotal;
+    }
+
 
     async gravarReserva() {
         let dataAtual = new Date();
@@ -201,7 +213,32 @@ class ReservaModel {
             return reserva;
         }
 
-        return null;
+        return false;
+    }
+
+    async obterReservaPorEmail(email) {
+        let sql = "select * from tb_reserva where res_pesEmail = ?";
+        let valores = [email];
+
+        let rows = await conexao.ExecutaComando(sql, valores);
+
+        if(rows.length > 0) {
+            let reserva = new ReservaModel();
+            reserva.resId = rows[0]["res_id"];
+            reserva.resPesNome = rows[0]["res_pesNome"];
+            reserva.resPesEmail = rows[0]["res_pesEmail"];
+            reserva.resQuartoId = rows[0]["res_quartoId"];
+            reserva.resDataCheckin = new Date(rows[0]["res_dataCheckin"]).toLocaleDateString();
+            reserva.resDataCheckout = new Date(rows[0]["res_dataCheckout"]).toLocaleDateString();
+            reserva.resNumAdulto = rows[0]["res_numAdulto"];
+            reserva.resNumCrianca = rows[0]["res_numCrianca"];
+            reserva.resDataReserva = new Date(rows[0]["res_dataReserva"]).toLocaleDateString();
+            reserva.resValorTotal = rows[0]["res_valorTotal"];
+
+            return reserva;
+        }
+
+        return false;
     }
     
     async listaReservas(termo, busca) {
