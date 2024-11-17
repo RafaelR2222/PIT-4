@@ -17,6 +17,7 @@ class QuartoRoute {
 
         let ctrl = new QuartoController
         this.#router.get("/", ctrl.quartoView)
+        this.#router.get("/listar/:id", ctrl.obterQuartoPorId)
     }
 }
 

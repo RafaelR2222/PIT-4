@@ -16,6 +16,7 @@ const CompraRoute = require('./routes/compraRoute.js');
 const RedefinirSenhaRoute = require('./routes/redefinirSenhaRoute.js');
 const AlterarSenhaRoute = require('./routes/alterarSenhaRoute.js');
 const CheckInRoute = require('./routes/checkinRoute.js');
+const serviceRoute = require('./routes/serviceRoute.js');
 const Autenticacao = require('./middlewares/autenticacao.js');
 
 const app = express();
@@ -63,8 +64,9 @@ app.use('/contato', contatoRota.router);
 const alterarSenhaRota = new AlterarSenhaRoute();
 app.use('/alterarSenha', auth.verificaAlterarSenhaAprovado , alterarSenhaRota.router);
 
-const checkinRota = new CheckInRoute();
-app.use('/checkin', checkinRota.router);
+const serviceRota = new serviceRoute();
+app.use('/service', serviceRota.router);
+
 
 // Rotas protegidas (admin e funcionários podem acessar)
 const produtoRota = new ProdutoRoute();
@@ -79,6 +81,9 @@ app.use('/compras',auth.verificaUsuarioFuncLogado, compraRota.router);
 // Rotas que somente administradores podem acessar (usuários)
 const usuarioRota = new UsuarioRoute();
 app.use('/usuarios', auth.verificaUsuarioADMLogado, usuarioRota.router);
+
+const checkinRota = new CheckInRoute();
+app.use('/checkin',auth.verificaUsuarioFuncLogado, checkinRota.router);
 
 app.listen(5000, function () {
     console.log("Servidor web iniciado no link: http://localhost:5000");

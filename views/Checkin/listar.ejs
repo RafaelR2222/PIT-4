@@ -1,39 +1,63 @@
-<script src="/js/Fornecedor/listar.js"></script>
+<script src="/js/checkin/listar.js"></script>
+<script src="/js/checkin/alterar.js"></script>
+
 <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
 <div>
-    <h1>Fornecedores cadastrados</h1>
+    <h1>Check-in cadastrados</h1>
 
     <div>
-        <a class="btn btn-primary" id="btnCadastrarFornecedores" href="/fornecedor/cadastrar">Cadastrar fornecedores</a>
+        <a class="btn btn-primary" id="btnCadastrarFornecedores" href="/checkin/cadastrar">Cadastrar Check-in</a>
         <button onclick="window.print()" class="btn btn-primary btnExportarPdf">Exportar para PDF</button>
         <button id="btnExportarExcel" class="btn btn-primary btnExportarExcel">Exportar para Excel</button>
     </div>
+    <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
     <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
-        <thead>
-            <th>CNPJ</th>
-            <th>Nome</th>
+        <thead style="width: 10%;">
+            <th>Id do check-in</th>
+            <th>Nome </th>
             <th>Email</th>
-            <th>Telefone</th>
-            <th>Endereco</th>
-            <th>CEP</th>
+            <th>Id quarto</th>
+            <th>Nome do Quarto</th>
+            <th>Data check-in realizado</th>
+            <th>Data check-out realizado</th>
+            <th>Data check-in esperado</th>
+            <th>Data check-out esperado</th>
+            <th>Data reserva efetuada</th>
+            <th>Id reserva efetuada</th>
+            <th>Número de adultos</th>
+            <th>Número de crianças</th>
+            <th>Ids serviços cadastrados</th>
+            <th>Nomes serviços cadastrados</th>
+            <th>Total</th>
             <th class="actions">Ações</th>
         </thead>
         <tbody>
             <% for(let i=0; i<lista.length; i++) { %>
                 <tr>
-                    <td><%= lista[i].fornCnpj %></td>
-                    <td><%= lista[i].fornNome %></td>
-                    <td><%= lista[i].fornEmail %></td>
-                    <td><%= lista[i].fornTelefone %></td>
-                    <td><%= lista[i].fornEndereco %></td>
-                    <td><%= lista[i].fornCep %></td>
+                    <td><%= lista[i].cinId %></td>
+                    <td><%= lista[i].cinNomePessoa %></td>
+                    <td><%= lista[i].cinEmail %></td>
+                    <td><%= lista[i].cinQuartoId %></td>
+                    <td><%= lista[i].cinNomeQuarto %></td>
+                    <td><%= lista[i].cinData %></td>
+                    <td><%= lista[i].cinCoutData %></td>
+                    <td><%= lista[i].cinCinDataEsperada %></td>
+                    <td><%= lista[i].cinCoutDataEsperada %></td>
+                    <td><%= lista[i].cinDataReserva %></td>
+                    <td><%= lista[i].cinIdReserva %></td>
+                    <td><%= lista[i].cinNumAdultos %></td>
+                    <td><%= lista[i].cinNumCriancas %></td>
+                    <td><%= lista[i].cinIdServContratados %></td>
+                    <td><%= lista[i].cinNomeServContratados %></td>
+                    <td><%= lista[i].cinValorServs %></td>
+
                     <td class="actions">
                         <div>
-                            <a href="/fornecedor/alterar/<%= lista[i].fornId %>" class="btn btn-primary">
+                            <button data-id="<%= lista[i].cinId %>" class="btn btn-primary btnAlteracao" style="width: 2.7rem;margin-bottom: .5rem;">
                                 <i class="fas fa-pen"></i>
-                            </a>
-                            <button data-id="<%= lista[i].fornId %>" class="btn btn-danger btnExclusao">
+                            </button>
+                            <button data-id="<%= lista[i].cinId %>" class="btn btn-danger btnExclusao">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>
@@ -42,4 +66,5 @@
             <% } %>
         </tbody>
     </table>
+</div>
 </div>

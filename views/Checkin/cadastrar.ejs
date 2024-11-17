@@ -1,0 +1,73 @@
+
+<script src="/js/Checkin/cadastrar.js"></script>
+<div>
+    <h1>Cadastrar novo Check-in</h1>
+
+    <div style="display: block">
+        <div class="form-group">
+            <label for="emailUsuario">Email do cliente:</label>
+            <input class="form-control" type="text" id="emailUsuario"/>
+        <div style="margin-top: 1rem">
+            <button id="btnBuscar" class="btn btn-primary">Buscar</button>
+            <a class="btn btn-secondary" href="/checkin">Voltar</a>
+        </div>
+        </div>
+    </div>
+
+
+    <div id="formsCheckIn">
+        <div class="form-group">
+            <label for="fornecedorNome">Nome:</label>
+            <input class="form-control" type="text" id="cinNome" />
+
+            <label for="cinEmail">Email:</label>
+            <input class="form-control" type="email" id="cinEmail" maxlength="50" />
+
+            <label for="cinQuartoId">Quarto:</label>
+            <input class="form-control" type="text" id="cinQuartoId" maxlength="20" />
+
+            <label for="cinQuartoValor">Quarto Valor total pago:</label>
+            <input class="form-control" type="text" id="cinQuartoValor" maxlength="20" />
+
+            <label for="cinQuartoNome">Nome quarto:</label>
+            <input class="form-control" type="text" id="cinQuartoNome" maxlength="50" />
+
+            <label for="cinDataAtual">Data atual:</label>
+            <input class="form-control" type="date" id="cinDataAtual" maxlength="50" />
+
+            <label for="cinDataEsperada">Data check-in esperada:</label>
+            <input class="form-control" type="text" id="cinDataEsperada" maxlength="50" />
+
+            <label for="cinCoutDataEsperada">Data check-out esperada:</label>
+            <input class="form-control" type="text" id="cinCoutDataEsperada" maxlength="50" />
+
+            <label for="cinDataReserva">Data reserva efetuada:</label>
+            <input class="form-control" type="text" id="cinDataReserva" maxlength="50" />
+
+            <label for="cinReservaId">Id da reserva:</label>
+            <input class="form-control" type="text" id="cinReservaId" maxlength="50" />
+
+            <label for="cinNumAdultos">Número de adultos:</label>
+            <input class="form-control" type="text" id="cinNumAdultos" maxlength="50" />
+
+            <label for="cinNumCriancas">Número de crianças:</label>
+            <input class="form-control" type="text" id="cinNumCriancas" maxlength="50" />
+
+            <label for="cinNumServicoId">Ids dos serviços:</label>
+            <input class="form-control" type="text" id="cinNumServicoId" maxlength="50" />
+
+            <label for="cinNumServicoNome">Nomes dos serviços:</label>
+            <input class="form-control" type="text" id="cinNumServicoNome" maxlength="50" />
+
+            <label for="cinTotal">Valor total com serviços:</label>
+            <input class="form-control" type="text" id="cinTotal" maxlength="50" />
+
+
+        </div>
+
+        <div>
+            <button id="btnGravar" class="btn btn-primary">Gravar</button>
+            <a class="btn btn-secondary" href="/checkin">Voltar</a>
+        </div>
+    </div>
+</div>

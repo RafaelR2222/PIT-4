@@ -124,6 +124,26 @@ class UsuarioModel {
         return null;
     }
 
+    async obterUsuarioCompletoPorEmail(email) {
+        let sql = "select * from tb_usuarioh where usu_email = ?";
+        let valores = email;
+
+        let rows = await conexao.ExecutaComando(sql, valores);
+        if(rows.length > 0) {
+            
+            let usuario = new UsuarioModel();
+            usuario.usuId = rows[0]["usu_id"];
+            usuario.usuNome = rows[0]["usu_nome"];
+            usuario.usuEmail = rows[0]["usu_Email"];
+            usuario.usuAtivo = rows[0]["usu_ativo"];
+            usuario.perId = rows[0]["per_id"];
+
+            return usuario;
+        }
+
+        return null;
+    }
+
     async gravarUsuario() {
         if(this.#usuId == 0){
             let sql = `insert into tb_usuarioh 
