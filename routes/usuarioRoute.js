@@ -19,6 +19,7 @@ class UsuarioRoute {
         this.#router.post('/excluir', ctrl.excluir);
         this.#router.get('/alterar/:id', ctrl.alterarView);
         this.#router.post('/alterar', ctrl.alterar);
+        this.#router.get('/obterIdPorEmail/:email', ctrl.obterIdPorEmail);
     }
 }
 

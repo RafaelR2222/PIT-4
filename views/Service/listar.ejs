@@ -1,0 +1,104 @@
+<!-- <script src="/js/jslayout2/solicitarservicos.js"></script> -->
+<!-- <script src="/js/Servicos/listar.js"></script> -->
+<script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+
+
+<div>
+    <div>
+        <h1>Selecione o Checkin para Cadastrar Serviço</h1>
+        <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
+            <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
+                <thead style="width: 10%;">
+                    <th>Id do check-in</th>
+                    <th>Nome </th>
+                    <th>Email</th>
+                    <th class="actions">Ações</th>
+                </thead>
+                <tbody>
+                    <% for(let i=0; i<listaCheckin.length; i++) { %>
+                        <tr>
+                            <td>
+                                <%= listaCheckin[i].cinId %>
+                            </td>
+                            <td>
+                                <%= listaCheckin[i].cinNomePessoa %>
+                            </td>
+                            <td>
+                                <%= listaCheckin[i].cinEmail %>
+                            </td>
+                            <td class="actions">
+                                <div>
+                                    <button data-value="<%=  listaCheckin[i].cinEmail %>" class="btn btn-primary btnAdicao"
+                                        style="width: 2.7rem;margin-bottom: .5rem;">
+                                        <i class="fas fa-plus"></i>
+                                    </button>
+                                </div>
+                            </td>
+                        </tr>
+                        <% } %>
+                </tbody>
+            </table>
+            <table style="margin-top:10px" class="table table-stripped" id="tabelaServicos">
+
+            <thead style="width: 10%;">
+                <th>Id do serviço</th>
+                <th>Descrição do serviço </th>
+                <th>Valor</th>
+                <th class="actions">Ações</th>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<servicosExistentes.length; i++) { %>
+                    <tr id="formsServicos">
+                        <td>
+                            <%= servicosExistentes[i].servId %>
+                        </td>
+                        <td>
+                            <%= servicosExistentes[i].servDesc %>
+                        </td>
+                        <td>
+                            <%= servicosExistentes[i].servVal %>
+                        </td>
+                        <td class="actions">
+                            <div>
+                                <button data-id="<%=  servicosExistentes[i].servId %>" class="btn btn-primary btnGravar"
+                                    style="width: 2.7rem;margin-bottom: .5rem;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    <% } %>
+            </tbody>
+        </table>
+            <h1>Serviços Contratados</h1>
+            <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
+                <table style="margin-top:10px" class="table table-stripped" id="formsServicosContratados">
+                    <thead style="width: 10%;">
+                        <th>Id da Contratação</th>
+                        <th>Email do Solicitante</th>
+                        <th>Id do Serviço</th>
+                        <th>Nome do Serviço</th>
+                    </thead>
+                    <tbody>
+                        <% for(let i=0; i<listaServicos.length; i++) { %>
+                            <tr>
+                                <td>
+                                    <%= listaServicos[i].idServContratado %>
+                                </td>
+                                <td>
+                                    <%= listaServicos[i].emailCliente %>
+                                </td>
+                                <td>
+                                    <%= listaServicos[i].idService %>
+                                </td>
+                                <td>
+                                    <%= listaServicos[i].nomeServico %>
+                                </td>                
+                            </tr>
+                            <% } %>
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>

@@ -7,13 +7,17 @@ class ServicoContratadoModel {
     #idCliente;
     #qtdService;
     #valTotalService;
+    #emailCliente;
+    #nomeServico;
 
-    constructor(idServContratado, idService, idCliente, qtdService, valTotalService) {
+    constructor(idServContratado, idService, idCliente, qtdService, valTotalService, emailCliente, nomeServico) {
         this.#idServContratado = idServContratado;
         this.#idService = idService;
         this.#idCliente = idCliente;
         this.#qtdService = qtdService;
         this.#valTotalService = valTotalService;
+        this.#emailCliente = emailCliente;
+        this.#nomeServico = nomeServico;
     }
 
     toJSON() {
@@ -22,7 +26,9 @@ class ServicoContratadoModel {
             idService: this.#idService,
             idCliente: this.#idCliente,
             qtdService: this.#qtdService,
-            valTotalService: this.#valTotalService
+            valTotalService: this.#valTotalService,
+            emailCliente: this.#emailCliente,
+            nomeServico: this.#nomeServico
         };
     }
 
@@ -42,11 +48,17 @@ class ServicoContratadoModel {
     get valTotalService() { return this.#valTotalService; }
     set valTotalService(valTotalService) { this.#valTotalService = valTotalService; }
 
+    get emailCliente() { return this.#emailCliente; }
+    set emailCliente(emailCliente) { this.#emailCliente = emailCliente; }
+
+    get nomeServico() { return this.#nomeServico; }
+    set nomeServico(nomeServico) { this.#nomeServico = nomeServico; }
+
     // Method to save a contracted service to the database
-    async gravarServicoContratado() {
+    async gravarServicoContratado(id) {
         let sql = `INSERT INTO tb_servicos_contratados (id_service, id_cliente, qtd_service, val_total_service) 
                     VALUES (?, ?, ?, ?)`;
-        let valores = [this.#idService, this.#idCliente, this.#qtdService, this.#valTotalService];
+        let valores = [id, this.#idCliente, this.#qtdService, this.#valTotalService];
         let resultado = await conexao.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }
@@ -82,6 +94,8 @@ class ServicoContratadoModel {
                 servicoContratado.idCliente = row["id_cliente"];
                 servicoContratado.qtdService = row["qtd_service"];
                 servicoContratado.valTotalService = row["val_total_service"];
+                servicoContratado.emailCliente = row["email_cliente"];
+                servicoContratado.nomeServico = row["nome_service"];
                 servicosContratados.push(servicoContratado.toJSON());
             }
         }
