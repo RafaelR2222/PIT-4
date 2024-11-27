@@ -12,12 +12,26 @@ class ReservaController {
     reservaView(req, res) {
         res.render('reserva/reserva');
     }
-   async listarView(req,res){
+    async listarView(req, res) {
         const usuarioCodificado = req.cookies.usuarioAtual;
         let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
         let ReservasModel = new ReservaModel();
         let listaReservas = await ReservasModel.obterReservas()
-        res.render('reserva/listar', {lista: listaReservas, usuario: usuario, layout: 'layoutADM'});
+        res.render('reserva/listar', { lista: listaReservas, usuario: usuario, layout: 'layoutADM' });
+    }
+
+    async alterarView(req, res) {
+        if (req.params.id != undefined) {
+            const usuarioCodificado = req.cookies.usuario_logado;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+            let reserva = new ReservaModel();
+            reserva = await reserva.obterReservaPorId(req.params.id);
+            console.log(JSON.stringify( { reserva: reserva, usuario: usuario}));
+            res.render('reserva/alterar', { reserva: reserva, usuario: usuario, layout: 'layoutADM' });
+        }
+        else
+            res.redirect("/")
+
     }
 
     async gravarReserva(req, res) {
@@ -31,48 +45,48 @@ class ReservaController {
         reserva.resNumCrianca = req.body.criancas;
         let quartosDisponiveis = await quartos.obterQuartoDesocupado();
         let numQuarto = 0;
-        if(reserva.resQuartoId == '1'){
+        if (reserva.resQuartoId == '1') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto <= 10);
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
-        else if(reserva.resQuartoId == '2'){
+        else if (reserva.resQuartoId == '2') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto > 10 && quarto.qrIdQuarto <= 20);
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
-        else if(reserva.resQuartoId == '3'){
+        else if (reserva.resQuartoId == '3') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto > 20 && quarto.qrIdQuarto <= 30);
 
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
-        else if(reserva.resQuartoId == '4'){
+        else if (reserva.resQuartoId == '4') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto > 30 && quarto.qrIdQuarto <= 40);
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
-        else if(reserva.resQuartoId == '5'){
+        else if (reserva.resQuartoId == '5') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto > 40 && quarto.qrIdQuarto <= 50);
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
-        else if(reserva.resQuartoId == '6'){
+        else if (reserva.resQuartoId == '6') {
             numQuarto = quartosDisponiveis.find(quarto => quarto.qrIdQuarto > 50 && quarto.qrIdQuarto <= 60);
-            if(!numQuarto || numQuarto == 0){
+            if (!numQuarto || numQuarto == 0) {
                 return res.send({ ok: false, message: "Não há quartos disponíveis" });
             }
         }
         reserva.resQuartoId = String(numQuarto.qrIdQuarto);
 
-        try{
+        try {
             let gravar = await reserva.gravarReserva(reserva);
-            if(gravar){
+            if (gravar) {
                 await quartos.editarQuartoReserva(reserva.resQuartoId);
                 let transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -81,24 +95,24 @@ class ReservaController {
                         pass: process.env.SENHA
                     }
                 });
-        
+
                 let mailOptions = {
                     from: process.env.EMAIL,
                     to: reserva.resPesEmail,
                     subject: 'Reserva Confirmada',
                     text: `Obrigado por reservar conosco. O ID do seu quarto é: ${reserva.resQuartoId}. Te esperamos no dia ${reserva.resDataCheckin}!`
                 };
-        
+
                 // Send the email
                 await transporter.sendMail(mailOptions);
             }
-            else{
+            else {
                 return res.send({ ok: false, message: "Reserva falha" });
             }
             return res.send({ ok: true, message: "Reserva efetuada com sucesso" });
         }
-        catch(e){
-            return res.send({ ok: false, message: "Reserva falha", error: e});
+        catch (e) {
+            return res.send({ ok: false, message: "Reserva falha", error: e });
         }
     }
 
@@ -111,7 +125,7 @@ class ReservaController {
     async listarReservas(req, res) {
         let reserva = new ReservaModel();
         let listaReserva = []
-        if(req.body != undefined){
+        if (req.body != undefined) {
             let termo = req.body.termo;
             let busca = req.body.busca;
             listaReserva = await reserva.listaReservas(termo, busca);
@@ -121,16 +135,37 @@ class ReservaController {
 
     async excluirReserva(req, res) {
         let reserva = new ReservaModel();
-        reserva.resId = req.params.id;
-        await reserva.excluirReserva(req.params.id);
+        console.log(req.params.id);
+        await reserva.deletarReserva(req.params.id);
         return res.send({ ok: true, message: "Reserva excluida" });
     }
 
     async editarReserva(req, res) {
-        let reserva = new ReservaModel();
-        reserva.resId = req.params.id;
-        reserva = await reserva.editarReserva(req.params.id);
-        return res.send( { ok: true, reserva });
+        if (req.params.id != undefined) {
+            let dataInicialString = req.body.dataInicial;
+            let dataFinalString = req.body.dataFinal;
+            var dataInicial = dataInicialString.split("/");
+
+            var dataFinal = dataFinalString.split("/");
+            var ObjetoDataInicial = new Date(+dataInicial[2], dataInicial[1] - 1, +dataInicial[0]); 
+            var ObjetoDataFinal = new Date(+dataFinal[2], dataFinal[1] - 1, +dataFinal[0]);
+            
+            let reserva = new ReservaModel();
+            reserva.resPesNome = req.body.nome;
+            reserva.resPesEmail = req.body.email;
+            reserva.resQuartoId = parseInt(req.body.quartos);
+            reserva.resDataCheckin = ObjetoDataInicial;
+            reserva.resDataCheckout = ObjetoDataFinal;
+            reserva.resNumAdulto = parseInt(req.body.adultos);
+            reserva.resNumCrianca = parseInt(req.body.criancas);
+
+            reserva = await reserva.editarReserva(req.params.id);
+            return res.send({ ok: true, reserva });
+        }
+        else {
+            return res.send({ ok: false, message: "Reserva não encontrada" });
+        }
+
     }
 }
 
