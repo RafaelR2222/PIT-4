@@ -1,0 +1,67 @@
+<script src="/js/Reserva/alterar.js"></script>
+
+<div>
+    <h1>Alterar Reserva</h1>
+
+    <div>
+        <div class="form-group">
+            <input id="reservaCodigo" type="hidden" value="<%= reserva.resId %>"/>
+
+            <label for="reservaNome">Primeiro Nome</label>
+            <input value="<%= reserva.resPesNome %>" class="form-control" type="text" id="reservaNome" />
+
+            <label for="email">Email</label>
+            <i class="icon icon-mail"></i>
+            <input  value="<%= reserva.resPesEmail %>" type="reservaEmail" class="form-control" id="reservaEmail" >
+
+            <label for="quartoId">Quarto</label>
+            <i class="icon icon-chevron-down"></i>
+            <select name="quartoId" id="quartoId" class="form-control" required>
+                <option value="" disabled <% if (!reserva.resQuartoId) { %>selected<% } %>>Selecione seu quarto</option>
+                <option value="1" <% if (reserva.resQuartoId == 1) { %>selected<% } %>>Suíte Básica - Externo</option>
+                <option value="2" <% if (reserva.resQuartoId == 2) { %>selected<% } %>>Suíte Básica - Interno</option>
+                <option value="3" <% if (reserva.resQuartoId == 3) { %>selected<% } %>>Suíte Standart - Externo</option>
+                <option value="4" <% if (reserva.resQuartoId == 4) { %>selected<% } %>>Suíte Standart - Interno</option>
+                <option value="5" <% if (reserva.resQuartoId == 5) { %>selected<% } %>>Suíte Deluxe - Externo</option>
+                <option value="6" <% if (reserva.resQuartoId == 6) { %>selected<% } %>>Suíte Deluxe - Interno</option>
+            </select>
+
+            <label for="dataCheckin">Data inicial</label>
+            <i class="icon icon-calendar2"></i>
+            <input  value="<%= reserva.resDataCheckin %>" type="text" class="form-control" id="dataCheckin"    >
+
+            <label for="dataCheckOut">Data final</label>
+            <i class="icon icon-calendar2"></i>
+            <input value="<%= reserva.resDataCheckout %>" type="text" class="form-control" id="dataCheckOut"   >
+
+            <label for="numAdulto">Adultos</label>
+            <i class="icon icon-chevron-down"></i>
+            <select name="numAdulto" id="numAdulto" class="form-control"  required>
+                <option value="" disabled <% if (!reserva.resNumAdulto) { %>selected<% } %>>Número de adultos</option>
+                <option value="1" <% if (reserva.resNumAdulto == 1) { %>selected<% } %>>1</option>
+                <option value="2" <% if (reserva.resNumAdulto == 2) { %>selected<% } %>>2</option>
+                <option value="3" <% if (reserva.resNumAdulto == 3) { %>selected<% } %>>3</option>
+                <option value="4" <% if (reserva.resNumAdulto == 4) { %>selected<% } %>>4</option>
+            </select>
+
+            <label for="numCrianca">Crianças</label>
+            <i class="icon icon-chevron-down"></i>
+            <select name="numCrianca" id="numCrianca" class="form-control"  required>
+                <option value="" disabled <% if (!reserva.resNumCrianca) { %>selected<% } %>>Número de crianças</option>
+                <option value="0" <% if (reserva.resNumCrianca == 0) { %>selected<% } %>>0</option>
+                <option value="1" <% if (reserva.resNumCrianca == 1) { %>selected<% } %>>1</option>
+                <option value="2" <% if (reserva.resNumCrianca == 2) { %>selected<% } %>>2</option>
+                <option value="3" <% if (reserva.resNumCrianca == 3) { %>selected<% } %>>3</option>
+                <option value="4" <% if (reserva.resNumCrianca == 4) { %>selected<% } %>>4+</option>
+            </select>
+
+
+        </div>
+        <div class="form-group">
+            <input type="button" class="btn btn-primary" id="btnAlterar" name="submit" value="Alterar"
+                onclick="editarReserva()">
+            <a class="btn btn-secondary" href="/reservas">Voltar</a>
+        </div>
+    </div>
+</div>
+</div>
