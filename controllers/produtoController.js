@@ -23,7 +23,7 @@ class ProdutoController {
     async alterarView(req, res) {
         if(req.params.id != undefined){
             const usuarioCodificado = req.cookies.usuarioAtual;
-        let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let produto = new ProdutoModel();
             produto = await produto.obterProdutoPorId(req.params.id, conexao);
             res.render('produto/alterar', {produto: produto, usuario: usuario, layout: 'layoutADM'});
