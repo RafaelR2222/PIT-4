@@ -135,14 +135,13 @@ class ReservaController {
 
     async excluirReserva(req, res) {
         let reserva = new ReservaModel();
-        reserva.resId = req.params.id;
-        await reserva.excluirReserva(req.params.id);
+        console.log(req.params.id);
+        await reserva.deletarReserva(req.params.id);
         return res.send({ ok: true, message: "Reserva excluida" });
     }
 
     async editarReserva(req, res) {
         if (req.params.id != undefined) {
-            console.log(req.body)
             let dataInicialString = req.body.dataInicial;
             let dataFinalString = req.body.dataFinal;
             var dataInicial = dataInicialString.split("/");
@@ -160,7 +159,6 @@ class ReservaController {
             reserva.resNumAdulto = parseInt(req.body.adultos);
             reserva.resNumCrianca = parseInt(req.body.criancas);
 
-            console.log(JSON.stringify(reserva))
             reserva = await reserva.editarReserva(req.params.id);
             return res.send({ ok: true, reserva });
         }

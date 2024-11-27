@@ -28,8 +28,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 criancas: resNumCrianca.value
             }
 
-            console.log(reserva)
-
             fetch(`/reservas/editar/${codigo.value}`, {
                 method: 'PUT',
                 headers: {

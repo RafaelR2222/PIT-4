@@ -1,5 +1,7 @@
 <script src="/js/Reserva/listar.js"></script>
 <script src="/js/Reserva/filtrar.js"></script>
+<script src="/js/Reserva/deletar.js"></script>
+
 <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
 <div>
@@ -60,7 +62,7 @@
                             <a href="/reservas/alterar/<%= lista[i].resId %>" class="btn btn-primary">
                                 <i class="fas fa-pen"></i>
                             </a>
-                            <button data-id="<%= lista[i].resId %>" class="btn btn-danger btnExclusao">
+                            <button data-id="<%= lista[i].resId %>" class="btn btn-danger btnExclusao" id="btnExclusao">
                                 <i class="fas fa-trash"></i>
                             </button>
                         </div>

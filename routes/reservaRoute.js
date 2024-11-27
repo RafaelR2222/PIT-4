@@ -23,7 +23,7 @@ class ReservaRoute {
         this.#router.post("/listar", ctrl.listarReservas); // obter todas as reservas ou por termo e busca
         this.#router.post("/gravar", ctrl.gravarReserva);
         this.#router.put("/editar/:id", ctrl.editarReserva);
-        this.#router.delete("/deletar", ctrl.excluirReserva);
+        this.#router.delete("/deletar/:id", ctrl.excluirReserva);
 
     }
 }
