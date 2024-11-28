@@ -139,6 +139,24 @@ async gravarCheckin(req, res) {
         return res.send({ listaCheckins });
     }
 
+    async obterCheckinPorEmail(req, res) {
+
+        let checkin = new CheckinModel();
+        // Obtendo a reserva e o usuário pelo email
+        try
+        {
+            let existeCheckIn = await checkin.obterCheckinPorEmail(req.params.email);
+            let lista = existeCheckIn;
+            console.log(lista)
+            return res.send({ checkin: lista, ok: true, msg: 'Reserva encontrada!' });
+        }
+        catch (error) 
+        {
+            return res.send({ ok: false, msg: 'Reserva não encontrada!' });
+        }
+    }
+
+
 
     // Obter detalhes de um check-in específico
     async obterCheckinParaCadastro(req, res) {

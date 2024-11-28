@@ -17,6 +17,7 @@ class checkinRoute{
         
         this.#router.get('/', ctrl.checkinView);
         this.#router.get('/listar', ctrl.obterCheckins);
+        this.#router.get('/listarCheckinPorEmail/:email', ctrl.obterCheckinPorEmail);
         this.#router.get('/listarCheckin/:email', ctrl.obterCheckinParaCadastro);
         this.#router.get('/cadastrar', ctrl.cadastrarView);
         this.#router.get('/alterar', ctrl.alterarView);

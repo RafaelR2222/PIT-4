@@ -18,6 +18,7 @@ const AlterarSenhaRoute = require('./routes/alterarSenhaRoute.js');
 const CheckInRoute = require('./routes/checkinRoute.js');
 const serviceRoute = require('./routes/serviceRoute.js');
 const Autenticacao = require('./middlewares/autenticacao.js');
+const ContratarServico = require('./routes/servicoContratadoRoute.js');
 
 const app = express();
 dotenv.config(); // Carrega as variáveis de ambiente
@@ -65,7 +66,11 @@ const alterarSenhaRota = new AlterarSenhaRoute();
 app.use('/alterarSenha', auth.verificaAlterarSenhaAprovado , alterarSenhaRota.router);
 
 const serviceRota = new serviceRoute();
-app.use('/service', serviceRota.router);
+app.use('/service', auth.verificaUsuarioFuncLogado, serviceRota.router);
+
+const contratarServicoRota = new ContratarServico();
+app.use('/servico', auth.verificaUsuarioFuncLogado, contratarServicoRota.router);
+
 
 
 // Rotas protegidas (admin e funcionários podem acessar)

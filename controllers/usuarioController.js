@@ -34,6 +34,12 @@ class UsuarioController {
         
     }
 
+    async obterIdPorEmail(req, res) {
+        let usuarioModel = new UsuarioModel();
+        let id = await usuarioModel.obterUsuarioCompletoPorEmail(req.params.email);
+        res.send({id: id.usuId});
+    }
+
     async excluir(req, res) {
         if(req.body.id != ""){
             let usuario = new UsuarioModel();
