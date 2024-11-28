@@ -1,5 +1,6 @@
 <!-- <script src="/js/jslayout2/solicitarservicos.js"></script> -->
 <!-- <script src="/js/Servicos/listar.js"></script> -->
+<script src="/js/ContratarServicos/cadastrar.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
 
@@ -60,7 +61,7 @@
                         </td>
                         <td class="actions">
                             <div>
-                                <button data-id="<%=  servicosExistentes[i].servId %>" class="btn btn-primary btnGravar"
+                                <button data-id="<%=  servicosExistentes[i].servId %>" data-value="<%= servicosExistentes[i].servVal %>" data-valueTwo="<%= servicosExistentes[i].servDesc %>" class="btn btn-primary btnGravar"
                                     style="width: 2.7rem;margin-bottom: .5rem;">
                                     <i class="fas fa-plus"></i>
                                 </button>

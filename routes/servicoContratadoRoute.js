@@ -19,7 +19,7 @@ class contratarServicoRoute {
         // this.#router.get('/cadastrar', ctrl.cadastrarView);
 
         // Rota para cadastrar um novo serviço
-        this.#router.post('/gravar', ctrl.contratarServico);
+        this.#router.post('/gravar/:id', ctrl.contratarServico);
 
         // // Rota para obter todos os serviços
         // this.#router.get('/obter', ctrl.obterServices);

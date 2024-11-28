@@ -34,17 +34,24 @@ class ContratarServicoController {
 
     // Realiza o cadastro de um novo serviço
     async contratarServico(req, res) {
-        let servico = new ServicosContratadosModel();
+        let servicoContratado = new ServicosContratadosModel();
         let id = req.params.id;
+        servicoContratado.idCliente = parseInt(req.body.client_id);
+        servicoContratado.emailCliente = req.body.email;
+        servicoContratado.valTotalService = parseFloat(req.body.serv_val);
+        servicoContratado.nomeServico = req.body.serv_desc;
+
+        console.log(req.body)
 
         try {
-            let resultado = await servico.gravarServicoContratado(id);
+            let resultado = await servicoContratado.gravarServicoContratado(id);
             if (resultado) {
                 return res.send({ ok: true, message: "Serviço registrado com sucesso" });
             } else {
                 return res.send({ ok: false, message: "Falha ao registrar o serviço" });
             }
         } catch (error) {
+            console.error("Erro ao cadastrar o serviço", error);
             return res.send({ ok: false, message: "Erro ao cadastrar o serviço", error });
         }
     }

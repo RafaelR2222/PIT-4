@@ -56,9 +56,9 @@ class ServicoContratadoModel {
 
     // Method to save a contracted service to the database
     async gravarServicoContratado(id) {
-        let sql = `INSERT INTO tb_servicos_contratados (id_service, id_cliente, qtd_service, val_total_service) 
-                    VALUES (?, ?, ?, ?)`;
-        let valores = [id, this.#idCliente, this.#qtdService, this.#valTotalService];
+        let sql = `INSERT INTO tb_servicos_contratados (id_service, id_cliente, qtd_service, email_cliente, val_total_service, nome_service) 
+                    VALUES (?, ?, ?, ?, ?, ?)`;
+        let valores = [id, this.#idCliente, 1, this.#emailCliente, this.#valTotalService, this.#nomeServico];
         let resultado = await conexao.ExecutaComandoNonQuery(sql, valores);
         return resultado;
     }
