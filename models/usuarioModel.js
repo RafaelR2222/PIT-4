@@ -251,13 +251,19 @@ class UsuarioModel {
     }
 
     async deletarUsuario(id) {
-        let sql = "delete from tb_usuarioh where usu_id = ?";
-        let valores = [id];
-
-        let result = await conexao.ExecutaComandoNonQuery(sql, valores);
-
-        return result;
+        try {
+            let sql = "delete from tb_usuarioh where usu_id = ?";
+            let valores = [id];
+    
+            let result = await conexao.ExecutaComandoNonQuery(sql, valores);
+    
+            return result;
+        } catch (erro) {
+            console.error("Erro ao deletar o usuário:", erro);
+            return false;
+        }
     }
+    
 
     async autenticarUsuario(email, senha) {
         let sql = "select * from tb_usuarioh where usu_email = ? and usu_senha = ? and usu_ativo = 'S'";

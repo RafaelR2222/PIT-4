@@ -230,8 +230,7 @@ class CheckinModel {
 
         return checkins;
     }
-
-
+   
     async obterCheckinPorId(cinId) {
         let sql = "SELECT * FROM tb_checkin WHERE cin_id = ?";
         let valores = [cinId];

@@ -16,6 +16,7 @@ const CompraRoute = require('./routes/compraRoute.js');
 const RedefinirSenhaRoute = require('./routes/redefinirSenhaRoute.js');
 const AlterarSenhaRoute = require('./routes/alterarSenhaRoute.js');
 const CheckInRoute = require('./routes/checkinRoute.js');
+const CheckOutRoute = require('./routes/checkOutRoute.js');
 const serviceRoute = require('./routes/serviceRoute.js');
 const Autenticacao = require('./middlewares/autenticacao.js');
 const ContratarServico = require('./routes/servicoContratadoRoute.js');
@@ -89,6 +90,9 @@ app.use('/usuarios', auth.verificaUsuarioADMLogado, usuarioRota.router);
 
 const checkinRota = new CheckInRoute();
 app.use('/checkin',auth.verificaUsuarioFuncLogado, checkinRota.router);
+
+const checkoutRota = new CheckOutRoute();
+app.use('/checkout',auth.verificaUsuarioFuncLogado, checkoutRota.router);
 
 app.listen(5000, function () {
     console.log("Servidor web iniciado no link: http://localhost:5000");

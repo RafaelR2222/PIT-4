@@ -1,0 +1,247 @@
+<script src="/js/checkout/cadastrar.js"></script>
+<style>
+    /* Estilos gerais para o documento */
+    .nota {
+
+        display: block;
+        border: 2px solid #000;
+        padding: 30px;
+        width: 90%;
+        font-family: 'Times New Roman', serif;
+        margin-top: 20px;
+        background-color: #f9f9f9;
+    }
+
+    .nota h2 {
+        text-align: center;
+        font-size: 24px;
+        font-weight: bold;
+        margin-bottom: 20px;
+    }
+
+    .nota p {
+        font-size: 16px;
+        line-height: 1.6;
+    }
+
+    .nota .campo {
+        margin-bottom: 15px;
+    }
+
+    .nota .campo label {
+        font-weight: bold;
+        display: block;
+    }
+
+    .nota .valor {
+        font-style: italic;
+        font-weight: normal;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-bottom: 20px;
+    }
+
+    table, th, td {
+        border: 1px solid black;
+    }
+
+    th, td {
+        padding: 10px;
+        text-align: left;
+    }
+
+    tr,th {
+        background-color:#356f7d;
+    }
+    .footer {
+        margin-top: 20px;
+        text-align: center;
+        font-size: 14px;
+        border-top: 1px solid #000;
+        padding-top: 10px;
+    }
+
+    .buttons {
+        display: block;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    .btn-print {
+        background-color: #007bff;
+        color: white;
+        padding: 10px;
+        border: none;
+        cursor: pointer;
+        font-size: 16px;
+        border-radius: 5px;
+    }
+
+    .btn-print:hover {
+        background-color: #0056b3;
+    }
+
+    /* Para a aparência da declaração como documento oficial */
+    .declaracao-texto {
+        color: #000;
+        margin-bottom: 15px;
+        font-size: 16px;
+        line-height: 1.8;
+        text-align: center;
+    }
+</style>
+<div>
+    <h1 id="tituloCheckout">Registrar ou editar Check-out:</h1>
+
+    <div>
+        <div class="form-group" id="formularios">
+            <label for="coutId" style="display: none;">Código do check-out:</label>
+            <input class="form-control" type="text" id="coutId" style="display: none;" readonly/>
+
+            <label for="cinNomePessoa">Código do check-in:</label>
+            <input class="form-control" type="text" id="cinId" readonly/>
+            
+            <label for="cinNomePessoa">Nome do hóspede:</label>
+            <input class="form-control" type="text" id="cinNomePessoa" />
+
+            <label for="cinEmail">Email do hóspede:</label>
+            <input class="form-control" type="email" id="cinEmail" maxlength="50" />
+
+            <label for="cinQuarto">Quarto hospedado:</label>
+            <input class="form-control" type="text" id="cinQuarto" readonly />
+
+            <label for="cinQuartoValor">Valor do Quarto hospedado:</label>
+            <input class="form-control" type="number" id="cinQuartoValor" step="0.01" />
+
+            <label for="cinNomeQuarto">Tipo do Quarto hospedado:</label>
+            <input class="form-control" type="text" id="cinNomeQuarto" />
+
+            <label for="cinData">Data de Check-in:</label>
+            <input class="form-control" type="text" id="cinData" />
+
+            <label for="cinCoutData">Data de Check-out:</label>
+            <input class="form-control" type="date" id="cinCoutData" />
+
+            <label for="cinCinDataEsperada">Data de Check-in Esperada:</label>
+            <input class="form-control" type="text" id="cinCinDataEsperada" />
+
+            <label for="cinCoutDataEsperada">Data de Check-out Esperada:</label>
+            <input class="form-control" type="text" id="cinCoutDataEsperada" />
+
+            <label for="cinDataReserva">Data da Reserva:</label>
+            <input class="form-control" type="text" id="cinDataReserva" />
+
+            <label for="cinIdReserva">ID da Reserva:</label>
+            <input class="form-control" type="text" id="cinIdReserva" readonly />
+
+            <label for="cinNumAdultos">Número de Adultos:</label>
+            <input class="form-control" type="number" id="cinNumAdultos" />
+
+            <label for="cinNumCriancas">Número de Crianças:</label>
+            <input class="form-control" type="number" id="cinNumCriancas" />
+
+            <label for="cinIdServContratados">Código dos Serviços Contratados:</label>
+            <input class="form-control" type="text" id="cinIdServContratados" readonly />
+
+            <label for="cinNomeServContratados">Nome dos Serviços Contratados:</label>
+            <input class="form-control" type="text" id="cinNomeServContratados" />
+
+            <label for="cinValorServs">Valor dos Serviços:</label>
+            <input class="form-control" type="text" id="cinValorServs" />
+        </div>
+
+        <div style="display: flex;" id="todosBotoes"> 
+            <button id="btnRegistrar" class="btn btn-primary">Registrar</button>
+            <button id="btnAlterar" class="btn btn-primary" style="margin-left: .5rem; background-color: #ffd817; color: black; width:5.5rem" disabled>Alterar</button>
+            <button id="btnExcluir" class="btn btn-primary" style="margin-left: .5rem; background-color: #cc2901; color: rgb(255, 255, 255)" disabled>Excluir</button>
+            <button id="btnGerarNota" class="btn btn-primary" style="margin-left: .5rem; background-color: #000000; color: rgb(255, 255, 255)" disabled>Gerar Declaração</button>
+            <div style="margin-left: .1rem;">
+                <a class="btn btn-primary" href="/checkin" style=" margin-left: .5rem; background-color: gray; width:5.5rem">Voltar</a>
+            </div>
+        </div>
+        <p style="color: rgb(219 40 40); display:none;" id="mensagemAviso"> Este check-out ja está cadastrado, voce poderá apenas alterar ou exclui-lo!</p>
+        <p style="color: rgb(219 40 40); display:block;" id="mensagemAviso2"> Primeiro você precisa registrar o check-out para poder alterar ou excluir!</p>
+    </div>
+
+    <div class="nota" id="notaComprovante" style="margin-left: 4rem; display: none;">
+        <h2 spellcheck="margin-left: 4rem">Declaração de Check-out</h2>
+
+        <p class="declaracao-texto" >Certificamos que o hóspede abaixo relacionado efetuou o check-out no nosso estabelecimento. Abaixo estão os detalhes relacionados à sua estadia:</p>
+
+        <table style="width: 90%; margin-left: 5rem;">
+            <thead>
+                <tr>
+                    <th colspan="2" style="text-align:center;">Detalhes do Check-out</th>
+                </tr>
+            </thead>
+            <tbody style="margin-left: 1rem">
+                <tr>
+                    <td><strong>Nome do hóspede:</strong></td>
+                    <td id="nomeHospede" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Email do hóspede:</strong></td>
+                    <td id="emailHospede" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Quarto Hospedado:</strong></td>
+                    <td id="quartoHospedado" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Valor do Quarto:</strong></td>
+                    <td id="valorQuarto" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Data de Check-in:</strong></td>
+                    <td id="dataCheckin" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Data de Check-out:</strong></td>
+                    <td id="dataCheckout" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Número de Adultos:</strong></td>
+                    <td id="numAdultos" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Número de Crianças:</strong></td>
+                    <td id="numCriancas" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Serviços Contratados:</strong></td>
+                    <td id="servicosContratados" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Valor dos Serviços:</strong></td>
+                    <td id="valorServicos" class="valor"></td>
+                </tr>
+                <tr>
+                    <td><strong>Valor Total:</strong></td>
+                    <td id="valorTotal" class="valor"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p class="declaracao-texto">A presente declaração é emitida para fins de comprovação do check-out realizado, com os valores acima descritos. Agradecemos pela estadia em nosso estabelecimento e esperamos poder recebê-lo novamente em breve.</p>
+
+        <div class="footer" style="display: block;">
+            <p>Emitido por: Rainha Victória Cruzeiros | Data de Emissão: <span id="dataEmissao"></span></p>
+            
+        </div>
+
+        <!-- Botão para imprimir -->
+        <div class="buttons">
+            <button class="btn btn-primary" id="btnImprimir" onclick="">Imprimir Declaração</button>
+            
+        </div>
+        <div style="display: flex; justify-content: center; align-items: center;">
+            <img width="300px" src="/assets/images/rainhavitoriasfundo.png" alt="Logo Rainha Victoria">
+        </div>
+        
+    </div>
+    </div>
+
+</div>
