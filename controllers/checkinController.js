@@ -109,21 +109,31 @@ async gravarCheckin(req, res) {
 
     // Se cinId estiver presente no corpo da requisição, chama a função de editar
     if (req.body.cinId) {
+        try {
         let resultado = await checkinModel.editarCheckin(dadosCheckin);
         // Se a edição for bem-sucedida, retorna a mensagem
-        if (resultado) {
-            return res.send({ ok: true, msg: "Check-in alterado com sucesso" });
-        } else {
-            return res.send({ ok: false, msg: "Falha ao alterar o check-in" });
+            if (resultado) {
+                return res.send({ ok: true, msg: "Check-in alterado com sucesso" });
+            } else {
+                return res.send({ ok: false, msg: "Falha ao alterar o check-in" });
+            }
+        } catch (error) {
+            console.error("Erro ao alterar o check-in:", error);
+            return res.send({ ok: false, msg: "O check-in não pode ser alterado pois está vinculado a um check-out" });
         }
     } else {
-        // Caso contrário, chama a função para gravar um novo check-in
-        let resultado = await checkinModel.gravarCheckin(dadosCheckin);
-        // Se o check-in for gravado com sucesso, retorna a mensagem
-        if (resultado) {
-            return res.send({ ok: true, msg: "Check-in realizado com sucesso" });
-        } else {
-            return res.send({ ok: false, msg: "Falha ao realizar o check-in" });
+        try {
+            // Caso contrário, chama a função para gravar um novo check-in
+            let resultado = await checkinModel.gravarCheckin(dadosCheckin);
+            // Se o check-in for gravado com sucesso, retorna a mensagem
+            if (resultado) {
+                return res.send({ ok: true, msg: "Check-in realizado com sucesso" });
+            } else {
+                return res.send({ ok: false, msg: "Falha ao realizar o check-in" });
+            }
+        } catch (error) {
+            console.error("Erro ao alterar o check-in:", error);
+            return res.send({ ok: false, msg: "Não foi possivel realizar o registro do check-in" });
         }
     }
 }

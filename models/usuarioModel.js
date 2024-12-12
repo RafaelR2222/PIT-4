@@ -262,6 +262,7 @@ class UsuarioModel {
             return false;
         }
     }
+    
 
     async autenticarUsuario(email, senha) {
         let sql = "select * from tb_usuarioh where usu_email = ? and usu_senha = ? and usu_ativo = 'S'";

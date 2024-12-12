@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         alert(resposta2.message);
                         window.location.reload();
                     } else {
-                        alert(JSON.stringify(resposta2));
+                        alert(resposta2.message);
                     }
                 });
 

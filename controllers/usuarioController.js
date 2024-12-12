@@ -28,7 +28,7 @@ class UsuarioController {
             let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let perfil = new PerfilModel();
             let listaPerfil = await perfil.listarPerfil();
-            res.render('usuario/alterar', {usuario: usuario, user: user, listaPerfil: listaPerfil, layout: 'layoutADM'});
+            res.render('usuario/alterar', {user: user, usuario: usuario , listaPerfil: listaPerfil, layout: 'layoutADM'});
         }
         else {
             res.redirect("/");
@@ -39,7 +39,12 @@ class UsuarioController {
     async obterIdPorEmail(req, res) {
         let usuarioModel = new UsuarioModel();
         let id = await usuarioModel.obterUsuarioCompletoPorEmail(req.params.email);
-        res.send({id: id.usuId});
+        if(id){
+            res.send({id: id.usuId, ok: true});
+        }else{
+            res.send({id: false, ok: false});
+        }
+
     }
 
     async excluir(req, res) {

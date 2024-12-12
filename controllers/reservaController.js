@@ -84,7 +84,7 @@ class ReservaController {
         }
         reserva.resQuartoId = String(numQuarto.qrIdQuarto);
 
-        try {
+       
             let gravar = await reserva.gravarReserva(reserva);
             if (gravar) {
                 await quartos.editarQuartoReserva(reserva.resQuartoId);
@@ -111,13 +111,7 @@ class ReservaController {
                 return res.send({ ok: false, message: "Reserva falha" });
             }
             return res.send({ ok: true, message: "Reserva efetuada com sucesso" });
-        }
-
-        catch (e) {
-            alert(e.message)
-            console.log("erro: ", e)
-            return res.send({ ok: false, message: "Reserva falha", error: e });
-        }
+       
     }
 
     async obterReserva(req, res) {
