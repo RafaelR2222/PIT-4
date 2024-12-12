@@ -23,10 +23,12 @@ class UsuarioController {
     async alterarView(req, res) {
         if(req.params.id != undefined) {
             let usuarioModel = new UsuarioModel();
-            usuario = await usuarioModel.obterUsuario(req.params.id)
+            let user = await usuarioModel.obterUsuario(req.params.id)
+            const usuarioCodificado = req.cookies.usuarioAtual;
+            let usuario = usuarioCodificado ? decodeURIComponent(usuarioCodificado) : null;
             let perfil = new PerfilModel();
             let listaPerfil = await perfil.listarPerfil();
-            res.render('usuario/alterar', {usuario: usuario, listaPerfil: listaPerfil, layout: 'layoutADM'});
+            res.render('usuario/alterar', {usuario: usuario, user: user, listaPerfil: listaPerfil, layout: 'layoutADM'});
         }
         else {
             res.redirect("/");
@@ -47,7 +49,7 @@ class UsuarioController {
             if(result == true)
                 res.send({ok: true, msg: "Usuário excluído!"});
             else
-                res.send({ok: false, msg: "Erro ao excluir usuário!"});
+                res.send({ok: false, msg: "Erro ao excluir usuário, não é possível excluir um usuario vinculado a uma reserva!"});
         }
         else{
             res.send({ok: false, msg: "Dados inválidos!"});

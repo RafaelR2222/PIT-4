@@ -26,7 +26,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         window.location.reload();
                     }
                     else{
-                        alert(r.msg);
+                        alert(r.message);
                     }
                 })
             }

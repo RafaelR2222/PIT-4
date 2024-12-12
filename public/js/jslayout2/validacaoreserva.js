@@ -169,7 +169,7 @@ async function verificabotaor() {
         location.reload(true);
       } else {
         console.log(JSON.stringify(r))
-        alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS!")
+        alert(r.message)
         location.reload(true);
       }
     })

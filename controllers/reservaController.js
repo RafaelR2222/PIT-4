@@ -88,30 +88,34 @@ class ReservaController {
             let gravar = await reserva.gravarReserva(reserva);
             if (gravar) {
                 await quartos.editarQuartoReserva(reserva.resQuartoId);
-                let transporter = nodemailer.createTransport({
+               /* let transporter = nodemailer.createTransport({
                     service: 'gmail',
                     auth: {
                         user: process.env.EMAIL,
                         pass: process.env.SENHA
                     }
                 });
-
+               
                 let mailOptions = {
                     from: process.env.EMAIL,
                     to: reserva.resPesEmail,
                     subject: 'Reserva Confirmada',
                     text: `Obrigado por reservar conosco. O ID do seu quarto é: ${reserva.resQuartoId}. Te esperamos no dia ${reserva.resDataCheckin}!`
                 };
-
+                 */
+                return res.send({ ok: true, message: "Reserva efetuada com sucesso" });
                 // Send the email
-                await transporter.sendMail(mailOptions);
+                //await transporter.sendMail(mailOptions);
             }
             else {
                 return res.send({ ok: false, message: "Reserva falha" });
             }
             return res.send({ ok: true, message: "Reserva efetuada com sucesso" });
         }
+
         catch (e) {
+            alert(e.message)
+            console.log("erro: ", e)
             return res.send({ ok: false, message: "Reserva falha", error: e });
         }
     }
@@ -136,8 +140,11 @@ class ReservaController {
     async excluirReserva(req, res) {
         let reserva = new ReservaModel();
         console.log(req.params.id);
-        await reserva.deletarReserva(req.params.id);
-        return res.send({ ok: true, message: "Reserva excluida" });
+        let reservaExluida = await reserva.deletarReserva(req.params.id);
+        if(reservaExluida){
+            return res.send({ ok: true, message: "Reserva excluida" });
+        }   
+        return res.send({ ok: false, message: "Não é possivel excluir uma reserva vinculada a um check-in" });
     }
 
     async editarReserva(req, res) {
