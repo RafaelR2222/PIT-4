@@ -169,12 +169,46 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="helpModalLabel">Ajuda</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-        </button>
       </div>
       <div class="modal-body">
-        Aqui você pode adicionar informações de ajuda ou instruções para os usuários.
+        <p><strong>Produtos</strong></p>
+        <ul>
+          <li>Para cadastrar produto, clique em "Cadastrar produto". Digite o código do produto, a descrição, a quantidade e o preço unitário. Então clique em "Gravar".</li>
+        </ul>
+        <p><strong>Compras</strong></p>
+        <ul>
+          <li>Para cadastrar compra, clique em "Cadastrar compra". Informe o código da compra (número da nota), o CNPJ do fornecedor, a data da compra e o Valor Total da compra (deve ser igual a soma do valor total do produto). Selecione o produto desejado, insira a quantidade e o valor PAGO unitário, e então, clique em "Adicionar". Caso deseje adicionar outro produto realize o mesmo processo. Finalizado, clique em "Gravar".</li>
+          <li>Para buscar um produto, escolha o Filtro acima: "Código da compra" ou "Nome do Fornecedor", digite em "Digite aqui" e clique em "Pesquisar", caso deseje apagar o filtro, clique em "Limpar Filtro".</li>
+          <li>Para visualizar os dados da nota, clique no Olho referente à compra realizada.</li>
+        </ul>
+        <p><strong>Reservas</strong></p>
+        <ul>
+          <li>Para buscar uma reserva, escolha o Filtro acima: "Número do quarto" ou "Nome do Hóspede", digite em "Digite aqui" e clique em "Pesquisar", caso deseje apagar o filtro, clique em "Trazer todos".</li>
+          <li>O botão "Cadastrar Reservas" foi criado para facilitar para o funcionário, o cadastro de um hóspede que for pedir a realização de reserva presencialmente. Apenas redireciona para a tela de Cadastro de Reservas.</li>
+        </ul>
+        <p><strong>Fornecedores</strong></p>
+        <ul>
+          <li>Para cadastrar um fornecedor, clique em "Cadastrar fornecedores". Digite o nome do fornecedor, o CNPJ, o email, o telefone, o endereço e o CEP. Então clique em "Gravar".</li>
+        </ul>
+        <p><strong>Usuários - Funcionalidade restrita</strong></p>
+        <ul>
+          <li>Para cadastrar usuários, clique em "Cadastrar usuário". Digite o nome da pessoa, o email, selecione o perfil do usuário e então digite a sua senha. O botão Ativo é utilizado para o Administrador definir se o usuário está ativo ou não.</li>
+        </ul>
+        <p><strong>Contratar Serviços (Usuários)</strong></p>
+        <ul>
+          <li>Para adicionar um serviço para o usuário, clique em "+" referente ao usuário desejado, e então clique em "+" no serviço desejado.</li>
+          <li>A listagem dos serviços contratados pelos usuários está abaixo.</li>
+        </ul>
+        <p><strong>Checkin</strong></p>
+        <ul>
+          <li>Para cadastrar um checkin, clique em "Cadastrar Check-in", para tanto, busque o email do cliente, caso o check-in já foi realizado, aparecerá um alerta. Caso contrário, aparecerão os dados da reserva. Deve-se incluir obrigatoriamente o dado "Data atual" e "Valor Total". Clique em "Gravar".</li>
+        </ul>
+        <p><strong>GERAL</strong></p>
+        <ul>
+          <li>Para editar o serviço referente, clique no lápis referente ao dado desejado e altere.</li>
+          <li>Para excluir o dado referente, clique na lixeira.</li>
+          <li>Para Gerar Relatórios de cada funcionalidade, entre na funcionalidade desejada e clique em "Exportar para PDF" ou "Exportar para Excel".</li>
+        </ul>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" id="fecharBt" data-target="#helpModal">Fechar</button>
