@@ -207,14 +207,15 @@ class CheckinModel {
                 // Formatando a data para incluir apenas o dia, mês e ano
                 checkin.cinData = new Date(row["cin_data"]).toLocaleDateString('pt-BR'); 
             
-                let dataCheckOut = new Date(row["cin_cout_data"]).toLocaleDateString('pt-BR');
-                if (dataCheckOut === 'Invalid Date' || dataCheckOut == undefined ) {
-                    checkin.cinCoutData = "Não existe nenhum check-out até o momento.";
-                } 
+                let dataCheckOut = row["cin_cout_data"]
+                if (dataCheckOut === 'Invalid Date' || dataCheckOut == undefined || dataCheckOut == null ) {
+                    checkin.cinCoutData = "";
+                } else {
+                    checkin.cinCoutData = new Date(dataCheckOut).toLocaleDateString('pt-BR');
+                }
                 checkin.cinCinDataEsperada = new Date(row["cin_cinData_esperada"]).toLocaleDateString('pt-BR');
                 checkin.cinCoutDataEsperada = row["cin_coutData_esperada"]
                 checkin.cinDataReserva = new Date(row["cin_dataReserva"]).toLocaleDateString('pt-BR');
-                
                 checkin.cinIdReserva = row["cin_id_reserva"];
                 checkin.cinNumAdultos = row["cin_num_adultos"];
                 checkin.cinNumCriancas = row["cin_num_criancas"];

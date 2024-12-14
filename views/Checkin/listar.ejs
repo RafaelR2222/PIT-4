@@ -35,22 +35,22 @@
         <tbody>
             <% for(let i=0; i<lista.length; i++) { %>
                 <tr>
-                    <td><%= lista[i].cinId %></td>
-                    <td><%= lista[i].cinNomePessoa %></td>
-                    <td><%= lista[i].cinEmail %></td>
-                    <td><%= lista[i].cinQuartoId %></td>
-                    <td><%= lista[i].cinNomeQuarto %></td>
-                    <td><%= lista[i].cinData %></td>
-                    <td><%= lista[i].cinCoutData %></td>
-                    <td><%= lista[i].cinCinDataEsperada %></td>
-                    <td><%= lista[i].cinCoutDataEsperada %></td>
-                    <td><%= lista[i].cinDataReserva %></td>
-                    <td><%= lista[i].cinIdReserva %></td>
-                    <td><%= lista[i].cinNumAdultos %></td>
-                    <td><%= lista[i].cinNumCriancas %></td>
-                    <td><%= lista[i].cinIdServContratados %></td>
-                    <td><%= lista[i].cinNomeServContratados %></td>
-                    <td><%= lista[i].cinValorServs %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinId %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomePessoa %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinEmail %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinQuartoId %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomeQuarto %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinData %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCoutData ? lista[i].cinCoutData : "Checkout ainda não foi realizado" %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCinDataEsperada %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCoutDataEsperada %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinDataReserva %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinIdReserva %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNumAdultos %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNumCriancas %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinIdServContratados %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomeServContratados %></td>
+                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinValorServs %></td>
 
                     <td class="actions">
                         <div>
