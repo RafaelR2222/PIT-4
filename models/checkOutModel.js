@@ -21,11 +21,12 @@ class CheckoutModel {
       #coIdServContratados;
       #coNomeServContratados;
       #coValorServs;
+      #coValorTotal;
   
       constructor(coId, coIdCheckin, coIdReserva, coNomePessoa, coEmail, coQuarto, 
                   coQuartoValor, coNomeQuarto, coCinData, coCinDataEsperada, coCoutDataReal, 
                   coCoutDataEsperada, coDataReserva, coNumAdultos, coNumCriancas, coIdServContratados, 
-                  coNomeServContratados, coValorServs) {
+                  coNomeServContratados, coValorServs,coValorTotal) {
           this.coId = coId;
           this.coIdCheckin = coIdCheckin;
           this.coIdReserva = coIdReserva;
@@ -44,6 +45,7 @@ class CheckoutModel {
           this.coIdServContratados = coIdServContratados;
           this.coNomeServContratados = coNomeServContratados;
           this.coValorServs = coValorServs;
+          this.coValorTotal = coValorTotal;
       }
   
       toJSON() {
@@ -66,6 +68,7 @@ class CheckoutModel {
               co_id_servContratados: this.coIdServContratados,
               co_nome_servContratados: this.coNomeServContratados,
               co_valor_servs: this.coValorServs,
+              co_valor_total: this.coValorTotal
           };
       }
 
@@ -124,15 +127,18 @@ class CheckoutModel {
     get coValorServs() { return this.#coValorServs; }
     set coValorServs(value) { this.#coValorServs = value; }
 
+    get coValorTotal() { return this.#coValorTotal; }
+    set coValorTotal(value) { this.#coValorTotal = value; }
+
 
     async gravarCheckout(dados) {
         // Definindo a consulta SQL de inserção de dados com a nova sequência de campos
         let sql = `INSERT INTO tb_checkout
         (co_id, co_id_checkin, co_id_reserva, co_nome_pessoa, co_email, co_quarto, co_quarto_valor, 
         co_nome_quarto, co_cin_data, co_cin_data_esperada, co_cout_data_real, co_cout_data_esperada, 
-        co_dataReserva, co_num_adultos, co_num_criancas, co_id_servContratados, co_nome_servContratados, 
-        co_valor_servs)
-        VALUES (0,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
+        co_dataReserva, co_num_adultos, co_num_criancas, co_id_servContratados, co_nome_servContratados, co_valor_servs, co_valor_total)
+        VALUES
+        (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`;
     
         let valores = dados;
             // Executando o comando SQL para inserir o checkout
@@ -171,7 +177,8 @@ class CheckoutModel {
                     co_num_criancas = ?, 
                     co_id_servContratados = ?, 
                     co_nome_servContratados = ?, 
-                    co_valor_servs = ?
+                    co_valor_servs = ?,
+                    co_valor_total = ?
                 WHERE co_id = ?`;
     
         let valores = lista;
@@ -217,40 +224,92 @@ class CheckoutModel {
     }
     
     async obterCheckoutPorId(cinId) {
-        let sql = `SELECT * FROM tb_checkout WHERE co_id_checkin = ?`;
-        let valores = [cinId];
-        
-        let rows = await conexao.ExecutaComando(sql, valores);
-        
+        // Fazendo a consulta no banco de dados
+        let sql = `SELECT * FROM tb_checkout where co_id_checkin = ${cinId}`;  // Filtrando diretamente no SQL para melhorar a performance
+
+        let rows = await conexao.ExecutaComando(sql);  // Executando a consulta
+    
         if (rows.length > 0) {
-            // Convertendo o resultado para um objeto Checkout
-            let row = rows[0];
-            let checkout = new CheckoutModel(
-                row["co_id"],
-                row["co_id_checkin"],
-                row["co_id_reserva"],
-                row["co_nome_pessoa"],
-                row["co_email"],
-                row["co_quarto"],
-                row["co_quarto_valor"],
-                row["co_nome_quarto"],
-                row["co_cin_data"],
-                row["co_cin_data_esperada"],
-                row["co_cout_data_real"],
-                row["co_cout_data_esperada"],
-                row["co_dataReserva"],
-                row["co_num_adultos"],
-                row["co_num_criancas"],
-                row["co_id_servContratados"],
-                row["co_nome_servContratados"],
-                row["co_valor_servs"]                  
-            );
-            return checkout;
-        } else {
+                // Encontrando o checkout que corresponde ao cinId
+                let row = rows[0];  // Já sabemos que queremos o primeiro (e único) resultado baseado no filtro
+               
+                    
+                    let checkout = new CheckoutModel(
+                        row["co_id"],                     // co_id
+                        row["co_id_checkin"],              // co_id_checkin
+                        row["co_id_reserva"],              // co_id_reserva
+                        row["co_nome_pessoa"],             // co_nome_pessoa
+                        row["co_email"],                   // co_email
+                        row["co_quarto"],                  // co_quarto
+                        row["co_quarto_valor"],            // co_quarto_valor
+                        row["co_nome_quarto"],             // co_nome_quarto
+                        row["co_cin_data"],                // co_cin_data
+                        row["co_cin_data_esperada"],       // co_cin_data_esperada
+                        row["co_cout_data_real"],          // co_cout_data_real
+                        row["co_cout_data_esperada"],      // co_cout_data_esperada
+                        row["co_dataReserva"],             // co_dataReserva
+                        row["co_num_adultos"],             // co_num_adultos
+                        row["co_num_criancas"],            // co_num_criancas
+                        row["co_id_servContratados"],      // co_id_servContratados
+                        row["co_nome_servContratados"],    // co_nome_servContratados
+                        row["co_valor_servs"],              // co_valor_servs
+                        row["co_valor_total"]
+                    );
+                    return checkout;
+                
+               
+           
+            return false;
+        }else {
+            // Caso não encontre nenhum checkout com o cinId
             return false;
         }
     }
+   /*async obterCheckoutPorId(cinId) {
+        // Fazendo a consulta no banco de dados
+        let sql = `SELECT * FROM tb_checkout`;  // Filtrando diretamente no SQL para melhorar a performance
+
+        let rows = await conexao.ExecutaComando(sql);  // Executando a consulta
     
+        if (rows.length > 0) {
+                // Encontrando o checkout que corresponde ao cinId
+                let row = rows[0];  // Já sabemos que queremos o primeiro (e único) resultado baseado no filtro
+                for(let i; i>rows.length; i++ ){
+                    // Criando o modelo de Checkout com os dados da linha (row)
+                    if(parseInt(row["co_id_checkin"][i]) == parseInt(cinId) ) {
+                    let checkout = new CheckoutModel(
+                        row["co_id"][i],                     // co_id
+                        row["co_id_checkin"][i],              // co_id_checkin
+                        row["co_id_reserva"][i],              // co_id_reserva
+                        row["co_nome_pessoa"][i],             // co_nome_pessoa
+                        row["co_email"][i],                   // co_email
+                        row["co_quarto"][i],                  // co_quarto
+                        row["co_quarto_valor"][i],            // co_quarto_valor
+                        row["co_nome_quarto"][i],             // co_nome_quarto
+                        row["co_cin_data"][i],                // co_cin_data
+                        row["co_cin_data_esperada"][i],       // co_cin_data_esperada
+                        row["co_cout_data_real"][i],          // co_cout_data_real
+                        row["co_cout_data_esperada"][i],      // co_cout_data_esperada
+                        row["co_dataReserva"][i],             // co_dataReserva
+                        row["co_num_adultos"][i],             // co_num_adultos
+                        row["co_num_criancas"][i],            // co_num_criancas
+                        row["co_id_servContratados"][i],      // co_id_servContratados
+                        row["co_nome_servContratados"][i],    // co_nome_servContratados
+                        row["co_valor_servs"][i],              // co_valor_servs
+                        row["co_valor_total"][i]
+                    );
+                    return checkout;
+                }
+               
+            } 
+            return false;
+        }else {
+            // Caso não encontre nenhum checkout com o cinId
+            return false;
+        }
+    }
+*/
+
     async obterIdCheckout(cinId) {
         
         let sql = "SELECT co_id FROM tb_checkout WHERE co_id_checkin = ?";
@@ -288,6 +347,7 @@ class CheckoutModel {
                 checkout.coIdServContratados = row["co_id_servContratados"];
                 checkout.coNomeServContratados = row["co_nome_servContratados"];
                 checkout.coValorServs = row["co_valor_servs"];
+                checkout.coValorTotal = row["co_valor_total"];
                 checkouts.push(checkout);
 
 

@@ -37,7 +37,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         return true;
     }
-
+        function formatarDataParaISO(data) {
+            return data.split('T')[0]; // Remove a parte da hora e fuso horário
+        }
+        
         function carregarForms(lista) {
             // Você pode salvar os dados em localStorage para utilizá-los na página de destino
             window.location.href = '/checkin/alterar';
@@ -115,6 +118,23 @@ document.addEventListener("DOMContentLoaded", function() {
            
         }
 
+        function formatarDataCin(dataString) {
+            const data = new Date(dataString);
+        
+            const ano = data.getFullYear();
+            const mes = ("0" + (data.getMonth() + 1)).slice(-2); // Meses começam de 0
+            const dia = ("0" + data.getDate()).slice(-2);
+        
+            // Retorna a data no formato yyyy-mm-dd
+            return `${ano}-${mes}-${dia}`;
+        }
+        
+
+        function formatarData(data) {
+            const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+            return new Date(data).toLocaleDateString('pt-BR', options);
+        }
+
         function printaComprovante(){
 
             document.getElementById("todosBotoes").style.display = 'none'
@@ -149,38 +169,50 @@ document.addEventListener("DOMContentLoaded", function() {
         }
         function montarForms(lista, coutId) {
 
-            let btnRegistrar = document.getElementById("btnRegistrar");
-            let btnAlterar = document.getElementById("btnAlterar");
-            let btnExcluir = document.getElementById("btnExcluir");
-            let btnGerarNota = document.getElementById("btnGerarNota");
-
-
-            var dtCin = lista.cinData ? lista.cinData : lista.co_cin_data 
-            var dtCout = lista.cinCoutData ? lista.cinCoutData : lista.co_cout_data_real
-            var dataCheckin = new Date(dtCin);
-            var dataCheckout = new Date(dtCout);
-            var valorServ = lista.cinValorServs ? lista.cinValorServs : lista.co_valor_servs;
-            var quartoValor = lista.cinQuartoValor ? lista.cinQuartoValor : lista.co_quarto_valor;
-
-            // Calcular a diferença em milissegundos
-            var diffTime = dataCheckout - dataCheckin; 
-
-            // Converter a diferença para dias e arredondar
-            var diffDays = Math.round(diffTime / (1000 * 3600 * 24));  // Arredondar para número inteiro
-
-            console.log(diffDays);  // Número de dias calculado
-
-            // Calcular o valor total da diária
-            var valorTotal = parseFloat(quartoValor) * diffDays;
-
-            console.log(valorTotal);  // Valor total da diária
-
-            // Somar o valor dos serviços ao valor total
-            var valorServicos = parseFloat(valorServ); // Garantir que o valor dos serviços seja numérico
-            valorTotal += valorServicos; // Somar o valor dos serviços
-           console.log('lista.cinValorServs',lista.cinValorServs ? lista.cinValorServs : lista.co_valor_servs);
-
-            //checkout lista registro
+                let btnRegistrar = document.getElementById("btnRegistrar");
+                let btnAlterar = document.getElementById("btnAlterar");
+                let btnExcluir = document.getElementById("btnExcluir");
+                let btnGerarNota = document.getElementById("btnGerarNota");
+                let mensagemAvisoRegistro = document.getElementById("mensagemAvisoRegistro");
+                let mensagemAvisoEdicao = document.getElementById("mensagemAvisoEdicao");
+                var dtCin = lista.cinData ? lista.cinData : lista.co_cin_data;
+                var dtCout = lista.cinCoutData ? lista.cinCoutData : lista.co_cout_data_real;
+                var dataCheckin = new Date(dtCin);
+                var dataCheckout = new Date(dtCout);
+                var valorServ = lista.cinValorServs ? lista.cinValorServs : lista.co_valor_servs;
+                var quartoValor = lista.cinQuartoValor ? lista.cinQuartoValor : lista.co_quarto_valor;
+                
+               
+                // Calcular a diferença em milissegundos
+                var diffTime = dataCheckout - dataCheckin; 
+                
+                // Converter a diferença para dias e arredondar
+                var diffDays = Math.round(diffTime / (1000 * 3600 * 24));  // Arredondar para número inteiro
+                
+                console.log("Número de dias calculado: " + diffDays);  // Número de dias calculado
+                
+                // Certifique-se de que quartoValor e valorServ sejam números
+                var valorQuarto = parseFloat(quartoValor);
+                var valorServicos = parseFloat(valorServ);
+                
+                console.log("Valor do quarto: " + valorQuarto);
+                console.log("Valor dos serviços: " + valorServicos);
+                
+                // Verificar se os valores são números válidos
+                if (isNaN(valorQuarto) || isNaN(valorServicos)) {
+                    console.log("Erro: Um ou mais valores não são números válidos.");
+                } else {
+                    // Calcular o valor total da diária (somente a diária, sem contar serviços ainda)
+                    var valorTotal = valorQuarto * diffDays;
+                
+                    console.log("Valor total da diária: " + valorTotal);  // Valor total da diária
+                
+                    // Somar o valor dos serviços ao valor total
+                    valorTotal =  valorTotal + valorServicos; // Somar o valor dos serviços
+                
+                    console.log("Valor total com serviços: " + valorTotal);
+  
+                }
             if(!lista.co_id) {
                 localStorage.removeItem('checkinData');
                 document.getElementById('cinId').value = lista.cinId;
@@ -189,29 +221,33 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('cinQuarto').value = lista.cinQuartoId;  
                 document.getElementById('cinQuartoValor').value = parseFloat(lista.cinQuartoValor).toFixed(2);
                 document.getElementById('cinNomeQuarto').value = lista.cinNomeQuarto;
-                document.getElementById('cinData').value = lista.cinData;
-                document.getElementById('cinCoutData').value = lista.cinCoutDat;
-                document.getElementById('cinCinDataEsperada').value = lista.cinCinDataEsperada;
-                document.getElementById('cinCoutDataEsperada').value = lista.cinCoutDataEsperada;
-                document.getElementById('cinDataReserva').value = lista.cinDataReserva;
+                document.getElementById('cinData').value = formatarDataCin(lista.cinData);
+                document.getElementById('cinCoutData').value = formatarDataCin(lista.cinCoutData);
+                document.getElementById('cinCinDataEsperada').value = formatarDataCin(lista.cinCinDataEsperada);
+                document.getElementById('cinCoutDataEsperada').value = formatarDataCin(lista.cinCoutDataEsperada);
+                document.getElementById('cinDataReserva').value = formatarDataCin(lista.cinDataReserva);
                 document.getElementById('cinIdReserva').value = lista.cinIdReserva;
                 document.getElementById('cinNumAdultos').value = lista.cinNumAdultos; 
                 document.getElementById('cinNumCriancas').value = lista.cinNumCriancas;
                 document.getElementById('cinIdServContratados').value = lista.cinIdServContratados;
                 document.getElementById('cinNomeServContratados').value = lista.cinNomeServContratados;
-                document.getElementById('cinValorServs').value = `${parseFloat(valorTotal)}`
+                document.getElementById('cinValorServs').value = parseFloat(lista.cinValorServs);
+                document.getElementById("cinValorTotal").value = parseFloat(valorTotal);
                 //comprovante
                 document.getElementById("nomeHospede").textContent = lista.cinNomePessoa;
                 document.getElementById("emailHospede").textContent = lista.cinEmail;
                 document.getElementById("quartoHospedado").textContent = lista.cinNomeQuarto;
                 document.getElementById("valorQuarto").textContent = `${lista.cinQuartoValor}`;
-                document.getElementById("dataCheckin").textContent = lista.cinData;
-                document.getElementById("dataCheckout").textContent = lista.cinCoutData;
+                document.getElementById("dataCheckin").textContent =  formatarData(lista.cinData);
+                document.getElementById("dataCheckout").textContent = formatarData(lista.cinCoutData);
                 document.getElementById("numAdultos").textContent = lista.cinNumAdultos;
                 document.getElementById("numCriancas").textContent = lista.cinNumCriancas;
                 document.getElementById("servicosContratados").textContent = lista.cinNomeServContratados;
-                document.getElementById("cinValorServs").textContent = `${parseFloat(valorTotal)}`;
+                document.getElementById("valorServicos").textContent = `R$: ${parseFloat(lista.cinValorServs)}`;
+                document.getElementById("valorTotal").textContent = `R$: ${parseFloat(valorTotal)}`;
 
+                mensagemAvisoEdicao.style.display = 'none'
+                mensagemAvisoRegistro.style.display = 'block'
                 btnRegistrar.disabled = false
                 btnAlterar.disabled = true
                 btnExcluir.disabled = true
@@ -226,36 +262,34 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById('cinQuarto').value = lista.co_quarto;  
                 document.getElementById('cinQuartoValor').value = parseFloat(lista.co_quarto_valor).toFixed(2);
                 document.getElementById('cinNomeQuarto').value = lista.co_nome_quarto;
-                document.getElementById('cinData').value = lista.co_cin_data;
-                document.getElementById('cinCoutData').value = lista.co_cout_data_real;
-                document.getElementById('cinCinDataEsperada').value = lista.co_cin_data_esperada;
-                document.getElementById('cinCoutDataEsperada').value = lista.co_cout_data_esperada;
-                document.getElementById('cinDataReserva').value = lista.co_dataReserva;
+                document.getElementById('cinData').value = formatarDataParaISO(lista.co_cin_data);
+                document.getElementById('cinCoutData').value = formatarDataParaISO(lista.co_cout_data_real);
+                document.getElementById('cinCinDataEsperada').value = formatarDataParaISO(lista.co_cin_data_esperada);
+                document.getElementById('cinCoutDataEsperada').value = formatarDataParaISO(lista.co_cout_data_esperada);
+                document.getElementById('cinDataReserva').value = formatarDataParaISO(lista.co_dataReserva);
                 document.getElementById('cinIdReserva').value = lista.co_id_reserva;
                 document.getElementById('cinNumAdultos').value = lista.co_num_adultos; 
                 document.getElementById('cinNumCriancas').value = lista.co_num_criancas;
                 document.getElementById('cinIdServContratados').value = lista.co_id_servContratados;
                 document.getElementById('cinNomeServContratados').value = lista.co_nome_servContratados;
-                document.getElementById('cinValorServs').value = `${parseFloat(valorTotal)}`;
+                document.getElementById('cinValorServs').value = parseFloat(lista.co_valor_servs);
+                document.getElementById("cinValorTotal").value = parseFloat(valorTotal);
 
                 //comprovante
-                document.getElementById("nomeHospede").textContent = lista.cinNomePessoa;
-                document.getElementById("emailHospede").textContent = lista.cinEmail;
-                document.getElementById("quartoHospedado").textContent = lista.cinNomeQuarto;
-                document.getElementById("valorQuarto").textContent = `R$ ${lista.cinQuartoValor}`;
-                document.getElementById("dataCheckin").textContent = lista.cinData;
-                document.getElementById("dataCheckout").textContent = lista.cinCoutData;
-                document.getElementById("numAdultos").textContent = lista.cinNumAdultos;
-                document.getElementById("numCriancas").textContent = lista.cinNumCriancas;
-                document.getElementById("servicosContratados").textContent = lista.cinNomeServContratados;
-                document.getElementById("cinValorServs").textContent = `${parseFloat(valorTotal)}`;
+                document.getElementById("nomeHospede").textContent = lista.co_nome_pessoa;
+                document.getElementById("emailHospede").textContent = lista.co_email;
+                document.getElementById("quartoHospedado").textContent = lista.co_nome_quarto;
+                document.getElementById("valorQuarto").textContent = `R$ ${lista.co_quarto_valor}`;
+                document.getElementById("dataCheckin").textContent = formatarData(lista.co_cin_data);
+                document.getElementById("dataCheckout").textContent = formatarData(lista.co_cout_data_real);
+                document.getElementById("numAdultos").textContent = lista.co_num_adultos;
+                document.getElementById("numCriancas").textContent =  lista.co_num_criancas;
+                document.getElementById("servicosContratados").textContent = lista.co_nome_servContratados;
+                document.getElementById("valorServicos").textContent = `R$: ${parseFloat(lista.co_valor_servs)}`;
+                document.getElementById("valorTotal").textContent = `R$: ${parseFloat(valorTotal)}`;
 
-
-
-                //ativa botões 
-
-                
-
+                mensagemAvisoEdicao.style.display = 'block';
+                mensagemAvisoRegistro.style.display = 'none';
                 btnRegistrar.disabled = true
                 btnAlterar.disabled = false
                 btnExcluir.disabled = false
@@ -363,7 +397,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let cinIdServContratados = document.getElementById("cinIdServContratados");
             let cinNomeServContratados = document.getElementById("cinNomeServContratados");
             let cinValorServs = document.getElementById("cinValorServs");
-        
+            let coValorTotal = document.getElementById("cinValorTotal");
             // Validar os campos do formulário antes de enviar
             if (validarCampos(cinNomePessoa, cinEmail, cinQuarto, cinQuartoValor, cinNomeQuarto, cinData, cinCoutData)) {
         
@@ -386,7 +420,8 @@ document.addEventListener("DOMContentLoaded", function() {
                     cinNumCriancas: cinNumCriancas.value,
                     cinIdServContratados: cinIdServContratados.value,
                     cinNomeServContratados: cinNomeServContratados.value,
-                    cinValorServs: cinValorServs.value
+                    cinValorServs: cinValorServs.value,
+                    cinValorTotal: coValorTotal.value
                 };
         
                 if (confirm("Tem certeza de que deseja alterar o checkout?")) {
@@ -486,6 +521,7 @@ document.addEventListener("DOMContentLoaded", function() {
             let cinIdServContratados = document.getElementById("cinIdServContratados");
             let cinNomeServContratados = document.getElementById("cinNomeServContratados");
             let cinValorServs = document.getElementById("cinValorServs");
+            let cinValorTotal = document.getElementById("cinValorTotal");
         
             // Validar os campos do formulário antes de enviar
             if (validarCampos(cinNomePessoa, cinEmail, cinQuarto, cinQuartoValor, cinNomeQuarto, cinData, cinCoutData)) {
@@ -508,7 +544,9 @@ document.addEventListener("DOMContentLoaded", function() {
                     cinNumCriancas: cinNumCriancas.value,
                     cinIdServContratados: cinIdServContratados.value,
                     cinNomeServContratados: cinNomeServContratados.value,
-                    cinValorServs: cinValorServs.value
+                    cinValorServs: cinValorServs.value,
+                    cinValorTotal: cinValorTotal.value
+                    
                 };
         
                 // Enviar os dados via POST para o servidor (usando a mesma rota /checkin/cadastrar)

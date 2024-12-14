@@ -55,10 +55,12 @@ class CheckoutController {
                 cinNumCriancas,  // Usado para co_num_criancas
                 cinIdServContratados,  // Usado para co_id_servContratados
                 cinNomeServContratados,  // Usado para co_nome_servContratados
-                cinValorServs  // Usado para co_valor_servs
+                cinValorServs,  // Usado para co_valor_servs
+                cinValorTotal
             } = req.body;
 
             dadosCheckout = [
+                0,
                 cinId,  // Usado para co_id_checkin
                 cinIdReserva,  // Usado para co_id_reserva
                 cinNomePessoa,  // Usado para co_nome_pessoa
@@ -75,7 +77,8 @@ class CheckoutController {
                 cinNumCriancas,  // Usado para co_num_criancas
                 cinIdServContratados,  // Usado para co_id_servContratados
                 cinNomeServContratados,  // Usado para co_nome_servContratados
-                cinValorServs  // Usado para co_valor_servs
+                cinValorServs,  // Usado para co_valor_servs
+                cinValorTotal
             ];
         } else {
             const {
@@ -96,6 +99,7 @@ class CheckoutController {
                 cinIdServContratados,  // Usado para co_id_servContratados
                 cinNomeServContratados,  // Usado para co_nome_servContratados
                 cinValorServs,  // Usado para co_valor_servs
+                cinValorTotal,
                 coutId
             } = req.body;
             // Caso contrário, estamos alterando um checkout existente
@@ -117,6 +121,7 @@ class CheckoutController {
                 cinIdServContratados,  // Usado para co_id_servContratados
                 cinNomeServContratados,  // Usado para co_nome_servContratados
                 cinValorServs,  // Usado para co_valor_servs
+                cinValorTotal,
                 coutId
             ];
         }
