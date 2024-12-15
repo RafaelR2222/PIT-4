@@ -153,10 +153,10 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function printaComprovante(){
-            
-            document.getElementById('btnRegistrar').display = 'none';
-            document.getElementById("btnExcluir").display = 'none';
-            document.getElementById("btnAlterar").display = 'none';
+            document.getElementById('todosBotoes').style.display = 'none';
+            document.getElementById('btnRegistrar').style.display = 'none';
+            document.getElementById("btnExcluir").style.display = 'none';
+            document.getElementById("btnAlterar").style.display = 'none';
             document.getElementById("mensagemAvisoRegistro").style.display = 'none'
             document.getElementById("mensagemAvisoEdicao").style.display = 'none'
             document.getElementById("tituloCheckout").style.display = 'none'

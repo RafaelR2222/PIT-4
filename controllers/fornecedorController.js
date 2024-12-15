@@ -78,7 +78,7 @@ class fornecedorController{
             if(result == true)
                 res.send({ok: true, msg: "Fornecedor excluído!"});
             else
-                res.send({ok: false, msg: "Erro ao excluir fornecedor!"});
+                res.send({ok: false, msg: "Erro ao excluir fornecedor, não é possível remover um fornecedor vinculado a uma compra!"});
         }
         else{
             res.send({ok: false, msg: "Dados inválidos!"});

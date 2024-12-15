@@ -175,18 +175,21 @@ class FornecedorModel {
     }
 
     async deletarFornecedor(id) {
-        
-        let sql = "delete from tb_juridica where cod_pessoa = ?";
-        let valores = [id];
+        try{
+            let sql = "delete from tb_juridica where cod_pessoa = ?";
+            let valores = [id];
 
-        let result1 = await conexao.ExecutaComandoNonQuery(sql, valores);
+            let result1 = await conexao.ExecutaComandoNonQuery(sql, valores);
 
-        sql = "delete from tb_pessoa where pes_codigo = ?";
-        valores = [id];
+            sql = "delete from tb_pessoa where pes_codigo = ?";
+            valores = [id];
 
-        let result2 = await conexao.ExecutaComandoNonQuery(sql, valores);
+            let result2 = await conexao.ExecutaComandoNonQuery(sql, valores);
 
-        return result1 && result2;
+            return result1 && result2;
+        }catch(error){
+            return false
+        }
     }
 
 
