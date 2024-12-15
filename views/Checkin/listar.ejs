@@ -11,6 +11,41 @@
         <button onclick="window.print()" class="btn btn-primary btnExportarPdf">Exportar para PDF</button>
         <button id="btnExportarExcel" class="btn btn-primary btnExportarExcel">Exportar para Excel</button>
     </div>
+    <div style="display: flex; justify-content: flex-end; height: 20vh;">
+        <div id="legenda" style="width: 30vw; height: 250px; background-color: #3c3c3c; display: grid; grid-template-columns: repeat(2, 1fr); grid-template-rows: repeat(2, 1fr); gap: 10px; border-radius: 0.1rem; border: 1px solid #000; position: relative;
+    bottom: 8rem;">
+            
+            <!-- Primeira div com ícone e texto -->
+            <div style="width: 35px; height: 30px; background-color: #ffd817; margin-top: .5rem; border-radius: 0.5rem; margin-left: .5rem; display: flex; align-items: center; padding-left: 10px;">
+                <i class="fas fa-door-open" style="color: #000; margin-right: 10px;"></i>
+                <span style="white-space: nowrap; text-align: left; color: #fff; margin-left: 1rem;">Área de check-out</span>
+            </div>
+    
+            <!-- Segunda div com ícone e texto -->
+            <div style="width: 35px; height: 30px; background-color: #dc3545; margin-top: .5rem; border-radius: 0.5rem; margin-left: .5rem; display: flex; align-items: center; padding-left: 10px;">
+                <i class="fas fa-trash" style="color: #fff; margin-right: 10px;"></i>
+                <span style="white-space: nowrap; text-align: left; color: #fff; margin-left: 1rem;">Excluir um check-in</span>
+            </div>
+    
+            <!-- Terceira div com ícone e texto -->
+            <div style="width: 35px; height: 30px; background-color: #356; border-radius: 0.5rem; margin-left: .5rem; display: flex; align-items: center; padding-left: 10px;">
+                <i class="fas fa-pen" style="color: #fff; margin-right: 10px;"></i>
+                <span style="white-space: nowrap; text-align: left; color: #fff; margin-left: 1rem;">Alterar um check-in</span>
+            </div>
+    
+            <!-- Quarta div com texto -->
+            <div style="width: 35px; height: 30px; background-color: #7c8ba3; border-radius: 0.5rem; margin-left: .5rem; display: flex; align-items: center; padding-left: 10px;">
+                <span style="white-space: nowrap; text-align: left; color: #fff; margin-left: 2.5rem; margin-top: 4.5rem;">Colunas com a coloração  <br> acinzentadas, representam <br> que aquele check-in já <br> possuí check-out.</span>
+            </div>
+    
+        </div>
+    </div>
+    
+    
+    
+    
+    
+    
     <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
     <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
         <thead style="width: 10%;">
@@ -35,22 +70,85 @@
         <tbody>
             <% for(let i=0; i<lista.length; i++) { %>
                 <tr>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinId %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomePessoa %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinEmail %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinQuartoId %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomeQuarto %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinData %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCoutData ? lista[i].cinCoutData : "Checkout ainda não foi realizado" %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCinDataEsperada %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinCoutDataEsperada %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinDataReserva %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinIdReserva %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNumAdultos %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNumCriancas %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinIdServContratados %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinNomeServContratados %></td>
-                    <td style="background-color: <%= lista[i].cinCoutData ? '#7c8ba3; color: #fff' : '#fff' %>"><%= lista[i].cinValorServs %></td>
+             <!-- A primeira célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinId %>
+</td>
+
+<!-- A segunda célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinNomePessoa %>
+</td>
+
+<!-- A terceira célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinEmail %>
+</td>
+
+<!-- A quarta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinQuartoId %>
+</td>
+
+<!-- A quinta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinNomeQuarto %>
+</td>
+
+<!-- A sexta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinData %>
+</td>
+
+<!-- A sétima célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= (lista[i].cinCoutData) ? lista[i].cinCoutData : 'Ainda não houve check-out'  %>
+</td>
+
+<!-- A oitava célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinCinDataEsperada %>
+</td>
+
+<!-- A nona célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinCoutDataEsperada %>
+</td>
+
+<!-- A décima célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinDataReserva %>
+</td>
+
+<!-- A décima primeira célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinIdReserva %>
+</td>
+
+<!-- A décima segunda célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinNumAdultos %>
+</td>
+
+<!-- A décima terceira célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinNumCriancas %>
+</td>
+
+<!-- A décima quarta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinIdServContratados %>
+</td>
+
+<!-- A décima quinta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinNomeServContratados %>
+</td>
+
+<!-- A décima sexta célula -->
+<td style="background-color: <%= (lista[i].cinCoutData) ? '#7c8ba3; color: #fff' : '#fff' %>">
+    <%= lista[i].cinValorServs %>
+</td>
 
                     <td class="actions">
                         <div>

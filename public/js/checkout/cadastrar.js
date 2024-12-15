@@ -119,7 +119,22 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function formatarDataCin(dataString) {
-            const data = new Date(dataString);
+            // Verifica se a data está nula ou vazia
+            if (!dataString) {
+                return null; // Se a data for nula ou vazia, retorna null
+            }
+        
+            let data;
+        
+            // Verificar se a data está no formato "dd/mm/yyyy"
+            if (dataString.match(/^\d{2}\/\d{2}\/\d{4}$/)) {
+                // Converter para o formato "yyyy-mm-dd"
+                const [dia, mes, ano] = dataString.split('/');
+                data = new Date(`${ano}-${mes}-${dia}`);
+            } else {
+                // Se já estiver no formato "yyyy-mm-dd"
+                data = new Date(dataString);
+            }
         
             const ano = data.getFullYear();
             const mes = ("0" + (data.getMonth() + 1)).slice(-2); // Meses começam de 0
@@ -129,6 +144,8 @@ document.addEventListener("DOMContentLoaded", function() {
             return `${ano}-${mes}-${dia}`;
         }
         
+        
+        
 
         function formatarData(data) {
             const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
@@ -136,32 +153,38 @@ document.addEventListener("DOMContentLoaded", function() {
         }
 
         function printaComprovante(){
-
-            document.getElementById("todosBotoes").style.display = 'none'
-            document.getElementById("mensagemAviso").style.display = 'none'
+            
+            document.getElementById('btnRegistrar').display = 'none';
+            document.getElementById("btnExcluir").display = 'none';
+            document.getElementById("btnAlterar").display = 'none';
+            document.getElementById("mensagemAvisoRegistro").style.display = 'none'
+            document.getElementById("mensagemAvisoEdicao").style.display = 'none'
             document.getElementById("tituloCheckout").style.display = 'none'
             document.getElementById("footer_LayoutAdm").style.display = 'none'
             document.getElementById("btnImprimir").style.display = 'none'
             window.print();
-            document.getElementById("todosBotoes").style.display = 'block'
-            document.getElementById("mensagemAviso").style.display = 'block'
-            document.getElementById("tituloCheckout").style.display = 'block'
-            document.getElementById("footer_LayoutAdm").style.display = 'block'
-            document.getElementById("btnImprimir").style.display = 'block'
+           
         }
 
         function escondeExibeComprovante(){
             if(document.getElementById("notaComprovante").style.display == 'none'){
                 document.getElementById("notaComprovante").style.display = 'block';
                 document.getElementById("formularios").style.display = 'none';
+
                 document.getElementById('btnRegistrar').disabled = true;
                 document.getElementById("btnExcluir").disabled = true;
                 document.getElementById("btnAlterar").disabled = true;
-                document.getElementById("btnGerarNota").disabled = false
+                document.getElementById('btnRegistrar').display = 'none';
+                document.getElementById("btnExcluir").display = 'none';
+                document.getElementById("btnAlterar").display = 'none';
+                document.getElementById("btnGerarNota").disabled = true
             } else {
                 document.getElementById('btnRegistrar').disabled = false;
                 document.getElementById("btnExcluir").disabled = false;
                 document.getElementById("btnAlterar").disabled = false;
+                document.getElementById('btnRegistrar').display = block;
+                document.getElementById("btnExcluir").display = block;
+                document.getElementById("btnAlterar").display = block;
                 document.getElementById("notaComprovante").style.display = 'none'
                 document.getElementById("formularios").style.display = 'block';
             }
@@ -175,6 +198,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 let btnGerarNota = document.getElementById("btnGerarNota");
                 let mensagemAvisoRegistro = document.getElementById("mensagemAvisoRegistro");
                 let mensagemAvisoEdicao = document.getElementById("mensagemAvisoEdicao");
+                let inputCoutData = document.getElementById("cinCoutData");
                 var dtCin = lista.cinData ? lista.cinData : lista.co_cin_data;
                 var dtCout = lista.cinCoutData ? lista.cinCoutData : lista.co_cout_data_real;
                 var dataCheckin = new Date(dtCin);
@@ -242,7 +266,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById("dataCheckout").textContent = formatarData(lista.cinCoutData);
                 document.getElementById("numAdultos").textContent = lista.cinNumAdultos;
                 document.getElementById("numCriancas").textContent = lista.cinNumCriancas;
-                document.getElementById("servicosContratados").textContent = lista.cinNomeServContratados;
+                document.getElementById("servicosContratados").textContent = lista.cinNomeServContratados ? lista.cinNomeServContratados : 'Não foi contratado nenhum serviço';
                 document.getElementById("valorServicos").textContent = `R$: ${parseFloat(lista.cinValorServs)}`;
                 document.getElementById("valorTotal").textContent = `R$: ${parseFloat(valorTotal)}`;
 
@@ -252,6 +276,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 btnAlterar.disabled = true
                 btnExcluir.disabled = true
                 btnGerarNota.disabled = true
+                inputCoutData.readOnly = false
             //checkout lista alteração
             } else if(lista.co_id){
                 localStorage.removeItem('checkinData');
@@ -284,9 +309,10 @@ document.addEventListener("DOMContentLoaded", function() {
                 document.getElementById("dataCheckout").textContent = formatarData(lista.co_cout_data_real);
                 document.getElementById("numAdultos").textContent = lista.co_num_adultos;
                 document.getElementById("numCriancas").textContent =  lista.co_num_criancas;
-                document.getElementById("servicosContratados").textContent = lista.co_nome_servContratados;
+                document.getElementById("servicosContratados").textContent = lista.co_nome_servContratados ? lista.co_nome_servContratados : 'Não foi contratado nenhum serviço';
                 document.getElementById("valorServicos").textContent = `R$: ${parseFloat(lista.co_valor_servs)}`;
                 document.getElementById("valorTotal").textContent = `R$: ${parseFloat(valorTotal)}`;
+
 
                 mensagemAvisoEdicao.style.display = 'block';
                 mensagemAvisoRegistro.style.display = 'none';
@@ -294,6 +320,7 @@ document.addEventListener("DOMContentLoaded", function() {
                 btnAlterar.disabled = false
                 btnExcluir.disabled = false
                 btnGerarNota.disabled = false
+                inputCoutData.readOnly = true
                 
             }
     

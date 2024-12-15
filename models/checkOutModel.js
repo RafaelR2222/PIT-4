@@ -222,6 +222,8 @@ class CheckoutModel {
         let resultado = await conexao.ExecutaComandoNonQuery(sql, valor);
         return resultado;
     }
+
+   
     
     async obterCheckoutPorId(cinId) {
         // Fazendo a consulta no banco de dados
@@ -308,7 +310,64 @@ class CheckoutModel {
             return false;
         }
     }
-*/
+        */
+        // Função para atualizar os serviços contratados baseado no email
+        async atualizarServicosContratados(email, id_servicos, nome_servicos, valor_servicos) {
+            // Verifica se o email existe na tabela tb_checkout
+            let sqlCheckin = "SELECT * FROM tb_checkout WHERE co_email = ?";
+            let valoresCheckin = [email];
+            let checkin = await conexao.ExecutaComando(sqlCheckin, valoresCheckin);
+
+            if (checkin.length === 0) {
+                // Se o usuário não for encontrado, retorna false
+                return false;
+            }
+
+            // Obter os dados atuais dos serviços contratados
+            let usuario = checkin[0];
+            let novoIdServicos = id_servicos;
+            let novoNomeServicos = nome_servicos;
+            let novoValorServicos = valor_servicos;
+
+            // Verifica se já existem valores para o id_servicos, nome_servicos ou valor_servicos
+            if (usuario.co_id_servContratados) {
+                // Se já existirem, concatena os valores
+                novoIdServicos = usuario.co_id_servContratados + ',' + id_servicos;
+            }
+
+            if (usuario.co_nome_servContratados) {
+                // Se já existirem, concatena os nomes dos serviços
+                novoNomeServicos = usuario.co_nome_servContratados + ',' + nome_servicos;
+            }
+
+            if (usuario.co_valor_servs) {
+                // Se já houver um valor, soma ao novo valor
+                novoValorServicos = parseFloat(usuario.co_valor_servs) + parseFloat(valor_servicos);
+            }
+
+            // Atualiza os serviços contratados no banco de dados
+            let updateSql = `
+                UPDATE tb_checkout
+                SET 
+                    co_id_servContratados = ?,
+                    co_nome_servContratados = ?,
+                    co_valor_servs = ?
+                WHERE co_email = ?
+            `;
+            
+            let updateValores = [novoIdServicos, novoNomeServicos, novoValorServicos, email];
+            
+            // Executando o update para registrar a atualização dos serviços
+            let resultadoUpdateServicos = await conexao.ExecutaComandoNonQuery(updateSql, updateValores);
+
+            // Verifica se a atualização foi bem-sucedida
+            if (resultadoUpdateServicos) {
+                return true;
+            }
+
+            return false;
+        }
+
 
     async obterIdCheckout(cinId) {
         
@@ -317,6 +376,17 @@ class CheckoutModel {
         let rows = await conexao.ExecutaComando(sql, valores);
         if(rows.length > 0){
             return rows;
+        }
+            return rows = false;
+    }
+
+    async obterIdCheckin(coutId) {
+        
+        let sql = "SELECT co_id_checkin FROM tb_checkout WHERE co_id = ?";
+        let valores = [coutId];
+        let rows = await conexao.ExecutaComando(sql, valores);
+        if(rows.length > 0){
+            return rows[0];
         }
             return rows = false;
     }

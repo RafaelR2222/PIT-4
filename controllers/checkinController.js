@@ -93,8 +93,8 @@ async gravarCheckin(req, res) {
             req.body.cinCoutData,
             req.body.cinCinDataEsperada,
             req.body.cinCoutDataEsperada,
-            req.body.cinIdReserva,
             req.body.cinDataReserva,
+            req.body.cinIdReserva,
             req.body.cinNumAdultos,
             req.body.cinNumCriancas,
             req.body.cinIdServContratados, // Pode ser uma string separada por vírgula, se necessário, manipular os dados
@@ -138,9 +138,6 @@ async gravarCheckin(req, res) {
     }
 }
 
-    
-    
-    
 
     // Obter todos os check-ins
     async obterCheckins(req, res) {
@@ -157,7 +154,6 @@ async gravarCheckin(req, res) {
         {
             let existeCheckIn = await checkin.obterCheckinPorEmail(req.params.email);
             let lista = existeCheckIn;
-            console.log(lista)
             return res.send({ checkin: lista, ok: true, msg: 'Reserva encontrada!' });
         }
         catch (error) 
@@ -190,20 +186,26 @@ async gravarCheckin(req, res) {
                         let servicosContratados = '';   // Para armazenar os nomes dos serviços contratados
                         let idsServicosContratados = ''; // Para armazenar os IDs dos serviços contratados
                         let valorTotal = 0;     // Para armazenar o valor total dos serviços
-                        let qtdServicos = listaServicos.length; // Contar a quantidade de serviços encontrados
-                
+                        if(listaServicos){
+                            var qtdServicos = listaServicos.length ? listaServicos.length : 0 ;
+                        } else { 
+                             qtdServicos = 0;
+                        }
+                        // Contar a quantidade de serviços encontrados
+                        
                         // Concatenar os nomes dos serviços, somar os valores e concatenar os IDs
-                        listaServicos.forEach(servico => {
-                            // Concatenar os nomes dos serviços
-                            servicosContratados += servico.nomeService + (listaServicos.indexOf(servico) < listaServicos.length - 1 ? ', ' : '');
-                            
-                            // Concatenar os IDs dos serviços
-                            idsServicosContratados += servico.idService + (listaServicos.indexOf(servico) < listaServicos.length - 1 ? ', ' : '');
-                            
-                            // Somar os valores dos serviços
-                            valorTotal += (parseFloat(servico.valTotalService ? servico.valTotalService : 0 ) + parseFloat(ListaReserva.resValorTotal));
-                        });
-                
+                        if(listaServicos){
+                            listaServicos.forEach(servico => {
+                                // Concatenar os nomes dos serviços
+                                servicosContratados += servico.nomeService + (listaServicos.indexOf(servico) < listaServicos.length - 1 ? ', ' : '');
+                                
+                                // Concatenar os IDs dos serviços
+                                idsServicosContratados += servico.idService + (listaServicos.indexOf(servico) < listaServicos.length - 1 ? ', ' : '');
+                                
+                                // Somar os valores dos serviços
+                                valorTotal += (parseFloat(servico.valTotalService ? servico.valTotalService : 0 ) + parseFloat(ListaReserva.resValorTotal));
+                            });
+                        }
                         // Montando o objeto checkinDetalhes
                         let checkinDetalhes = {
                             quarto: listaQuarto,
@@ -212,7 +214,7 @@ async gravarCheckin(req, res) {
                             servicos: listaServicos,           // Lista de serviços completos
                             servicosContratados: servicosContratados, // Nomes dos serviços contratados
                             idsServicosContratados: idsServicosContratados, // IDs dos serviços contratados
-                            valorTotal: valorTotal,     // Valor total dos serviços
+                            valorTotal: valorTotal ? valorTotal : 0,     // Valor total dos serviços
                             qtdServicos: qtdServicos           // Quantidade de serviços contratados
                         };
                     

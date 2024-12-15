@@ -22,11 +22,11 @@ document.addEventListener("DOMContentLoaded", function() {
                 })
                 .then(function(r) {
                     if(r.ok){
-                        alert("Reserva deletada com sucesso!");
+                        alert(r.message);
                         window.location.reload();
                     }
                     else{
-                        alert(r.msg);
+                        alert(r.message);
                     }
                 })
             }

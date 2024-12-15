@@ -60,7 +60,7 @@ document.addEventListener("DOMContentLoaded", function() {
         cinNome.value = lista.reserva.resPesNome;
         cinEmail.value = lista.reserva.resPesEmail;
         cinQuartoId.value = lista.reserva.resQuartoId;
-        cinQuartoValor.value = lista.reserva.resValorTotal;
+        cinQuartoValor.value = lista.quarto[0].qrQuartoValor;
         cinQuartoNome.value = lista.quarto[0].qrNome;
         cinDataAtual.value = cinDataAtual.value; // Data atual
         cinDataEsperada.value = lista.reserva.resDataCheckin;
@@ -92,7 +92,8 @@ document.addEventListener("DOMContentLoaded", function() {
         let numServicoNome = document.getElementById("cinNumServicoNome");
         let total = document.getElementById("cinTotal");
 
-        if (validarCampos(nome, email, quartoId, quartoValor, quartoNome, dataAtual, dataEsperada, coutDataEsperada,cinDataReserva, reservaId, numAdultos, numCriancas, numServicoId, numServicoNome, total)) {
+        if (validarCampos(nome, email, quartoId, quartoValor, quartoNome, dataAtual, 
+             dataEsperada, coutDataEsperada,cinDataReserva, reservaId, numAdultos, numCriancas, total)) {
 
             var checkinData = {
                 nome: nome.value,
@@ -153,9 +154,9 @@ document.addEventListener("DOMContentLoaded", function() {
     }
 
     // Função de validação dos campos do formulário
-    function validarCampos(nome, email, quartoId, quartoValor, quartoNome, dataAtual, dataEsperada, coutDataEsperada, reservaId, numAdultos, numCriancas, numServicoId, numServicoNome, total) {
+    function validarCampos(nome, email, quartoId, quartoValor, quartoNome, dataAtual, dataEsperada, coutDataEsperada, reservaId, numAdultos, numCriancas, total) {
 
-        let campos = [nome, email, quartoId, quartoValor, quartoNome, dataAtual, dataEsperada, coutDataEsperada, reservaId, numAdultos, numCriancas, numServicoId, numServicoNome, total];
+        let campos = [nome, email, quartoId, quartoValor, quartoNome, dataAtual, dataEsperada, coutDataEsperada, reservaId, numAdultos, numCriancas, total];
         let erros = [];
 
         // Verifica se os campos estão vazios

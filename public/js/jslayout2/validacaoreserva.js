@@ -154,24 +154,33 @@ async function verificabotaor() {
     }
 
     console.log(body)
-
-    await fetch('/reservas/gravar', {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify(body)
-    }).then(function (r) {
-      return r.json()
-    }).then(function (r) {
-      if (r.ok == true) {
-        alert("RESERVA EFETUADA COM SUCESSO !")
-        location.reload(true);
-      } else {
-        console.log(JSON.stringify(r))
-        alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS!")
-        location.reload(true);
-      }
-    })
+  if(fname.value != null && fname.value !== '' &&
+    lname.value != null && lname.value !== '' &&
+    email.value != null && email.value !== '' &&
+    adults.value != null && adults.value !== '' &&
+    quarto.value != null && quarto.value !== '' &&
+    crianca.value != null && crianca.value !== '' &&
+    dataInicialInput.value != null && dataInicialInput.value !== '' &&
+    dataFinalInput.value != null && dataFinalInput.value !== ''){
+          await fetch('/reservas/gravar', {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json"
+            },
+            body: JSON.stringify(body)
+          }).then(function (r) {
+            return r.json()
+          }).then(function (r) {
+            if (r.ok == true) {
+              alert("RESERVA EFETUADA COM SUCESSO !")
+              location.reload(true);
+            } else {
+              console.log(JSON.stringify(r))
+              alert("NÃO FOI POSSIVEL EFETUAR A RESERVA, VERIFIQUE OS CAMPOS!")
+              location.reload(true);
+            }
+          })
+    }else{
+      alert('Preencha os campos corretamente !');
+    }
 }
-
