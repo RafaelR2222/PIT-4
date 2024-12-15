@@ -1,11 +1,11 @@
 const QuartoModel = require("../models/quartoModel");
 const ReservaModel = require("../models/reservaModel");
-
 const nodemailer = require('nodemailer');
 
 const quartos = new QuartoModel();
 
 const cookieParser = require('cookie-parser');
+const UsuarioModel = require("../models/usuarioModel");
 
 class ReservaController {
 
@@ -87,6 +87,10 @@ class ReservaController {
        
             let gravar = await reserva.gravarReserva(reserva);
             if (gravar) {
+                let usuario = new UsuarioModel(0, req.body.nome, 
+                req.body.email, 'S', 123, 3)
+                let resultado = await usuario.gravarUsuario();
+
                 await quartos.editarQuartoReserva(reserva.resQuartoId);
                /* let transporter = nodemailer.createTransport({
                     service: 'gmail',
@@ -134,11 +138,12 @@ class ReservaController {
     async excluirReserva(req, res) {
         let reserva = new ReservaModel();
         console.log(req.params.id);
-        let reservaExluida = await reserva.deletarReserva(req.params.id);
-        if(reservaExluida){
+        let delecao = await reserva.deletarReserva(req.params.id);
+        if(delecao){
             return res.send({ ok: true, message: "Reserva excluida" });
-        }   
-        return res.send({ ok: false, message: "Não é possivel excluir uma reserva vinculada a um check-in" });
+        } else {
+            return res.send({ ok: false, message: "Não foi possível excluir a reserva. A reserva possivelmente está vinculada a um check-in" });
+        }
     }
 
     async editarReserva(req, res) {

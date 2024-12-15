@@ -193,7 +193,7 @@ class CheckinModel {
         let sql = "SELECT * FROM tb_checkin";
         let rows = await conexao.ExecutaComando(sql);
         let checkins = [];
-
+    
         if (rows.length > 0) {
             for (let row of rows) {
                 let checkin = new CheckinModel();
@@ -205,17 +205,18 @@ class CheckinModel {
                 checkin.cinNomeQuarto = row["cin_nome_quarto"];
                 
                 // Formatando a data para incluir apenas o dia, mês e ano
-                checkin.cinData = new Date(row["cin_data"]).toLocaleDateString('pt-BR'); 
-            
-                let dataCheckOut = row["cin_cout_data"]
-                if (dataCheckOut === 'Invalid Date' || dataCheckOut == undefined || dataCheckOut == null ) {
+                checkin.cinData = formatDate(row["cin_data"]);
+    
+                let dataCheckOut = row["cin_cout_data"];
+                if (dataCheckOut === 'Invalid Date' || dataCheckOut == undefined || dataCheckOut == null) {
                     checkin.cinCoutData = "";
                 } else {
-                    checkin.cinCoutData = new Date(dataCheckOut).toLocaleDateString('pt-BR');
+                    checkin.cinCoutData = formatDate(dataCheckOut);
                 }
-                checkin.cinCinDataEsperada = new Date(row["cin_cinData_esperada"]).toLocaleDateString('pt-BR');
-                checkin.cinCoutDataEsperada = row["cin_coutData_esperada"]
-                checkin.cinDataReserva = new Date(row["cin_dataReserva"]).toLocaleDateString('pt-BR');
+    
+                checkin.cinCinDataEsperada = formatDate(row["cin_cinData_esperada"]);
+                checkin.cinCoutDataEsperada = row["cin_coutData_esperada"];
+                checkin.cinDataReserva = formatDate(row["cin_dataReserva"]);
                 checkin.cinIdReserva = row["cin_id_reserva"];
                 checkin.cinNumAdultos = row["cin_num_adultos"];
                 checkin.cinNumCriancas = row["cin_num_criancas"];
@@ -226,12 +227,80 @@ class CheckinModel {
                 // Adicionando o checkin ao array
                 checkins.push(checkin.toJSON());
             }
-            
         }
-
+    
         return checkins;
     }
-   
+
+    async atualizarServicosCheckin(email, id_servicos, nome_servicos, valor_servicos) {
+        // Verifica se o email existe na tabela tb_checkin
+        let sqlCheckin = "SELECT * FROM tb_checkin WHERE cin_email = ?";
+        let checkin = await conexao.ExecutaComando(sqlCheckin, email);
+
+        if (checkin.length === 0) {
+            // Se o usuário não for encontrado, retorna false
+            return false;
+        }
+
+        // Obter os dados atuais dos serviços contratados
+        let usuario = checkin[0];
+        let novoIdServicos = id_servicos;
+        let novoNomeServicos = nome_servicos;
+        let novoValorServicos = valor_servicos;
+
+        // Verifica se já existem valores para o cin_id_servContratados, cin_nome_servContratados ou cin_valor_servs
+        if (usuario.cin_id_servContratados) {
+            // Se já existirem, concatena os valores
+            novoIdServicos = usuario.cin_id_servContratados + ',' + id_servicos;
+        }
+
+        if (usuario.cin_nome_servContratados) {
+            // Se já existirem, concatena os nomes dos serviços
+            novoNomeServicos = usuario.cin_nome_servContratados + ',' + nome_servicos;
+        }
+
+        if (usuario.cin_valor_servs) {
+            // Se já houver um valor, soma ao novo valor
+            novoValorServicos = parseFloat(usuario.cin_valor_servs) + parseFloat(valor_servicos);
+        }
+
+        // Atualiza os serviços contratados no banco de dados
+        let updateSql = `
+            UPDATE tb_checkin
+            SET 
+                cin_id_servContratados = ?,
+                cin_nome_servContratados = ?,
+                cin_valor_servs = ?
+            WHERE cin_email = ?
+        `;
+        
+        let updateValores = [novoIdServicos, novoNomeServicos, novoValorServicos, email];
+        
+        // Executando o update para registrar a atualização dos serviços
+        let resultadoUpdateServicos = await conexao.ExecutaComandoNonQuery(updateSql, updateValores);
+
+        // Verifica se a atualização foi bem-sucedida
+        if (resultadoUpdateServicos) {
+            return true;
+        }
+
+        return false;
+    }
+
+    async liberarDataCout(cinId) {
+        // SQL para atualizar a coluna 'cin_cout_data' para NULL
+        let sql = "UPDATE tb_checkin SET cin_cout_data = NULL WHERE cin_id = ?";
+        
+        // Valor do parâmetro para a consulta
+        let valor = [cinId];
+        
+        // Executa o comando de atualização na tabela
+        let resultado = await conexao.ExecutaComandoNonQuery(sql, valor);
+        
+        // Retorna o resultado da execução do comando
+        return resultado;
+    }
+    
     async obterCheckinPorId(cinId) {
         let sql = "SELECT * FROM tb_checkin WHERE cin_id = ?";
         let valores = [cinId];
@@ -298,6 +367,27 @@ class CheckinModel {
         return null;
     }
     
+}
+function formatDate(dateString) {
+    let date;
+
+    // Verifica se a data está no formato 'yyyy-mm-dd'
+    if (dateString && /^[0-9]{4}-[0-9]{2}-[0-9]{2}$/.test(dateString)) {
+        let parts = dateString.split('-'); // 'yyyy-mm-dd' -> [yyyy, mm, dd]
+        date = new Date(parts[0], parts[1] - 1, parts[2]);
+    }
+    // Verifica se a data está no formato 'dd/mm/yyyy'
+    else if (dateString && /^[0-9]{2}\/[0-9]{2}\/[0-9]{4}$/.test(dateString)) {
+        let parts = dateString.split('/'); // 'dd/mm/yyyy' -> [dd, mm, yyyy]
+        date = new Date(parts[2], parts[1] - 1, parts[0]); // Cria a data no formato correto
+    }
+
+    // Se a data for válida, formate e retorne, caso contrário, retorna uma string vazia
+    if (date instanceof Date && !isNaN(date)) {
+        return date.toLocaleDateString('pt-BR');
+    }
+
+    return ""; // Se a data não for válida ou estiver nula, retorna uma string vazia
 }
 
 module.exports = CheckinModel;

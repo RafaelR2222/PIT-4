@@ -2,7 +2,9 @@ const ServicosContratadosModel = require("../models/servicosContratadosModel"); 
 const UsuarioModel = require("../models/usuarioModel");
 const cookieParser = require('cookie-parser');
 const CheckinModel = require("../models/checkInModel");
+const CheckoutModel = require("../models/checkOutModel");
 const ServiceModel = require('../models/serviceModel');
+
 
 class ContratarServicoController {
 
@@ -41,12 +43,18 @@ class ContratarServicoController {
         servicoContratado.valTotalService = parseFloat(req.body.serv_val);
         servicoContratado.nomeServico = req.body.serv_desc;
 
-        console.log(req.body)
-
         try {
             let resultado = await servicoContratado.gravarServicoContratado(id);
             if (resultado) {
-                return res.send({ ok: true, message: "Serviço registrado com sucesso" });
+                let checkinUpdate = new CheckinModel()
+                let checkoutUpdate = new CheckoutModel()
+                //email, id_servicos, nome_servicos, valor_servicos
+                await checkinUpdate.atualizarServicosCheckin(req.body.email, id, req.body.serv_desc, req.body.serv_val);
+                await checkoutUpdate.atualizarServicosContratados(req.body.email, id, req.body.serv_desc, req.body.serv_val);
+                if(checkinUpdate){
+                    return res.send({ ok: true, message: "Serviço registrado com sucesso" });
+                }
+                return res.send({ ok: false, message: "Falha ao registrar o serviço" });
             } else {
                 return res.send({ ok: false, message: "Falha ao registrar o serviço" });
             }

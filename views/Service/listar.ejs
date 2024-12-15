@@ -3,42 +3,36 @@
 <script src="/js/ContratarServicos/cadastrar.js"></script>
 <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
 
+<div style="<%= listaCheckin.length ? 'display: block;' : 'display: none;' %>">
+    <h1>Selecione o Checkin para Cadastrar Serviço</h1>
+    <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
+        <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
+            <thead style="width: 10%;">
+                <th>Id do check-in</th>
+                <th>Nome </th>
+                <th>Email</th>
+                <th class="actions">Ações</th>
+            </thead>
+            <tbody>
+                <% for(let i=0; i<listaCheckin.length; i++) { %>
+                    <tr>
+                        <td><%= listaCheckin[i].cinId %></td>
+                        <td><%= listaCheckin[i].cinNomePessoa %></td>
+                        <td><%= listaCheckin[i].cinEmail %></td>
+                        <td class="actions">
+                            <div>
+                                <button data-value="<%= listaCheckin[i].cinEmail %>" class="btn btn-primary btnAdicao" style="width: 2.7rem;margin-bottom: .5rem;">
+                                    <i class="fas fa-plus"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                <% } %>
+            </tbody>
+        </table>
+    </div>
+</div>
 
-<div>
-    <div>
-        <h1>Selecione o Checkin para Cadastrar Serviço</h1>
-        <div id="divTable" style="max-width: 300%; width: auto; overflow-x: scroll;">
-            <table style="margin-top:10px" class="table table-stripped" id="tabelaFornecedores">
-                <thead style="width: 10%;">
-                    <th>Id do check-in</th>
-                    <th>Nome </th>
-                    <th>Email</th>
-                    <th class="actions">Ações</th>
-                </thead>
-                <tbody>
-                    <% for(let i=0; i<listaCheckin.length; i++) { %>
-                        <tr>
-                            <td>
-                                <%= listaCheckin[i].cinId %>
-                            </td>
-                            <td>
-                                <%= listaCheckin[i].cinNomePessoa %>
-                            </td>
-                            <td>
-                                <%= listaCheckin[i].cinEmail %>
-                            </td>
-                            <td class="actions">
-                                <div>
-                                    <button data-value="<%=  listaCheckin[i].cinEmail %>" class="btn btn-primary btnAdicao"
-                                        style="width: 2.7rem;margin-bottom: .5rem;">
-                                        <i class="fas fa-plus"></i>
-                                    </button>
-                                </div>
-                            </td>
-                        </tr>
-                        <% } %>
-                </tbody>
-            </table>
             <table style="margin-top:10px" class="table table-stripped" id="tabelaServicos">
 
             <thead style="width: 10%;">

@@ -8,14 +8,16 @@ class QuartoModel {
     #qrDescricao;
     #qrNumeroQuarto;
     #qrQuartoStatus;
+    #qrQuartoValor
 
     // Constructor to initialize the fields
-    constructor(qrIdQuarto, qrNome, qrDescricao, qrNumeroQuarto, qrQuartoStatus) {
+    constructor(qrIdQuarto, qrNome, qrDescricao, qrNumeroQuarto, qrQuartoStatus,qrQuartoValor) {
         this.#qrIdQuarto = qrIdQuarto;
         this.#qrNome = qrNome;
         this.#qrDescricao = qrDescricao;
         this.#qrNumeroQuarto = qrNumeroQuarto;
         this.#qrQuartoStatus = qrQuartoStatus;
+        this.#qrQuartoValor = qrQuartoValor;
     }
 
     // Getter and Setter for qrIdQuarto
@@ -63,13 +65,22 @@ class QuartoModel {
         this.#qrQuartoStatus = qrQuartoStatus;
     }
 
+    get qrQuartoValor(){
+        return this.#qrQuartoValor 
+    }
+
+    set qrQuartoValor(qrQuartoValor){
+        this.#qrQuartoValor = qrQuartoValor;
+    }
+
     toJSON() {
         return {
             qrIdQuarto: this.#qrIdQuarto,
             qrNome: this.#qrNome,
             qrDescricao: this.#qrDescricao,
             qrNumeroQuarto: this.#qrNumeroQuarto,
-            qrQuartoStatus: this.#qrQuartoStatus
+            qrQuartoStatus: this.#qrQuartoStatus,
+            qrQuartoValor: this.#qrQuartoValor
         };
     }
     
@@ -84,7 +95,9 @@ class QuartoModel {
             quarto.qrIdQuarto = rows[0]["qr_id_quarto"];
             quarto.qrNome = rows[0]["qr_nome"];
             quarto.qrDescricao = rows[0]["qr_descricao"];
+            quarto.qrNumeroQuarto = rows[0]["qr_numero_quarto"];
             quarto.qrQuartoStatus = rows[0]["qr_quarto_status"];
+            quarto.qrQuartoValor = rows[0]["qr_quarto_valor"];
 
             quartos.push(quarto.toJSON());
             return quartos

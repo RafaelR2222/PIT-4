@@ -113,7 +113,7 @@ class CheckoutController {
                 cinNomeQuarto,  // Usado para co_nome_quarto
                 cinData,  // Usado para co_cin_data
                 cinCinDataEsperada,  // Usado para co_cin_data_esperada
-                cinCoutData,  // Usado para co_cout_data_real
+                cinCoutData ? cinCoutData : null,  // Usado para co_cout_data_real
                 cinCoutDataEsperada,  // Usado para co_cout_data_esperada
                 cinDataReserva,  // Usado para co_dataReserva
                 cinNumAdultos,  // Usado para co_num_adultos
@@ -165,9 +165,19 @@ class CheckoutController {
     // Excluir um checkout
     async excluirCheckout(req, res) {
         let checkout = new CheckoutModel();
-        let resultado = await checkout.deletarCheckout(req.body.coutId);
-        if (resultado) {
-            return res.send({ ok: true, msg: "Checkout excluído com sucesso" });
+        let checkin = new CheckinModel();
+        let idCheckin = await checkout.obterIdCheckin(req.body.coutId)
+        if (idCheckin.co_id_checkin) {
+            let resultadoDataCout = await checkin.liberarDataCout(idCheckin.co_id_checkin);
+            if(resultadoDataCout){
+                var resultado = await checkout.deletarCheckout(req.body.coutId);
+            }
+            if(resultadoDataCout && resultado){
+                return res.send({ ok: true, msg: "Checkout excluído com sucesso" });
+            } else{
+                return res.send({ ok: true, msg: "Checkout excluído com sucesso, porém a data do checkout não foi removida do checkin!" });
+            }
+           
         } else {
             return res.send({ ok: false, msg: "Falha ao excluir o checkout" });
         }

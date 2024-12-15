@@ -158,7 +158,7 @@ class ReservaModel {
         let sql = "delete from tb_reserva where res_id = ?";
         let valor = [id];
 
-        let result1 = await conexao.ExecutaComandoNonQuery(sql, valor);
+            let result1 = await conexao.ExecutaComandoNonQuery(sql, valor);
 
         return result1;
     }catch(error) {
