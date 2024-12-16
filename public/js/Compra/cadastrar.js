@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function() {
             `
 
             html += `<div>
-                        <h4 style="text-align:end"> Valor total: R$<span> ${valorTotal.toFixed(2)} </span> </h4>
+                        <h4 style="text-align:end"> Valor total (R$): <span> ${valorTotal.toFixed(2)} </span> </h4>
                     </div>
                 `
 
